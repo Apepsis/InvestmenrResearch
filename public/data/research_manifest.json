@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-20T22:37:07+00:00",
+  "generatedAt": "2026-08-20T22:47:00+00:00",
   "mode": "live",
-  "runId": "20260820T223707Z-b32b8b83",
+  "runId": "20260820T224700Z-15c3777b",
   "modelVersion": "transparent-research-v4.0",
-  "gitCommit": "d6df42ab50bf",
-  "dataHash": "sha256:b32b8b836f6501e5b83c1d6435e63bbc604fe9379d8dd178e0693847c7e3a85a",
+  "gitCommit": "bfdc11265775",
+  "dataHash": "sha256:15c3777b921eb26e10ccf8dce312095697f96563c20a795eb93b5268f4676961",
   "horizon": "60 sesiones",
   "assetsProcessed": 9,
   "assetsExpected": 9,
@@ -12,27 +12,27 @@
   "nonCriticalErrors": 0,
   "testsPassed": 9,
   "dataCoverage": 100.0,
-  "durationSeconds": 23.95,
+  "durationSeconds": 23.9,
   "artifacts": [
     {
       "name": "market.json",
-      "sha256": "87dc2ea5b298dd1b8bbdc077a898e358e6ecf520a38fad51639f01113704d535",
-      "bytes": 118855
+      "sha256": "1a8e54b12cbce750b9e4cf789096ecdc756f01e4438592e33a29620f96275411",
+      "bytes": 118856
     },
     {
       "name": "backtest.json",
-      "sha256": "366ccf536c891613453b81a8603ea60c8e166d37dd7fce6da66ddf4912ce3d8f",
-      "bytes": 16691
+      "sha256": "a4b37fcaa8b388465c213b63021c9efe7dcc853b3a20144f7d8a308be584b771",
+      "bytes": 16689
     },
     {
       "name": "risk_model.json",
-      "sha256": "6639347b5503c4f86ba76aa4484fb3ad55bb93890a3994351357bfb89ca29a37",
-      "bytes": 123362
+      "sha256": "6183733158162d2374d4c7ac85f28f607d8eb7018a8b3bbcc9c2c3159b1e3848",
+      "bytes": 123364
     },
     {
       "name": "event_studies.json",
-      "sha256": "cbfea3c0a0efd75e721ffb78a00d29c1f1f1a6db57311c5fe4fa6f3badaf4afd",
-      "bytes": 35446
+      "sha256": "1f52fe1161591470f235850e69429603d24e016042ac703359dc32c66b6a3e0f",
+      "bytes": 35470
     },
     {
       "name": "build_journal.json",

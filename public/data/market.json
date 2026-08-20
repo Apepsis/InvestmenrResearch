@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T22:37:02+00:00",
+  "generatedAt": "2026-08-20T22:46:54+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -235,20 +235,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "2 S&P 500 Stocks to Research Further and 1 We Ignore - StockStory",
-          "source": "StockStory",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaUQxTjh4MTRyVFhib0RJWXMwMWhiMU5BUUV0NHlPNjJUM1JRamsyQlBKZDhMT1BrV1R2WHMtNEc0ZUJ5RzVORHMyMWlkVnVhVlBJSVFWRkc0RldOU1d4d19icUpZNjl2aDlhNmI4ckxGdGlnZ3hwRG5XSlRnbVNTb2pQRmltNjFJbmJHZFdIM0I1VEM5ZXdEVTlfQmRVTU5JNlNwX1ljTmwzNDVHVnFmSzg5OF8?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 09:24:09 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.35,
-          "novelty": 1.0,
-          "entityMatched": false,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Uber stock drops as bookings guidance disappoints; CEO bets on robotaxi push to grow overall business - Yahoo Finance",
           "source": "Yahoo Finance",
           "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxQTnZnQ1V0djJtd29YQV9zakhPdHVrd0ZkYldhbTd5WnNncnBWZDBTb0Eyang5aURsOTZETzFHbTI3OUhpWVQ2M1FKQ3pJRnA1RnNucUpxVzdJcHM0bEtRdC1TemxEa1F4aG81MjhUaUJxTTh4RlJ5NjRXTmd4eWNkdGZzTlNHeHBZb0lRUGxIU3g2c0dFZEFub1hkcG5PWVFYQ3ZEcGRHankydzlqdW13eWU4cUhOZHNDVW9zWEpjRHgxT0stQUhyVW83UEtzb3JvVmlMMDRiZ1NXU1FCYW5jM2lNdWNVSDVRcG5pUE4tM2pnbGdTMnI4?oc=5",
@@ -260,6 +246,20 @@
           "relevance": 0.69,
           "novelty": 0.9,
           "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
+          "title": "2 S&P 500 Stocks to Research Further and 1 We Ignore - StockStory",
+          "source": "StockStory",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaUQxTjh4MTRyVFhib0RJWXMwMWhiMU5BUUV0NHlPNjJUM1JRamsyQlBKZDhMT1BrV1R2WHMtNEc0ZUJ5RzVORHMyMWlkVnVhVlBJSVFWRkc0RldOU1d4d19icUpZNjl2aDlhNmI4ckxGdGlnZ3hwRG5XSlRnbVNTb2pQRmltNjFJbmJHZFdIM0I1VEM5ZXdEVTlfQmRVTU5JNlNwX1ljTmwzNDVHVnFmSzg5OF8?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:24:09 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.35,
+          "novelty": 1.0,
+          "entityMatched": false,
           "impactWeight": 0.0
         },
         {
@@ -873,6 +873,20 @@
           "impactWeight": 0.0
         },
         {
+          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.875,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Microsoft Stock (MSFT) Opinions on Azure and AI Growth - Quiver Quantitative",
           "source": "Quiver Quantitative",
           "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQaW9FOW9RTTc3Q3VsT0dDb0h4eUI5dGVKeWNNbnB6azVpckRFUUhvLVBkSWktU3BMMTJ1aW1JQ2ZnMWhwSUQ1azRtUEV6M1ktcEtPbGxtQUpIM1VqUHctRzhUZU1VSERRM2hjQ1doOXhoaXlJZ0pfOFJnQ1hfS0ZzQlllenYtVnJqa2dTV0NCdFd4YWx2Y0E?oc=5",
@@ -891,20 +905,6 @@
           "source": "Barchart.com",
           "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOWHpQNW5ZV1dla0JBOHpkRFlKZGJid20zOW5UZk1sRVN4UVNhNllRNVVKOU1nRHM2QXVfSUlrTm9PZlQ1TEpRMlRQZ0xldlRFcTVGbUlkU0dPcEZjM3IybmdMTlBQZ1Q1YkhFMlZVcEdwekprY08yOV9reTR0cXIzRmZPd01ER1hOaWNNWGxVRWE4RHgzWjl6azZKc1dVd2p5dmZfSG53R2JKQQ?oc=5",
           "publishedAt": "Thu, 20 Aug 2026 18:12:06 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.889,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
-          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
-          "source": "The Motley Fool",
-          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
-          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
@@ -1248,24 +1248,24 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Nvidia (NVDA) Stock Slips Despite Firefox Support for GeForce NOW - TipRanks",
-          "source": "TipRanks",
-          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPQlR5dkZOZU1wQUxodjBwZ09Kb3FXdUFWajNHNTJud0EtX0E2azZVaHh3SGJYUDhqdUpxS0RfTVlsY2wxSW5DaWZQekQteUdxckNNZUJvWTZKa2p0SERHVVk0QzdDZE5xMlRwQmRhX2hJazhXUXJsNHE0R290Y1ZSYWRyWUZXU2JNZWZ2WV9aeUVWZXA5TVNpQg?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 15:51:38 GMT",
+          "title": "Nvidia Stock Won't Be Overvalued by 2028: My Case for Buying NVDA Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNX1lwekk2Z2E1dWd6NWlCSFJRMDMyU05tb29HOHRFMklubzdqR3NkMDhFVmpjMlZuTUNRSzdRNkNVREROclpSaEhvRzVSaTAySENnVmxtQkZVMlhoRlRMcnAwSGZuckpwMGdCeU9CQ1dlZlFrQkVRNXdiWFpHUTNZM2J1S3p0S0RwX1B2Z2gzZUdIZ0hTcmxpQQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 06:30:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.85,
-          "novelty": 0.812,
+          "novelty": 0.895,
           "entityMatched": true,
           "impactWeight": 0.0
         },
         {
-          "title": "Nvidia Stock Won't Be Overvalued by 2028: My Case for Buying NVDA Today - The Motley Fool",
-          "source": "The Motley Fool",
-          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNX1lwekk2Z2E1dWd6NWlCSFJRMDMyU05tb29HOHRFMklubzdqR3NkMDhFVmpjMlZuTUNRSzdRNkNVREROclpSaEhvRzVSaTAySENnVmxtQkZVMlhoRlRMcnAwSGZuckpwMGdCeU9CQ1dlZlFrQkVRNXdiWFpHUTNZM2J1S3p0S0RwX1B2Z2gzZUdIZ0hTcmxpQQ?oc=5",
-          "publishedAt": "Wed, 19 Aug 2026 06:30:00 GMT",
+          "title": "Nvidia (NVDA) Stock Slips Despite Firefox Support for GeForce NOW - TipRanks",
+          "source": "TipRanks",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPQlR5dkZOZU1wQUxodjBwZ09Kb3FXdUFWajNHNTJud0EtX0E2azZVaHh3SGJYUDhqdUpxS0RfTVlsY2wxSW5DaWZQekQteUdxckNNZUJvWTZKa2p0SERHVVk0QzdDZE5xMlRwQmRhX2hJazhXUXJsNHE0R290Y1ZSYWRyWUZXU2JNZWZ2WV9aeUVWZXA5TVNpQg?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:51:38 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
@@ -1457,7 +1457,7 @@
         },
         {
           "label": "Valoracion",
-          "value": "P/E 25.0",
+          "value": "P/E 25.1",
           "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
           "tone": "neutral"
         }
@@ -1581,16 +1581,16 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Amazon Not Getting Enough Credit for AI Positioning, Analyst Says - Yahoo Finance",
-          "source": "Yahoo Finance",
-          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPLXl4RFB3RUw0TEhFaF9ud2oxUmhweWp2NjJTaDY3QkRWVFdpRE9UelpFVURFd1B6OVllVnVZSkJrbnkyOFpCaGtMUmYxUnZyWF9SU3lvVUpCTU9icUFDbGdWekIwRDIwbGhaRFF6RlQ1dmszQmJuNmhGVEFqaVhvN01xY1VMRnJsUklvaEVHeDY1R0hvaXNYU1B5TzNTQQ?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 16:58:24 GMT",
+          "title": "Amazon's AWS Backlog Just Hit $496 Billion: Is the Stock a Screaming Buy Under $270? - Currently.com",
+          "source": "Currently.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNcE9DV0dWLWtvN3d5M0Z3VElKXzVFQzhtdThjTTFMQ1pxU1ZUQjZqUUVTdmw0Sm1SaDhGMWlOS0piNEJGMVJmUlM2OEx0Z3RqaURRZ1NKZFpKQU16Y3ctZmQyMmF4TTY2dzdBZHd6eWZaR0FsQXl2NGlkNVJqZUcxYzNiZDZzdw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 16:50:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.941,
+          "novelty": 0.87,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -1604,7 +1604,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.867,
+          "novelty": 0.864,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -2233,9 +2233,9 @@
           "impactWeight": 0.0
         },
         {
-          "title": "What's Going On With Meta Platforms Stock Monday? - Benzinga",
-          "source": "Benzinga",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNdXR3N2Q3RU1pOFpzaXZtREdjT2phTzUzUlQ1TUk4cmhPSm5xUTgwQ0VMSld2OS14VVhKTzJpUjBvRTllVGhUX0gwNExXTDFsSlJvTmR6MF9VZVZWYkVsdmZnbzk2Y0RnVDl3dktVTmowTVdXdE5OUHZ1Tk42WDFFTXE0ODk0TjhLR3V3YXR1TnBkRGJZNVlCcVV1WFdRRTFiTjBaTQ?oc=5",
+          "title": "What's Going On With Meta Platforms Stock Monday? - TradingView",
+          "source": "TradingView",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNVW85R1ZjcmM5bWVaOWl2Vk9VekgxSDdWbXdkV01xTW5namZOUjN6eFJJUG1rNk1KMmNOYnRDMklkWGtUNGE2bEJUT2xwb2tETldpQnRaNGVRZExvVWN5VENjYjFLN29kb3htVzF3S2gwdzdiRGwtV01rdzczVVI1WnJJQ25zdS10VkdBTjZtZHpHbzhTeTR6YjlHbHRLMmt2YndlVGJLbzBKWUE?oc=5",
           "publishedAt": "Mon, 17 Aug 2026 18:16:23 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
