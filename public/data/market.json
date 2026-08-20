@@ -1,0 +1,1932 @@
+{
+  "generatedAt": "2026-08-20T19:51:46+00:00",
+  "mode": "live",
+  "macro": {
+    "fedRate": {
+      "label": "Tasa FED",
+      "value": null,
+      "unit": "%",
+      "asOf": "No disponible",
+      "source": "FRED:FEDFUNDS",
+      "error": "ConnectionError"
+    },
+    "cpi": {
+      "label": "Inflacion EE. UU.",
+      "value": null,
+      "unit": "%",
+      "asOf": "No disponible",
+      "source": "FRED:CPIAUCSL",
+      "error": "ConnectionError"
+    },
+    "unemployment": {
+      "label": "Desempleo EE. UU.",
+      "value": null,
+      "unit": "%",
+      "asOf": "No disponible",
+      "source": "FRED:UNRATE",
+      "error": "ConnectionError"
+    },
+    "dollar": {
+      "label": "Indice dolar",
+      "value": null,
+      "unit": "indice",
+      "asOf": "No disponible",
+      "source": "FRED:DTWEXBGS",
+      "error": "ConnectionError"
+    },
+    "oil": {
+      "label": "Petroleo WTI",
+      "value": null,
+      "unit": "USD",
+      "asOf": "No disponible",
+      "source": "FRED:DCOILWTICO",
+      "error": "ConnectionError"
+    }
+  },
+  "stocks": {
+    "UBER": {
+      "ticker": "UBER",
+      "name": "Uber Technologies",
+      "sector": "Movilidad",
+      "currency": "USD",
+      "price": 78.665,
+      "changePct": 0.801,
+      "asOf": "2026-08-20",
+      "score": 63.8,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 79.0,
+        "fundamental": 73.3,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 47.1
+      },
+      "history": [
+        72.91,
+        77.26,
+        74.11,
+        72.95,
+        76.36,
+        74.6,
+        70.92,
+        72.21,
+        69.55,
+        71.43,
+        75.5,
+        74.33,
+        72.08,
+        70.33,
+        71.2,
+        68.18,
+        75.36,
+        78.665
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "66.7",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Positivo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "positive"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-57.7%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+12.2%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+17.3%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 17.9",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 79/100.",
+        "Los fundamentales disponibles resultan favorables con score 73/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 45.3%.",
+        "Drawdown maximo en cinco anos: -57.7%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Uber Sells $472 Million of Aurora Stock - TradingView",
+          "source": "TradingView",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPSUN5SFR6Vm80Vk9nbHNzSGxkYmZuVlpDY3VqWTUyWjlGbllTMDBNNEpHZ0xNU3FlQmRoMURUQ3o1aTRuSkVvSmpGejNMRk43U2dDSUhhTWpWVjNTRTJsc2lNQ0Iyb0xhajhPWlRFWUZIMlIzQlY1MjZOQy1ndXA5SkR5ckQ3SWtCbW9nLVlYbHFaTGJ5Q1NUa3oybmNTWXM?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 13:54:25 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Jim Cramer tells investors to consider buying tumbling market giant - thestreet.com",
+          "source": "thestreet.com",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE95MTMwX3RTdnFyMW0yUEZ5eTJvelI0QklOc0dVYVIza0ZkVU9Wb0t3Q1BiSl9sMFp5cXJYdTJhb3hOdzFVWUtsNm92RFMwOWRJanZSUVpnZm4xNGxVM1h3NEpseERjdDlFaWhnd3FTV3NPWnVuaVow?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 12:07:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Uber Stock Looks Cheap. Here’s Why. - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5CWkpUVllFSGpjZWFZUGQ3RkwzdFMwMXhQVlBma2V5S3kzUE9PVTJNcE1GSVlKR1lVLXdHRnY2ZVJTRGh2V0dMam9JUXBHRm92VUhWY2dWUGp4Y01qN242Z0RrNjk2UndUUm1WN1k1ZTJVNTZ0ZGc?oc=5",
+          "publishedAt": "Fri, 14 Aug 2026 16:50:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "2 S&P 500 Stocks to Research Further and 1 We Ignore - StockStory",
+          "source": "StockStory",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaUQxTjh4MTRyVFhib0RJWXMwMWhiMU5BUUV0NHlPNjJUM1JRamsyQlBKZDhMT1BrV1R2WHMtNEc0ZUJ5RzVORHMyMWlkVnVhVlBJSVFWRkc0RldOU1d4d19icUpZNjl2aDlhNmI4ckxGdGlnZ3hwRG5XSlRnbVNTb2pQRmltNjFJbmJHZFdIM0I1VEM5ZXdEVTlfQmRVTU5JNlNwX1ljTmwzNDVHVnFmSzg5OF8?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:24:09 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Uber stock drops as bookings guidance disappoints; CEO bets on robotaxi push to grow overall business - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxQTnZnQ1V0djJtd29YQV9zakhPdHVrd0ZkYldhbTd5WnNncnBWZDBTb0Eyang5aURsOTZETzFHbTI3OUhpWVQ2M1FKQ3pJRnA1RnNucUpxVzdJcHM0bEtRdC1TemxEa1F4aG81MjhUaUJxTTh4RlJ5NjRXTmd4eWNkdGZzTlNHeHBZb0lRUGxIU3g2c0dFZEFub1hkcG5PWVFYQ3ZEcGRHankydzlqdW13eWU4cUhOZHNDVW9zWEpjRHgxT0stQUhyVW83UEtzb3JvVmlMMDRiZ1NXU1FCYW5jM2lNdWNVSDVRcG5pUE4tM2pnbGdTMnI4?oc=5",
+          "publishedAt": "Wed, 05 Aug 2026 07:00:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "After Earnings, Is Uber Stock a Buy, a Sell, or Fairly Valued? - Morningstar",
+          "source": "Morningstar",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQcDBibk5zX3NPc1RYQXh1a0lMLVVHR2ZNZk4wYmNaektrMmctYm42SGt4RkdfOGhwdFl3ZElCZ1dldXlQM3VWdzNsSmxrZXNXek84a01sS2FOX3VELWxEV3M4Q2c1ZzFIa3RaQlBoOWxZalBsSFpORlVaN1JBU0M3RTZzTVRIbU1adVBPa3Vva3g2YldIaHc?oc=5",
+          "publishedAt": "Tue, 11 Aug 2026 07:00:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "resultados",
+          "duration": "medium",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "AAPL": {
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sector": "Tecnologia",
+      "currency": "USD",
+      "price": 312.872,
+      "changePct": -1.249,
+      "asOf": "2026-08-20",
+      "score": 64.6,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 77.0,
+        "fundamental": 67.8,
+        "news": 53.3,
+        "macro": 50.0,
+        "risk": 63.5
+      },
+      "history": [
+        258.369,
+        265.696,
+        270.228,
+        283.674,
+        294.546,
+        301.99,
+        312.241,
+        310.962,
+        295.375,
+        296.754,
+        281.497,
+        310.392,
+        314.589,
+        325.609,
+        337.899,
+        310.732,
+        302.25,
+        312.872
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "54.7",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Negativo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "negative"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-33.4%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "-2.8%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "neutral"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+27.6%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 32.8",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 77/100.",
+        "Los fundamentales disponibles resultan favorables con score 68/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 28.0%.",
+        "Drawdown maximo en cinco anos: -33.4%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo controlable con dimension prudente.",
+          "tone": "positive"
+        }
+      ],
+      "news": [
+        {
+          "title": "What BofA and Morgan Stanley Are Saying About Apple (AAPL) Stock in August - 24/7 Wall St.",
+          "source": "24/7 Wall St.",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOOXBiNHhnd0pNdTBWM2xkX0hqY2szbkRjYzNjQlRtYnFGc0dpV3B1UXZQU1RRMlRqOVdKRkhUOE1lZ29pR01NMXZjeVhELU5FbHcxMHctTXAwXzNKalhPVFBQZmx6RVE4bjBqTVBZd0xHWFFVT1dSMzJMa1VBYzJweWNyMm5lM0NqTUUzZFpNell4YnpqdDJod0tKX3RmVEZnNXhTMHc1bm14a2dyRUpvNjloQ1IwRkE?oc=5",
+          "publishedAt": "Tue, 18 Aug 2026 13:00:11 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Why Investors Should Consider Buying Apple Stock Ahead of Its September iPhone Event - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQbklkSkRibERrSFgzbGRmdGstaXYySm5WUjlSb2VNbzA0NmJoRzVlV2NnbzREZzluSUtib3dxV25YRncwbmpaZ00tcUt6TU1LSllEMTJpMkVucEpVMFpzUjA1d2ZNTlpmVkZMMjBFTkhJS25SaW5KMEs1YW8tX1JXSXE1VVRabjFYT3hoUDIwYUU3LU5yYUlSb3FxbEZBZS1jcnc?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 20:13:06 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Apple Updates EU App Store Commission Structure to Resolve Regulator Disputes - TIKR.com",
+          "source": "TIKR.com",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOdTVrU2hjR094eEpWbDNIWmZiaXQ1MXdKdk1YYzJVbGx1ZHZmWi10eGFPYTM1WTZOQjhtcW9Ta1FhSGI0WkVYWnYweGNEQmVpZXpmWkN1cklpUjRJQmpqa2xWTDBELURTaEpNWTdZZTBjTTF0ZjJuTlZENkIyQW11M3JKODI?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 10:23:23 GMT",
+          "sentiment": "neutral",
+          "eventType": "regulatorio",
+          "duration": "structural",
+          "confidence": 0.45
+        },
+        {
+          "title": "Why is Apple stock rallying today? - Investing.com",
+          "source": "Investing.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPb3VwM0diakdQaEpUeWlTdk1LRkx3SHVnMFMtMGZzNEZ2YTlGdHVWZ2VVWGpBamVRbjh5TjNhUTlYZWMzazJjTU1Calh4cktlMkw2d2JiX1JVNXJRWXF6YlY4MV8xbC00VmF4TFJlOWh0NTdhalJ4ci1HZXBHU3IyUldkdWhmWGR2RGFTMldqTlFnVVBXUGtYSXVpOA?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 14:26:51 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "What's Going On With Apple Stock Thursday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQQnREUGVRdktzS1ctOGFrS1FWUHdQVWktYUpZa2NKUU9HZ2RsTXYxWGFBOWRTUDFwRjZIWFF4OWZsOVBsVE10OWRGYnh6M1V1RmIyb1dXNW1mYmVrRGdaYmdyeUMzV1ZqdXE4cXNnRHF2el9vOGthcTZja3d5WFFSNHlnd245cWlmREY0cVpJZjR3WUpPcTVsSHN4Zw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:30:35 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Apple Stock Got an Upgrade. It Could Be the AI Gatekeeper. - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNSy1ubHlUUTJtVExLNjYtTFBCbTZ1Y0NNdl9PYWhtOGRhcjBZUGd2ZkFYU1pFVUp0Y3Q4amZYXzd4YWw3TkJ2RFg0MjYzemJnZ19uTnBob0JMaEtVQWVLZVFaQktiYWFrUUlRMVhsRG0zU2UtamNlWEM4Uk1heW9jcw?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 18:37:00 GMT",
+          "sentiment": "positive",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.58
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "MSFT": {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sector": "Tecnologia",
+      "currency": "USD",
+      "price": 482.01,
+      "changePct": -0.475,
+      "asOf": "2026-08-20",
+      "score": 67.7,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 79.0,
+        "fundamental": 77.0,
+        "news": 53.3,
+        "macro": 50.0,
+        "risk": 62.1
+      },
+      "history": [
+        392.26,
+        423.243,
+        428.322,
+        410.491,
+        406.889,
+        420.15,
+        426.99,
+        428.05,
+        390.34,
+        367.34,
+        368.57,
+        388.84,
+        384.93,
+        390.34,
+        390.54,
+        487.46,
+        492.43,
+        482.01
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "59.3",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Positivo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "positive"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-37.1%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+15.7%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+40.3%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 20.4",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 79/100.",
+        "Los fundamentales disponibles resultan favorables con score 77/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 28.1%.",
+        "Drawdown maximo en cinco anos: -37.1%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo controlable con dimension prudente.",
+          "tone": "positive"
+        }
+      ],
+      "news": [
+        {
+          "title": "Should You Buy Microsoft Stock Now or Wait for a Dip? - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQZloxOFRVMnBnQVBWUVJNcHJtbzVXSEJYaFJ4Q0FvR3lYTnZkZFZDTTlmR1BOMUMxUHRpdHpvMk1WWm53eXlnbnMzYUhYaVR4SVpDb0pXRlhKTXUxbGViLWtMVU5VNEFELVFSb21xV19fVGFZM1U2S1AyWlYxWVNvbV9Qam5CRTJ1aEJ5dTdGWG5tTF9CNV9mWg?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 17:17:21 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Microsoft Corporation $MSFT Stock Position Boosted by Hamilton Wealth LLC - MarketBeat",
+          "source": "MarketBeat",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQSm8wVUY0Y1ZwcEh6ZmxOcktGbW9WSFYzVlFTVHpOaGQ5WWZfbXdQb0NpeXRCTWRYZjlRc3JBNDhpOENzM0tFZTB6ZVJlNjkxTzl1UDBNT0Q2T1YwRklZVXZaUEdMemNCNnRvN3JGelZOTm1DSE1EanlrLVBHb1VsNjlLS3REcnM2R1p3NWt3V0QzRnJNN0dEYk0yc1FqXy1rRkRDNTBDYm9Tak5IZkVaUVlFS0Vub2tMNDlPZmtEN1VRaHRFZW92QWtFUml6QQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 09:17:37 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Microsoft Stock Today: $480 After 3% AI Capex Selloff - FinanceFeeds",
+          "source": "FinanceFeeds",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNVlRUalNNTVVoMXhmcXlrMThuQlNlWklxMWhhczR6S3NKUG8zRVhVVnlDeGRPMHZJcXNVN0lnZldnT3hKeVBIc0MybHJmZlpqZ0JkbXhrM003NUtIY2pNbVQ4VFhIUDNJYlNqMmlxZGtQR1F5QzFhQkZLdWdISGxLaA?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 10:45:11 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Microsoft Stock (MSFT) Opinions on Azure and AI Growth - Quiver Quantitative",
+          "source": "Quiver Quantitative",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQaW9FOW9RTTc3Q3VsT0dDb0h4eUI5dGVKeWNNbnB6azVpckRFUUhvLVBkSWktU3BMMTJ1aW1JQ2ZnMWhwSUQ1azRtUEV6M1ktcEtPbGxtQUpIM1VqUHctRzhUZU1VSERRM2hjQ1doOXhoaXlJZ0pfOFJnQ1hfS0ZzQlllenYtVnJqa2dTV0NCdFd4YWx2Y0E?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:04:00 GMT",
+          "sentiment": "positive",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.58
+        },
+        {
+          "title": "Up almost 20%, Here’s Why Microsoft Stock Could Rise Even Further - Barchart.com",
+          "source": "Barchart.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOWHpQNW5ZV1dla0JBOHpkRFlKZGJid20zOW5UZk1sRVN4UVNhNllRNVVKOU1nRHM2QXVfSUlrTm9PZlQ1TEpRMlRQZ0xldlRFcTVGbUlkU0dPcEZjM3IybmdMTlBQZ1Q1YkhFMlZVcEdwekprY08yOV9reTR0cXIzRmZPd01ER1hOaWNNWGxVRWE4RHgzWjl6azZKc1dVd2p5dmZfSG53R2JKQQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 18:12:06 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "NVDA": {
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sector": "Semiconductores",
+      "currency": "USD",
+      "price": 216.715,
+      "changePct": -0.388,
+      "asOf": "2026-08-20",
+      "score": 67.1,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 89.0,
+        "fundamental": 78.9,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 41.0
+      },
+      "history": [
+        196.281,
+        199.647,
+        212.922,
+        196.271,
+        220.523,
+        223.21,
+        214.001,
+        218.66,
+        204.87,
+        208.65,
+        194.97,
+        196.93,
+        211.8,
+        212.06,
+        190.01,
+        219.22,
+        224.09,
+        216.715
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "67.2",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Positivo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "positive"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-66.3%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "-6.8%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "negative"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+63.0%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 16.7",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 89/100.",
+        "Los fundamentales disponibles resultan favorables con score 79/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 51.9%.",
+        "Drawdown maximo en cinco anos: -66.3%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Nvidia Stock Drops In Broad Market Slide With Earnings In Sight. Is Nvidia A Buy Or Sell Now? - Investor's Business Daily",
+          "source": "Investor's Business Daily",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1XTUFJeFZmVTllZDZKSFlLVjhXd2hLUEFnSXlwakRMdk1pemZJQmZFOFNKSHJBbWNfYzM4OEtoQmFpN0dINXFieE1fT3FlVTNkdExwdzJLVTJRRURUWk5yV1F4cEppRVdYSm9PekNFTEtrbE8zOUVHM2dRZzY2R0k?oc=5",
+          "publishedAt": "Tue, 18 Aug 2026 16:20:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "resultados",
+          "duration": "medium",
+          "confidence": 0.45
+        },
+        {
+          "title": "Mutual funds remain sharply underweight Nvidia, AI stocks (NVDA:NASDAQ) - Seeking Alpha",
+          "source": "Seeking Alpha",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQYXNOVUZ2SV82dVN4NHBKa05RYzFKVFEzUHRyLXlVbGtYdXlYQ0o3ZTZrdC1mRW5WcDB6Nk5yUzJkeDEzZ2gySUo4M01TNUlHZmxjQnZDMU5iWkprUnlCZnBLOWRlNVFQNl9uVGlDbUtyS3VJZEFnLS16WjVxOWdrUlhZTlREdXdaUklhazFNdUl4QUJ5bW1WcDRR?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:45:11 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Is Nvidia stock too cheap right now? - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBpei1WTHRMaEJkR2NyQkdJUXYydzZ4SklzSUNnZUh3Nl9KVGtkbXFwTUwzNnZrQVE3RFlkdDA2RWdXNGZwN0YxLVlEQXA4eGRqdnA5RDVfWk41YU9vc09RVWxxR0psaVZVVl9lTW5CcTV0OHNEejNWeXRLUUF5UQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 14:40:36 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Cathie Wood buys $22.3 million of surging semiconductor stock - thestreet.com",
+          "source": "thestreet.com",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQTjZwdzVLRGpOVXlfdUZxbXl1Nk5SUmNVbkJZeVIzS1dYZW13bnAyNnJTZkVxaTVlRURvZ21ZR1ltSVVaWkxUbmJVVG1FU1Y0dW52V1VfdElUR0dwUUsxY1hXb2RLR0FmVmlWTV9tNFZqWVVyTjA3WVNNdnNlTzhTeldQajZUVjQ1bkZFSGlnRlNfT1VoYUJHS01Ndnl4WTRITG5QY2RoRVYwN2FrckxoYWI2a1N2QQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 15:33:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Nvidia Stock Won't Be Overvalued by 2028: My Case for Buying NVDA Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNX1lwekk2Z2E1dWd6NWlCSFJRMDMyU05tb29HOHRFMklubzdqR3NkMDhFVmpjMlZuTUNRSzdRNkNVREROclpSaEhvRzVSaTAySENnVmxtQkZVMlhoRlRMcnAwSGZuckpwMGdCeU9CQ1dlZlFrQkVRNXdiWFpHUTNZM2J1S3p0S0RwX1B2Z2gzZUdIZ0hTcmxpQQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 06:30:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "“The Momentum Is Unreal,” Says Top Oppenheimer Analyst About Nvidia Stock (NVDA) Ahead of Q2 Earnings - TipRanks",
+          "source": "TipRanks",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQd25xbExTTFoxV1hzTm5sdTg2VllKNElteGxlWnJCVkxHeFg4V1pUamp0TmR0bVV3MVR6RjlLU29XNVQwZ1NsUjhWMXBPS3lOdm9vQkhrVVI0Z0ZzTUIyZzRaR19sSnpkRDZJVmstVXVYdkoyWENDb09zd3piZHV6VTVIbE9NdDVoSFpxSHgyazRvbENFNUlCQmo5ZUNsbVM5MTJxV0lGQ2hvWEJmakVPOTR6VEt0alFfXzMwMmxlRElyLWkx?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:46:37 GMT",
+          "sentiment": "neutral",
+          "eventType": "resultados",
+          "duration": "medium",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "AMZN": {
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sector": "Consumo / Cloud",
+      "currency": "USD",
+      "price": 261.144,
+      "changePct": -1.766,
+      "asOf": "2026-08-20",
+      "score": 64.3,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 80.0,
+        "fundamental": 71.9,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 51.5
+      },
+      "history": [
+        249.02,
+        249.91,
+        259.7,
+        273.55,
+        265.82,
+        265.01,
+        274.0,
+        253.79,
+        241.51,
+        232.79,
+        240.14,
+        245.98,
+        247.49,
+        244.85,
+        226.65,
+        272.65,
+        267.28,
+        261.144
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "41.3",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "neutral"
+        },
+        {
+          "label": "MACD",
+          "value": "Positivo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "positive"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-55.7%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+11.8%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+17.4%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 25.2",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 80/100.",
+        "Los fundamentales disponibles resultan favorables con score 72/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 36.4%.",
+        "Drawdown maximo en cinco anos: -55.7%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Prediction: This Will Be Amazon's Stock Price by the End of 2026 - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNSE9VNW5jU0Y1M1FlbWdTNW1pM2hUc3lrT0lmdzl1LTRnczZkWUg0RWhLNDFDWnBPdFdrYTgyVWI0aFlBb2ZlMmxtZTA1ODhDYllvaWk2bVlob0FNZ2hETDNSdVRuRkowM09kMjdEdTd0YldDUjRfSlZPRnJaZnhzd19wTEVhU1p1TklBWHNR?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 19:33:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Here’s how Amazon’s stock could nearly double by the end of next year, according to Morgan Stanley - MarketWatch",
+          "source": "MarketWatch",
+          "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPV1RUWEpINjJIaFN6OGk5c19KQ0pJc1BuMUFnSXNrX0hLZXJsUVdNN0xkWV9OYnAyODVic2NhdXlJS1FDSVk1OWVHNlNnR3A2TXhhbWhPVUJoeGc4TTVpMnFGZXBfUnNsT2gxT2VWWmhfSWN0TEpRSmxRQ0ROaWJzT2d3cEtlSHNGbC0xZDBGdjBDcGhkdDhNM1Q5b1JUdEk0RXp6LWJhX3ZUYS1wTXZWRHctODZZeWxoT2ROWktwTDlGa0FMRUdBcG9UZE5UaEQwbmpLUQ?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 17:57:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "What's Going On With Amazon Stock Monday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQQU1Ca3NzemluZU5FODlKalNubXpqV0VacmFCaHV4NEg1d2R0NmpGSmpXSTJfMjJpQlVqdDA0RXRRWlkzU3NwOFktQ2t4V0xicW00amJYNnBLRXA4NUdqVGI0THBaN3Y2QTZHQ3dkRmFQRDhfeGR2emtVMDVFRXZwWF9HY0c0WXFKeDlXWlpXd3ExcHlONmRLVzZJWWt0REZhend2eg?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 18:17:22 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Amazon Not Getting Enough Credit for AI Positioning, Analyst Says - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPLXl4RFB3RUw0TEhFaF9ud2oxUmhweWp2NjJTaDY3QkRWVFdpRE9UelpFVURFd1B6OVllVnVZSkJrbnkyOFpCaGtMUmYxUnZyWF9SU3lvVUpCTU9icUFDbGdWekIwRDIwbGhaRFF6RlQ1dmszQmJuNmhGVEFqaVhvN01xY1VMRnJsUklvaEVHeDY1R0hvaXNYU1B5TzNTQQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 16:58:24 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Stanley Druckenmiller loaded up on Amazon and chip stocks before July rout - CNBC",
+          "source": "CNBC",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNRDlSZnlyczVwT1BoOWxsUWI3OV9hd0dkaXY1c2JwblFOTHBUeW5fT2JacS1iOUxja0ktSlZrZ2VyT0MwbDlCTnA3ckt6N1Z0d1NvMlhSZzVKdVZKSS0wNmVocGJwVUdZbVF4eGRtdzZ5VmpFTjVMN3MyUncwWG93QmEwYmRCblpyWk5SeFA3dHkxTW9UVjVwNVhHTm93Q2p3akNLM3l3?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 16:13:33 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Billionaire investor makes Amazon his biggest stock bet - thestreet.com",
+          "source": "thestreet.com",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQRktGN1ZXTzdFY3JWUTZ1WUdVLUFaWEd5al9xalNSVVE4ZWdQTXF0MHZXV1NRaDk2dEo5VzJoSC0td1dPaV96b09HTHAzdHFCaU16SnRoNmlkWXBHenhLVko4Zk5uRUZHT1RjODJuN2ZvSFRUS2RTT082ajNSN3UzeGpIbWxqVHZZQlNqVDlmUlNHNC1uMFE?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 17:07:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "GOOGL": {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "sector": "Tecnologia",
+      "currency": "USD",
+      "price": 341.1,
+      "changePct": -1.05,
+      "asOf": "2026-08-20",
+      "score": 62.7,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 60.0,
+        "fundamental": 80.1,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 57.7
+      },
+      "history": [
+        332.711,
+        332.092,
+        349.571,
+        388.198,
+        387.119,
+        388.678,
+        389.897,
+        371.968,
+        357.77,
+        349.68,
+        353.65,
+        367.03,
+        359.51,
+        342.09,
+        336.71,
+        362.43,
+        343.54,
+        341.1
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "39.5",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "neutral"
+        },
+        {
+          "label": "MACD",
+          "value": "Negativo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "negative"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-44.3%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+9.8%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+54.8%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 23.0",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 60/100.",
+        "Los fundamentales disponibles resultan favorables con score 80/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 32.1%.",
+        "Drawdown maximo en cinco anos: -44.3%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Alphabet Stock Ran After Its Ad Machine Had Already Shown Its Work - Trefis",
+          "source": "Trefis",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQb0pFNlVfU0ZpYzJ3UFl2YW5TRjhLVUM4SWxWMzNMQTNJazl5ZlJfTTJUZXhoa2R3WlBmUXEtakd4QVJYZFhxeVRDcFhpSVJHX3V1UmY0SE1nN3ZQdDJMMk1aSEczeWhJSzRBbEpfV1JVQ1VCWWRQU0lPY2RBWkQ1cTU1UTJZcktDcXlCaFlEMklHMlJGN0RWTGRkNHFqNG16SGc2SURJXzh3QnJrNUx0QkRzVUNBbWpfY1Q1NUxQNXljcGIxbkhr?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 17:47:25 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "What's Going On With Marvell Stock Thursday? - Alphabet (NASDAQ:GOOGL), Alphabet (NASDAQ:GOOG), Marvell T - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPdzZPUnUyQktMNGVqeVpIMjBVaTljYmhDdG1HQmJEOEUxcTUtX2JKd2NmcENHT0hIYng3OHktTGlPYXJzUG54THVKeERWa2N0dzFMUkNGcF9UaGE2MDVNN21LRXF4aXV4d0VCNWlYMmxVbm9YLW42Z0hyQ2hqeFdsUFlucmJNb1NhZlEyU0NRWlBXendoT1dDbnJnOWJlQjJKemRSZ2dvWUEyaEhZdHp6eDFhTGc0c3o5ejBRRGw0WFA4NWp4SDdQVVJyMDJTWElYWjRyZWVPZVFNNFdQb0ZCV0c5OW5ob3dYa2c2aGQtRWZ5cGNT?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 16:18:32 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Search and Cloud Strength Drive Alphabet’s (GOOG) Rally - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVy11LVhJZlF1RS1pbVl2Zl9tQ29ESGRGWmtveW9iaDVCaXlRczhjLTRmd2c3QkNJV0pvOXlHODNkMmhZWlNfNmdjLWcyNl9IY244TDFQTHpxNTZTSnllOE80NmlGLU1IbUhERDNXeUdwYUwzUlpkb2hqU0tnREo0UTZRdjNKN3FNaDA5UzNweUtJOTVzSDRZakdkSlBlSlFYZVZB?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:30:14 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Alphabet: The $250 Billion Capex Offload Plan (NASDAQ:GOOG) - Seeking Alpha",
+          "source": "Seeking Alpha",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOb0RaRE14ZDJEQWd2V2Rod2lIVl9rTkU3RXVDZmUyeEJLZ09GMTVjakJlUmV1SzdxdTdDN1Uwdm5saUsxSkc5V0dtSjBySXBoN3dnRXNFQ1owcXd6cG5SSUxINkptc1BLUTdJbHhXN2Y4QVhCZDB0dzFUaUx5Ti11WmtzenFzSndCOXFjaw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 18:02:36 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Mosaic Family Wealth Partners LLC Raises Stock Holdings in Alphabet Inc. $GOOG - MarketBeat",
+          "source": "MarketBeat",
+          "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNQUpnU1pQRTFFWVM1LVJ2Z1h6enhaZzAzank1R2hGMXlUWTZRX2RNLWlyaFNRTUdsTHJFd2g2TmYyQkROc2lWVkdTejAwc1R0Nm1KamYyMC1CRmZXS0xTcDZ2MEI4YnNCekU2UHRqMUFhS1FvOHNzRlhoMzQycFZFZHB2V0tyaTZMSExkeTk1V0hEdy1kOVpSLUx4YndfV1hpMDhuQXpDb09JM0JybUJBalNHek80NTN1VnNvWVQ4dlM2aFRXQ3FmMmRQOEM3bjdUcUxv?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:12:42 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "META": {
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sector": "Tecnologia",
+      "currency": "USD",
+      "price": 545.02,
+      "changePct": -0.185,
+      "asOf": "2026-08-20",
+      "score": 48.5,
+      "verdict": "Mantener vigilancia",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 25.0,
+        "fundamental": 70.7,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 40.0
+      },
+      "history": [
+        661.877,
+        668.221,
+        670.718,
+        604.4,
+        602.442,
+        604.5,
+        634.702,
+        626.989,
+        567.904,
+        563.85,
+        562.6,
+        615.58,
+        661.04,
+        627.17,
+        585.61,
+        588.77,
+        578.85,
+        545.02
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Bajo SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "negative"
+        },
+        {
+          "label": "RSI 14",
+          "value": "45.8",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Negativo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "negative"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-76.7%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+15.7%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+29.8%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "positive"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 15.7",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es mixta o debil con score 25/100.",
+        "Los fundamentales disponibles resultan favorables con score 71/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 44.9%.",
+        "Drawdown maximo en cinco anos: -76.7%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Senales estadisticas sin confirmacion.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Why Meta Platforms Stock Is Falling Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE8zSmEzRVdlclFVVURZMVhJRHRPc3lRYzJTTjBpZXF6Z29XdllHYngwalNPZk90WjRVYWlJclJHQ2JxMVVnY2wxeVlwdVFmMFZXQjRObFU0SmVkWmFNcmJYd04tQ3dYWno3ZUhpTV9rQkZCalNXMlhjb2FVeXZkbWs?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 19:48:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Meta Platforms (META) Heads To Trial, Is The Stock 44% Undervalued? - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPaDcwTG8xV2czdTMyMzQ1OTJ4M185LXpPYlFvQkdxSlNsS1NBVHdsMVM1VE94NDdoN3NPb1h0NUNTZEJBdXBZdFNJcGw0QTdrZHBYcjBZU1FQeVMtSmZMajhrRkNTNEQ0djdUa2V2MVJ1a1NxRHg3ZExhY0Viemgwekh2Smw5MV9aTGZ0R0xJR0RER3kzd1I3Y2JadGY?oc=5",
+          "publishedAt": "Tue, 18 Aug 2026 18:16:43 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Meta Stock: The Market Is Punishing AI Spending. Here’s Why I’m Still Bullish - 24/7 Wall St.",
+          "source": "24/7 Wall St.",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOXhXX0ZLbnBOVjNKRmNDSU1pam9uUk82TzVOMFBNbWJ6R0hGa2pGdm1TRmxtdjFPdDBteEloVjMweWo1c0xJZElWTzVLMHcxTDBnUFRMU1JfZzVPMDJZTDNSYjBrNF9FQ1RMRk1GTUlBYUtEelJBWFQtR1lUYnRGLUhuWkhaMDZ4V24zM1lVblNuQ19KaU9ieFZuWUFBUzFoQ3NyQmJlWFpRQnNuY3NEaXNUUXJaWG1v?oc=5",
+          "publishedAt": "Tue, 18 Aug 2026 16:30:03 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Meta stock battered by threat that is hurting the social media giant - thestreet.com",
+          "source": "thestreet.com",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBSVzFjb2VzaW40ODdaWkROVkRtZEw0VlUza050TG5QSjJEcDI3eHVHcDBKdlFlZEdxNE9iMW0tQkRGbVZLMmMzQjdfdk8za0pUM3dfTGlrRXF2WEw4WGFpUURvd1U3RmUyODFhUVVXeDU?oc=5",
+          "publishedAt": "Tue, 18 Aug 2026 12:36:30 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "What's Going On With Meta Platforms Stock Monday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNdXR3N2Q3RU1pOFpzaXZtREdjT2phTzUzUlQ1TUk4cmhPSm5xUTgwQ0VMSld2OS14VVhKTzJpUjBvRTllVGhUX0gwNExXTDFsSlJvTmR6MF9VZVZWYkVsdmZnbzk2Y0RnVDl3dktVTmowTVdXdE5OUHZ1Tk42WDFFTXE0ODk0TjhLR3V3YXR1TnBkRGJZNVlCcVV1WFdRRTFiTjBaTQ?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 18:16:23 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Should You Buy Meta Platforms Stock Below $600 Before Mark Zuckerberg Unveils Its AI Cloud Business? Here's My Honest Take - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOT24yMWp6NDludGhuXzhlMUJxcnRvSF8wYmh5VGNhY2FuWVU4Y2ppUmxsWndEd1BaX1JCRlgwaXJwZm5wb01vU0loeWNvbkpuWDBxNjVpRVNQZUpHdzFwdTVBdE12T21heGN2dTFsN2Y4V2R3bHA4M3k3THE0VU5FaW9UbTBwZ3Y3RzBfZWFhZmZtODVGdlRNSUNWZw?oc=5",
+          "publishedAt": "Sun, 16 Aug 2026 16:40:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "TSLA": {
+      "ticker": "TSLA",
+      "name": "Tesla",
+      "sector": "Automotriz",
+      "currency": "USD",
+      "price": 344.05,
+      "changePct": -2.014,
+      "asOf": "2026-08-20",
+      "score": 43.1,
+      "verdict": "Mantener vigilancia",
+      "source": "live",
+      "confidence": 88,
+      "scores": {
+        "technical": 16.0,
+        "fundamental": 63.0,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 35.0
+      },
+      "history": [
+        364.2,
+        386.42,
+        376.02,
+        389.37,
+        433.45,
+        417.26,
+        442.1,
+        418.45,
+        399.15,
+        405.05,
+        411.84,
+        402.9,
+        396.18,
+        374.01,
+        298.32,
+        321.55,
+        327.51,
+        344.05
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Bajo SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "negative"
+        },
+        {
+          "label": "RSI 14",
+          "value": "69.5",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "neutral"
+        },
+        {
+          "label": "MACD",
+          "value": "Negativo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "negative"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-73.6%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "negative"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "+18.8%",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "positive"
+        },
+        {
+          "label": "Margen neto",
+          "value": "+3.7%",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "neutral"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Positivo",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "positive"
+        },
+        {
+          "label": "Valoracion",
+          "value": "P/E 158.1",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "negative"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es mixta o debil con score 16/100.",
+        "Los fundamentales disponibles resultan favorables con score 63/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 59.7%.",
+        "Drawdown maximo en cinco anos: -73.6%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad favorable.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "negative"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento verificable en los datos disponibles.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Senales estadisticas sin confirmacion.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo elevado; reducir tamano o esperar.",
+          "tone": "negative"
+        }
+      ],
+      "news": [
+        {
+          "title": "Tesla (TSLA) Stock Is Up, What You Need To Know - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNQ0tWMmxIS0YwWEJua0ZlRGdPVVBhaWwyYk9yNlJLY2ZIUnJLZU94UGJZSXFndWotSWhreWc2Z0JQelBWZVlveVNVSXRRaUtPYlQxdFZWMkh3VWs1YUFlNHlNTVgtUWhpcE1Vc0w2OUZsaXlVclJiaGtBaExsTjZIYlktNjBKM0FiZWp5UDRxTQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 23:10:02 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Tesla Stock Is at a ‘Major Inflection’ Point. Here’s What Could Drive It. - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdVFjZnAzOEZ0N05PWUk0U1VsVjAtTUZZVWNBczFzYW0tOUF1c2RUUHh1TE1mQ1pORHZaa3JsSVRjellIa0x4d2RmdW1kTjJaQ29xaE12aWxvSW5fWGx1dlhNa2VTc25yRnF1OGh0REMwRVJjYVRhUlBGQ3VGem04QzBB?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 13:51:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Tesla Stock Shares Part Of The Market's Direction And Amplifies All Of It - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPMGsyczBqRHVZS1lmR0RNTGlOQllRRnBGNVRFOVFna1E2T3FoU1NGQV9DMEMzY2ltUE92ZnhFV1poc3NQZ3daOUdxM3B3NnA4b1hUZWNodnJ4bmhzTXpxT2taUEE2R3ZBVWRRR2R5QTZxbDFEbUljS2ZZRHJIQkdoU2dHRkxfNDdTTHJGNlN4THVaRkg5SW5hLUtiUTQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:57:42 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "JPMorgan Hints At Another Delay For Tesla Optimus Release - Investor's Business Daily",
+          "source": "Investor's Business Daily",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1GeEtSem03alY1bmgwMG5lMEZNQzF4S2ZMZENRd09NemlKM1I0QlU5LWRCRHdEeWlZOHU4VktRSHF3WVdFa1VaYTg2TkFnUm4tWlU1NTNRUWxLSEs0RzdBQktBZlBCd0ExMVkxd3hROHRBN1lEUkRDN2hQWEphRlU?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 19:17:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "After Earnings, Is Tesla Stock a Buy, a Sell, or Fairly Valued? - Morningstar",
+          "source": "Morningstar",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOVdEaXFTSVM5MTB6anVqT1ZzN242dVZyeDdIc01GU2tRTzc4Vm1acTluTlctZXN4Q1lwRWpYeTl2Si0yOTdhbFBUSHBUdGNkMlBXcDM0NHlqX19wb3NqY2RPWVVHZ3BiaFh6ak9QVkdCRW1GMEQ1MFctSmJETmV5RmtUQnV2NDFaMkd1cEdlSHdGeVVqNW1tbW5HelUtTTk3WVhB?oc=5",
+          "publishedAt": "Wed, 05 Aug 2026 07:00:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "resultados",
+          "duration": "medium",
+          "confidence": 0.45
+        },
+        {
+          "title": "Ford Drops 4% as Bronco Pickup Rally Fades, Tesla Slips, General Motors Inches Higher: What's Behind the Auto Stock Differential? - 24/7 Wall St.",
+          "source": "24/7 Wall St.",
+          "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxOSEt1bHRsVHFaZE5FY3BTWmJfM3ZqMF9tNHpZRG00Z0JvOU9EQ2NhaXRrMnlFZXc5NlBVLVNTZ0RHRlkxeHBhSWJucFB4VzJvdnhSdDBCekJkN2JNQi05dGM1NnBkQ3hOQ2Jjc0RkV0lXdGp1cGc0Ymp5ZGlNVmtTOG1BNEpCeFBjeGlFemRyak9YMUxwUUtidFl4WmhOVS1wREQ0SS1xd2hqZkN6cUpkWXNtX1p6UGdWMW9fbVlXZVJ0d20yRE1FLVVSay1GYXFrcmRaWkR5MFhteVMyYU9uUGJ0bWFFSjVuVXVuaTFGMy1tUldlZUdZSmpEQQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 18:34:19 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    },
+    "SPY": {
+      "ticker": "SPY",
+      "name": "SPDR S&P 500 ETF",
+      "sector": "ETF diversificado",
+      "currency": "USD",
+      "price": 763.35,
+      "changePct": -0.742,
+      "asOf": "2026-08-20",
+      "score": 63.0,
+      "verdict": "Analizar entrada",
+      "source": "live",
+      "confidence": 69.7,
+      "scores": {
+        "technical": 89.0,
+        "fundamental": 50.0,
+        "news": 50.0,
+        "macro": 50.0,
+        "risk": 71.5
+      },
+      "history": [
+        692.676,
+        702.271,
+        709.861,
+        721.91,
+        736.283,
+        739.345,
+        752.661,
+        755.145,
+        735.864,
+        744.39,
+        741.0,
+        747.71,
+        751.83,
+        747.41,
+        729.46,
+        769.79,
+        772.49,
+        763.35
+      ],
+      "technical": [
+        {
+          "label": "Tendencia",
+          "value": "Sobre SMA 200",
+          "interpretation": "La media de 200 sesiones define el contexto de largo plazo.",
+          "tone": "positive"
+        },
+        {
+          "label": "RSI 14",
+          "value": "63.7",
+          "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
+          "tone": "positive"
+        },
+        {
+          "label": "MACD",
+          "value": "Positivo",
+          "interpretation": "Diferencia entre EMA 12 y EMA 26; no se usa como senal aislada.",
+          "tone": "positive"
+        },
+        {
+          "label": "Drawdown maximo",
+          "value": "-24.5%",
+          "interpretation": "Mayor caida desde un maximo durante la ventana de cinco anos.",
+          "tone": "neutral"
+        }
+      ],
+      "fundamental": [
+        {
+          "label": "Ingresos",
+          "value": "N/D",
+          "interpretation": "Crecimiento anual; SEC se prioriza cuando esta disponible.",
+          "tone": "neutral"
+        },
+        {
+          "label": "Margen neto",
+          "value": "N/D",
+          "interpretation": "Rentabilidad despues de costos, intereses e impuestos.",
+          "tone": "neutral"
+        },
+        {
+          "label": "Flujo de caja libre",
+          "value": "Negativo / N/D",
+          "interpretation": "Caja despues de inversiones operativas.",
+          "tone": "neutral"
+        },
+        {
+          "label": "Valoracion",
+          "value": "N/D",
+          "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        }
+      ],
+      "thesis": [
+        "La estructura tecnica es favorable con score 89/100.",
+        "Los fundamentales disponibles resultan insuficientes o exigentes con score 50/100.",
+        "La conclusion pondera tecnico, fundamental, noticias, macro y riesgo; ninguna senal aislada decide."
+      ],
+      "risks": [
+        "Volatilidad anualizada observada: 17.2%.",
+        "Drawdown maximo en cinco anos: -24.5%.",
+        "Noticias, regulacion o expectativas de valoracion pueden cambiar la tesis antes de la siguiente actualizacion."
+      ],
+      "invalidation": [
+        "Deterioro material y repetido de ingresos, margenes o flujo de caja.",
+        "Ruptura persistente de la tendencia de largo plazo con volumen elevado.",
+        "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio."
+      ],
+      "committee": [
+        {
+          "agent": "Buffett",
+          "focus": "Calidad",
+          "view": "Calidad aun no concluyente.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Graham",
+          "focus": "Valoracion",
+          "view": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Lynch",
+          "focus": "Crecimiento",
+          "view": "Crecimiento necesita mas evidencia.",
+          "tone": "neutral"
+        },
+        {
+          "agent": "Quant",
+          "focus": "Estadistica",
+          "view": "Momentum y tendencia favorables.",
+          "tone": "positive"
+        },
+        {
+          "agent": "Risk",
+          "focus": "Riesgo",
+          "view": "Riesgo controlable con dimension prudente.",
+          "tone": "positive"
+        }
+      ],
+      "news": [
+        {
+          "title": "SPY is down 0.4% today, on CRWD stock price movement - Quiver Quantitative",
+          "source": "Quiver Quantitative",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQYUlld2Q2dkZUOFEzMllmTU11dDFpVVkwQ091blV4R3lMcGhnaFhTR3pNZE5HVHRtTy1rQ29wTkhlLWgzd3h4Wkt1U09iWDVrUWdhcVZjMk15S2VsV0FTTlhNb1FuRzQ0UENDdGJNTnpxUFJNNVJaODE2LUtnU05JRnVMR2ExUDMyX2pQcU5tdVRmWDQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 16:16:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "22 S&P 500 Stocks Hit 52-Week Highs On Wednesday - Trefis",
+          "source": "Trefis",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUJ2ZWI0elBvWHgtZXhrZFpZZGN6QkY4YzNydzRyckRLNlNnMVNsYXM5NlBEa1pyWXVabExkbk1iaW1YU0J6VmlJejEtUlVmYkRGZk4tNU5iNldMc25BVVNqWVBxeUZUUm9sSU1vQmlZcWhzVWRWWXU2VnhRRDBpRUdueHBxMFRPTjlkV2ZSUm1vVFJNd3EtbWZRNFFZN2lsb0hQYnplOXloT2M?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:14:13 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "NIO Stock Rises Overnight As ‘Wagon King’ Returns In Spy Shots, Chery Takes 10% Stake In Energy Unit - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPbTZOblVBcEVkZlMtam1kb3ppelBtdzJXMS11bmdqRjYwZU9XYjJtd0RQSDBTamhSSjNMdEJ1ejhRZUY4bkZZRXhOeTFVZ0dDNGk2a3hsWW5sNEZDM3J6dkRlRklMeFNrbkVkMEg0Zk9TVVNWZUxVU3NlRTN1RS16TmhBd1hKdmg0bDUycVNrd0t5NkJJT1NNek9jNG8?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 05:23:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "These S&P 500 stocks still yield more than U.S. 10-year Treasury (SPY:NYSEARCA) - Seeking Alpha",
+          "source": "Seeking Alpha",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNRWVvb2dsWXdDRi1HZzd1OVpjNm9Wam10N18zRWN6RUx4QXNTNk00Wk9XenhNU3JTWFFaTkNRd0dTREZFaUstX1BjYnA5eGkxekJTS0JCcWRCOU5ZM0kxb2QyYjNEa0ZyRE5haHhGbUZxeElfM2U1Y0p5SEFOUXA4RERBOXh0WWpKT3E5UENubkpHR3k1ZUl6M05ON1hxSWZmR2Jz?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 16:04:02 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "NIO Stock Rises Overnight As ‘Wagon King’ Returns In Spy Shots, Chery Takes 10% Stake In Energy Unit - Stocktwits",
+          "source": "Stocktwits",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQa2JTWTdKQWhuTUN1YmZIUVBVNXJaVzBfa0RHSTVVbWZTbzA4RXNwRUM4aXVJYkh4WDBhOXMtNk03VVNSQUNxMmhRUnBWaEIyb0w0djdmM0NnNTR3d1FrZ2E4NnI0dy0xTGxtQXh6TEtmakJVQ0xUVl9MRE9zUW9jcWV5dGpKNEx3Y3FBQUJnakI3RzBSUW9IdVFqYlpiLWR5X0JfSTZKMFhMSUlveTRpcl9B?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 04:28:47 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        },
+        {
+          "title": "Chipmaker And AI Stock Selloff Drags S&P 500 (SPY), DJIA and Nasdaq 100 (QQQ) To Multi-Week Lows - foreignpolicyjournal.com",
+          "source": "foreignpolicyjournal.com",
+          "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPWFVFVmZzb3ZnU0w5T210VGxkMlJOUURuOXlnNzRWaFhpbnV3bnIwbnlLd2NfZUd3RkNPZGFBMHdxakw1eUNJQkFjNE9mZmE4OHJLTVZHcDQ4U3BHYkFDSjJSdjlhWTFyYVkwSWpGQ2J4d05WUE9YX3ZEZzRwTURmZEt0M1g2M01QRHRtWE1uNGx3Y2x5T0ltVkZGWVJSRHZNLXJhZFhwNnZOR1BIbW5iWHB4U1ZlQlUwLXVSTXZZT05Mb043S2p1bXRmNFZVVUw3NFI5WHFB?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 17:22:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45
+        }
+      ],
+      "trace": {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v1"
+      }
+    }
+  },
+  "errors": {},
+  "methodology": {
+    "weights": {
+      "technical": 25,
+      "fundamental": 30,
+      "news": 15,
+      "macro": 15,
+      "risk": 15
+    },
+    "horizon": "1 mes a 1 ano",
+    "disclaimer": "Investigacion informativa; no constituye asesoria financiera ni orden de inversion."
+  }
+}
