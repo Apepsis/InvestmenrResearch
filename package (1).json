@@ -1,0 +1,11 @@
+{
+  "name": "investment-market-api-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check worker.js",
+    "dev": "npx wrangler@latest dev",
+    "deploy": "npx wrangler@latest deploy"
+  }
+}

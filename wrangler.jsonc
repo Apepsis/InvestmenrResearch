@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "investment-market-api",
+  "main": "worker.js",
+  "compatibility_date": "2026-08-20",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://apepsis.github.io,http://localhost:5173",
+    "ALLOWED_SYMBOLS": "UBER,AAPL,MSFT,NVDA,AMZN,GOOGL,META,TSLA,SPY"
+  }
+}

@@ -11,6 +11,12 @@ rentabilidad.
 - Portafolio, lista de vigilancia, diario de decisiones y pesos personalizados
   sincronizados por usuario en Firestore.
 - Panel responsive para laptop y celular.
+- Grafica financiera dinamica y noticias recientes por ticker mediante widgets
+  gratuitos de TradingView.
+- Precio interno reciente mediante Alpaca Basic (feed IEX), consultado una vez
+  por minuto mientras la pagina esta abierta.
+- Worker de Cloudflare que mantiene las claves de Alpaca fuera de GitHub y del
+  navegador.
 - Score 0-100 con tecnico 25%, fundamental 30%, noticias 15%, macro 15% y
   riesgo 15%.
 - Indicadores SMA 50/200, RSI, MACD, volatilidad y drawdown.
@@ -29,6 +35,9 @@ flowchart TD
   U[Usuario] --> P[GitHub Pages]
   P --> A[Firebase Authentication]
   P --> F[Firestore por UID]
+  P --> T[Grafica y noticias TradingView]
+  P --> C[Cloudflare Worker]
+  C --> L[Alpaca IEX]
   G[GitHub Actions] --> Y[Precios y fundamentos]
   G --> N[Noticias RSS]
   G --> M[FRED y SEC]
@@ -38,9 +47,22 @@ flowchart TD
   J --> P
 ```
 
-GitHub Pages solo sirve archivos estaticos; no puede ejecutar Python. Por eso
-el recolector corre en GitHub Actions y publica un JSON que consume la interfaz.
-Firebase se usa exclusivamente para identidad y datos privados del usuario.
+GitHub Pages solo sirve archivos estaticos; no puede ejecutar Python ni guardar
+secretos. Por eso el recolector profundo corre en GitHub Actions, Cloudflare
+protege las claves de Alpaca y Firebase administra identidad y datos privados.
+
+## Precio Alpaca por minuto
+
+La configuracion completa, paso a paso, esta en
+`CONFIGURAR_ALPACA_CLOUDFLARE.md`. La forma mas sencilla es desplegar el archivo
+`cloudflare-worker/worker.js`, guardar las dos claves como secretos de
+Cloudflare y pegar la URL `workers.dev` en **Ajustes > Precio interno · Alpaca**.
+
+El precio reciente se usa en el encabezado del activo, el portafolio y la lista
+de vigilancia. Si el Worker o Alpaca no responden, la interfaz conserva el
+ultimo precio recibido y puede volver al precio diario de `market.json`. El
+score, los fundamentales, las noticias clasificadas y el contexto macro se
+recalculan en el workflow diario, no cada minuto.
 
 ## Configuracion de Firebase
 
@@ -106,9 +128,14 @@ los documentos depende de `firestore.rules`.
 5. Abre **Actions** y ejecuta manualmente **Actualizar datos de mercado**.
 6. Ejecuta **Publicar aplicacion en GitHub Pages** o haz un nuevo `push`.
 
-La actualizacion programada corre de lunes a viernes alrededor de las 6:20 a.
-m. de Lima. Si cambia `public/data/market.json`, el commit automatico vuelve a
-publicar la pagina.
+La actualizacion completa corre todos los dias alrededor de las 5:20 p. m. de
+Lima. Asi tambien puede incorporar noticias de fin de semana. Si cambia
+`public/data/market.json`, el commit automatico vuelve a publicar la pagina.
+
+La grafica y el bloque de noticias de TradingView se cargan directamente en el
+navegador y no necesitan que GitHub vuelva a publicar la aplicacion. Esos
+widgets son una capa informativa independiente y no recalculan el score. El
+valor del portafolio usa Alpaca cuando esta conectado.
 
 ## Personalizar los activos
 
@@ -171,6 +198,12 @@ invalidarian la tesis.
 
 - `yfinance` y los RSS gratuitos no ofrecen garantias de disponibilidad ni
   datos en tiempo real.
+- Alpaca Basic usa IEX; el precio puede diferir del consolidado de todas las
+  bolsas estadounidenses.
+- La consulta por minuto ocurre mientras la pagina esta abierta. Al regresar a
+  una pestana que estaba en segundo plano, la aplicacion consulta de inmediato.
+- Los widgets gratuitos de TradingView pueden mostrar cotizaciones retrasadas,
+  y su contenido no es consumido por el motor de puntuacion.
 - La clasificacion de noticias de esta version usa reglas transparentes por
   palabras; no equivale a FinBERT.
 - Los datos fundamentales pueden llegar con retraso o faltar para algunos

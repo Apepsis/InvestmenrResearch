@@ -1,0 +1,11 @@
+[
+  {"ticker":"UBER","name":"Uber Technologies","sector":"Movilidad","cik":"0001543151"},
+  {"ticker":"AAPL","name":"Apple","sector":"Tecnologia","cik":"0000320193"},
+  {"ticker":"MSFT","name":"Microsoft","sector":"Tecnologia","cik":"0000789019"},
+  {"ticker":"NVDA","name":"NVIDIA","sector":"Semiconductores","cik":"0001045810"},
+  {"ticker":"AMZN","name":"Amazon","sector":"Consumo / Cloud","cik":"0001018724"},
+  {"ticker":"GOOGL","name":"Alphabet","sector":"Tecnologia","cik":"0001652044"},
+  {"ticker":"META","name":"Meta Platforms","sector":"Tecnologia","cik":"0001326801"},
+  {"ticker":"TSLA","name":"Tesla","sector":"Automotriz","cik":"0001318605"},
+  {"ticker":"SPY","name":"SPDR S&P 500 ETF","sector":"ETF diversificado","cik":null}
+]
