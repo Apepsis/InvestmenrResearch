@@ -1,0 +1,53 @@
+name: Actualizar datos de mercado
+
+on:
+  schedule:
+    # De lunes a viernes, después del cierre del mercado estadounidense
+    - cron: "20 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: market-data
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Obtener datos actuales del mercado
+        run: python scripts/collect_market_data.py
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+
+      - name: Validar datos obtenidos
+        run: python scripts/validate_market_data.py public/data/market.json
+
+      - name: Guardar actualización
+        run: |
+          git config user.name "market-data-bot"
+          git config user.email "market-data-bot@users.noreply.github.com"
+          git add public/data/market.json
+          git diff --cached --quiet || git commit -m "data: actualizar mercado"
+          git push
+
+      - name: Volver a publicar la página
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main
