@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-08-20T22:37:07+00:00",
+  "mode": "live",
+  "runId": "20260820T223707Z-b32b8b83",
+  "modelVersion": "transparent-research-v4.0",
+  "gitCommit": "d6df42ab50bf",
+  "dataHash": "sha256:b32b8b836f6501e5b83c1d6435e63bbc604fe9379d8dd178e0693847c7e3a85a",
+  "horizon": "60 sesiones",
+  "assetsProcessed": 9,
+  "assetsExpected": 9,
+  "newsClassified": 72,
+  "nonCriticalErrors": 0,
+  "testsPassed": 9,
+  "dataCoverage": 100.0,
+  "durationSeconds": 23.95,
+  "artifacts": [
+    {
+      "name": "market.json",
+      "sha256": "87dc2ea5b298dd1b8bbdc077a898e358e6ecf520a38fad51639f01113704d535",
+      "bytes": 118855
+    },
+    {
+      "name": "backtest.json",
+      "sha256": "366ccf536c891613453b81a8603ea60c8e166d37dd7fce6da66ddf4912ce3d8f",
+      "bytes": 16691
+    },
+    {
+      "name": "risk_model.json",
+      "sha256": "6639347b5503c4f86ba76aa4484fb3ad55bb93890a3994351357bfb89ca29a37",
+      "bytes": 123362
+    },
+    {
+      "name": "event_studies.json",
+      "sha256": "cbfea3c0a0efd75e721ffb78a00d29c1f1f1a6db57311c5fe4fa6f3badaf4afd",
+      "bytes": 35446
+    },
+    {
+      "name": "build_journal.json",
+      "sha256": "97bfed8ea67b279d0e36367066184bd55fd01429cbf4f71b243df42b9609d84e",
+      "bytes": 3930
+    }
+  ]
+}
