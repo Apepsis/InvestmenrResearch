@@ -90,7 +90,7 @@ export function LiveMarketChart({ ticker }: { ticker: string }) {
   );
 
   return (
-    <div className="live-widget-wrap">
+    <div className="live-widget-wrap live-market-wrap">
       <TradingViewEmbed
         className="live-market-widget"
         scriptName="embed-widget-advanced-chart.js"
@@ -122,7 +122,7 @@ export function LiveMarketNews({ ticker }: { ticker: string }) {
   );
 
   return (
-    <div className="live-widget-wrap">
+    <div className="live-widget-wrap live-news-wrap">
       <TradingViewEmbed
         className="live-news-widget"
         scriptName="embed-widget-timeline.js"

@@ -20,18 +20,28 @@ import {
 } from "firebase/firestore";
 import { LiveMarketChart, LiveMarketNews } from "@/app/components/TradingViewWidgets";
 import { demoMarket } from "@/data/demo";
+import ConstructionLab from "@/app/components/ConstructionLab";
+import MethodologyLab from "@/app/components/MethodologyLab";
+import PortfolioRiskLab from "@/app/components/PortfolioRiskLab";
+import ResearchLab from "@/app/components/ResearchLab";
+import { demoBacktest, demoBuildJournal, demoEventStudy, demoManifest, demoRisk } from "@/data/researchDemo";
 import { firebaseConfigured, getFirebaseServices } from "@/lib/firebase";
 import type {
   JournalEntry,
+  BacktestDataset,
+  BuildJournal,
+  EventStudyDataset,
   LiveQuoteDataset,
   MarketDataset,
   Position,
+  ResearchManifest,
+  RiskDataset,
   ScoreKey,
   WatchItem,
   Weights,
 } from "@/lib/types";
 
-type View = "dashboard" | "analysis" | "portfolio" | "watchlist" | "journal" | "settings";
+type View = "dashboard" | "analysis" | "research" | "portfolio" | "watchlist" | "methodology" | "construction" | "journal" | "settings";
 
 const defaultWeights: Weights = { technical: 25, fundamental: 30, news: 15, macro: 15, risk: 15 };
 const scoreLabels: Record<ScoreKey, string> = {
@@ -45,8 +55,11 @@ const scoreLabels: Record<ScoreKey, string> = {
 const nav: { id: View; label: string; glyph: string }[] = [
   { id: "dashboard", label: "Panel", glyph: "D" },
   { id: "analysis", label: "Analisis", glyph: "A" },
+  { id: "research", label: "Research Lab", glyph: "R" },
   { id: "portfolio", label: "Portafolio", glyph: "P" },
   { id: "watchlist", label: "Vigilancia", glyph: "V" },
+  { id: "methodology", label: "Metodologia", glyph: "M" },
+  { id: "construction", label: "Construccion", glyph: "B" },
   { id: "journal", label: "Diario", glyph: "J" },
   { id: "settings", label: "Ajustes", glyph: "C" },
 ];
@@ -170,6 +183,11 @@ export default function InvestmentApp() {
   const [demo, setDemo] = useState(false);
   const [view, setView] = useState<View>("dashboard");
   const [market, setMarket] = useState<MarketDataset>(demoMarket);
+  const [backtest, setBacktest] = useState<BacktestDataset>(demoBacktest);
+  const [eventStudies, setEventStudies] = useState<EventStudyDataset>(demoEventStudy);
+  const [riskDataset, setRiskDataset] = useState<RiskDataset>(demoRisk);
+  const [researchManifest, setResearchManifest] = useState<ResearchManifest>(demoManifest);
+  const [buildJournal, setBuildJournal] = useState<BuildJournal>(demoBuildJournal);
   const [selectedTicker, setSelectedTicker] = useState("UBER");
   const [positions, setPositions] = useState<Position[]>([]);
   const [watchlist, setWatchlist] = useState<WatchItem[]>([]);
@@ -193,6 +211,22 @@ export default function InvestmentApp() {
         if (data?.stocks && Object.keys(data.stocks).length) setMarket(data);
       })
       .catch(() => setMarket(demoMarket));
+  }, []);
+
+  useEffect(() => {
+    const resources: Array<[string, (value: never) => void]> = [
+      ["data/backtest.json", (value) => setBacktest(value as BacktestDataset)],
+      ["data/event_studies.json", (value) => setEventStudies(value as EventStudyDataset)],
+      ["data/risk_model.json", (value) => setRiskDataset(value as RiskDataset)],
+      ["data/research_manifest.json", (value) => setResearchManifest(value as ResearchManifest)],
+      ["data/build_journal.json", (value) => setBuildJournal(value as BuildJournal)],
+    ];
+    resources.forEach(([path, setter]) => {
+      fetch(new URL(path, document.baseURI))
+        .then((response) => response.ok ? response.json() : Promise.reject())
+        .then((value) => setter(value as never))
+        .catch(() => undefined);
+    });
   }, []);
 
   useEffect(() => {
@@ -288,6 +322,8 @@ export default function InvestmentApp() {
   );
   const costPortfolio = positions.reduce((sum, position) => sum + position.averageCost * position.shares, 0);
   const portfolioReturn = costPortfolio ? ((totalPortfolio - costPortfolio) / costPortfolio) * 100 : 0;
+  const portfolioPrices = useMemo(() => Object.fromEntries(Object.keys(market.stocks).map((ticker) => [ticker, liveQuotes[ticker]?.price ?? market.stocks[ticker]?.price ?? 0])), [market, liveQuotes]);
+  const scenarioScore = (Object.keys(stock.scores) as ScoreKey[]).reduce((sum, key) => sum + stock.scores[key] * (weights[key] / 100), 0);
 
   function flash(message: string) {
     setNotice(message);
@@ -357,7 +393,7 @@ export default function InvestmentApp() {
       return;
     }
     if (services && user) await setDoc(doc(services.db, "users", user.uid, "settings", "preferences"), { weights, updatedAt: new Date().toISOString() }, { merge: true });
-    flash(user ? "Pesos sincronizados." : "Pesos aplicados solo a esta demo.");
+    flash(user ? "Escenario personal sincronizado." : "Escenario aplicado solo a esta demo.");
   }
 
   async function saveMarketApiUrl() {
@@ -417,6 +453,13 @@ export default function InvestmentApp() {
 
         {view === "dashboard" && (
           <div className="page-grid dashboard-page">
+            <section className="research-proof-strip">
+              <div><span>MODELO</span><strong>{researchManifest.modelVersion}</strong></div>
+              <div><span>RUN ID</span><strong>{researchManifest.runId}</strong></div>
+              <div><span>VALIDACIÓN</span><strong>{backtest.mode === "live" ? "Walk-forward ejecutado" : "Pendiente de primera ejecución"}</strong></div>
+              <div><span>COBERTURA</span><strong>{researchManifest.dataCoverage.toFixed(1)}%</strong></div>
+              <button onClick={() => setView("research")}>Auditar investigación →</button>
+            </section>
             <Card className="hero-card live-market-card">
               <div className="card-heading live-card-heading">
                 <div className="stock-heading">
@@ -447,9 +490,9 @@ export default function InvestmentApp() {
             </Card>
 
             <Card className="score-card">
-              <div className="card-heading"><div><p className="eyebrow">Score compuesto</p><h2>{stock.verdict}</h2></div><Badge tone={stock.score >= 60 ? "positive" : stock.score >= 40 ? "neutral" : "negative"}>{stock.confidence}% confianza</Badge></div>
+              <div className="card-heading"><div><p className="eyebrow">Score de investigación</p><h2>{stock.verdict}</h2></div><Badge tone={stock.score >= 60 ? "positive" : stock.score >= 40 ? "neutral" : "negative"}>{stock.confidence}% cobertura</Badge></div>
               <ScoreRing score={stock.score} />
-              <div className="score-bars">{(Object.keys(stock.scores) as ScoreKey[]).map((key) => <div key={key}><span>{scoreLabels[key]}</span><div><i style={{ width: `${stock.scores[key]}%` }} /></div><strong>{Math.round(stock.scores[key])}</strong></div>)}</div>
+              <div className="score-bars">{(Object.keys(stock.scores) as ScoreKey[]).map((key) => <div key={key}><span>{scoreLabels[key]}</span><div><i style={{ width: `${stock.scores[key]}%` }} /></div><strong>{Math.round(stock.scores[key])}</strong></div>)}<button className="score-audit-button" onClick={() => setView("research")}>Ver fórmula, fuentes e incertidumbre →</button></div>
             </Card>
 
             <Card className="thesis-card">
@@ -464,7 +507,7 @@ export default function InvestmentApp() {
             </Card>
 
             <Card className="committee-card">
-              <div className="card-heading"><div><p className="eyebrow">Comite artificial</p><h2>Perspectivas y desacuerdos</h2></div><span className="tiny-label">5 agentes</span></div>
+              <div className="card-heading"><div><p className="eyebrow">Lentes metodológicos</p><h2>Reglas interpretativas documentadas</h2></div><span className="tiny-label">5 perspectivas · no son personas simuladas</span></div>
               <div className="committee-grid">{stock.committee.map((agent) => <article key={agent.agent}><div><span className={`tone-dot ${agent.tone}`} /><strong>{agent.agent}</strong><small>{agent.focus}</small></div><p>{agent.view}</p></article>)}</div>
             </Card>
 
@@ -478,10 +521,15 @@ export default function InvestmentApp() {
 
         {view === "analysis" && (
           <div className="analysis-page">
-            <section className="analysis-intro"><div><p className="eyebrow">{stock.ticker} · Analisis integrado</p><h2>{stock.name}</h2><p>La salida combina evidencias independientes y conserva lo que invalidaria la tesis.</p></div><ScoreRing score={stock.score} /></section>
+            <section className="analysis-intro"><div><p className="eyebrow">{stock.ticker} · Analisis integrado</p><h2>{stock.name}</h2><p>La salida combina evidencias independientes, publica incertidumbre y conserva lo que invalidaría la tesis.</p><button className="link-button" onClick={() => setView("research")}>Auditar el score completo →</button></div><ScoreRing score={stock.score} /></section>
+            <Card>
+              <div className="card-heading"><div><p className="eyebrow">Inteligencia propia de eventos</p><h2>Noticias clasificadas y medibles</h2></div><Badge tone={market.mode === "live" ? "positive" : "neutral"}>{stock.news.length} eventos</Badge></div>
+              <p className="live-card-copy">Estos titulares sí forman parte del dataset del agente. Se publican sentimiento, tipo, relevancia, novedad y la medición posterior cuando existe una ventana suficiente.</p>
+              <div className="news-list enriched-news-list">{stock.news.map((item) => <a key={item.title} href={item.url === "#" ? undefined : item.url} target="_blank" rel="noreferrer"><div><Badge tone={item.sentiment}>{item.sentiment}</Badge><span>{item.source}</span><span>{item.eventType}</span></div><strong>{item.title}</strong><small>confianza {Math.round(item.confidence * 100)}% · relevancia {Math.round((item.relevance ?? item.confidence) * 100)}% · novedad {Math.round((item.novelty ?? 0.5) * 100)}% · {item.entityMatched === false ? "entidad no confirmada" : "entidad confirmada"}</small></a>)}</div>
+            </Card>
             <Card className="live-news-card">
-              <div className="card-heading live-card-heading"><div><p className="eyebrow">Vigilancia informativa</p><h2>Noticias dinamicas de {stock.ticker}</h2></div><Badge tone="positive">Actualizacion externa</Badge></div>
-              <p className="live-card-copy">Utiliza este bloque para detectar eventos recientes. Las noticias clasificadas y el score que aparecen debajo corresponden a la ultima ejecucion completa del agente.</p>
+              <div className="card-heading live-card-heading"><div><p className="eyebrow">Vigilancia externa secundaria</p><h2>Explorador de noticias de {stock.ticker}</h2></div><Badge tone="neutral">No modifica el score</Badge></div>
+              <p className="live-card-copy">Este widget sirve para descubrir eventos recientes, pero su contenido no es tratado como evidencia hasta pasar por el pipeline propio.</p>
               <LiveMarketNews ticker={stock.ticker} />
             </Card>
             <div className="two-column">
@@ -489,10 +537,10 @@ export default function InvestmentApp() {
               <Card><div className="card-heading"><h2>Analisis fundamental</h2><Badge tone="positive">{stock.scores.fundamental}/100</Badge></div><div className="indicator-list">{stock.fundamental.map((item) => <article key={item.label}><span className={`tone-dot ${item.tone}`} /><div><strong>{item.label}</strong><p>{item.interpretation}</p></div><b>{item.value}</b></article>)}</div></Card>
             </div>
             <div className="two-column">
-              <Card><p className="eyebrow">Noticias clasificadas</p><h2>Eventos recientes</h2><div className="news-list">{stock.news.map((item) => <a key={item.title} href={item.url === "#" ? undefined : item.url} target="_blank" rel="noreferrer"><div><Badge tone={item.sentiment}>{item.sentiment}</Badge><span>{item.source}</span></div><strong>{item.title}</strong><small>{item.eventType} · {item.duration} · confianza {Math.round(item.confidence * 100)}%</small></a>)}</div></Card>
+              <Card><p className="eyebrow">Auditoría del score</p><h2>Contribuciones publicadas</h2><div className="mini-contribution-list">{(stock.explanation?.contributions ?? []).map((item) => <article key={`${item.group}-${item.feature}`}><span>{item.feature}</span><strong className={item.contribution >= 0 ? "up" : "down"}>{item.contribution >= 0 ? "+" : ""}{item.contribution.toFixed(2)}</strong><small>{item.source}</small></article>)}{!stock.explanation && <p className="muted">La próxima ejecución V4 agregará las contribuciones exactas. Mientras tanto, el Research Lab reconstruye el peso de cada bloque.</p>}</div></Card>
               <Card><p className="eyebrow">Prueba de falsacion</p><h2>Que invalidaria la tesis</h2><ul className="warning-list">{stock.invalidation.map((item) => <li key={item}><span>!</span>{item}</li>)}</ul></Card>
             </div>
-            <Card><div className="card-heading"><div><p className="eyebrow">Entorno economico</p><h2>Variables macro</h2></div><Badge tone={market.mode === "live" ? "positive" : "neutral"}>{market.generatedAt}</Badge></div><div className="macro-grid">{Object.values(market.macro).map((item) => <article key={item.label}><span>{item.label}</span><strong>{item.value == null ? "Pendiente" : `${item.value.toFixed(2)} ${item.unit}`}</strong><small>{item.asOf}</small></article>)}</div></Card>
+            <Card><div className="card-heading"><div><p className="eyebrow">Entorno economico</p><h2>Variables macro</h2></div><Badge tone={market.mode === "live" ? "positive" : "neutral"}>{market.generatedAt}</Badge></div><div className="macro-grid">{Object.values(market.macro).map((item) => <article key={item.label}><span>{item.label}</span><strong>{item.value == null ? "No disponible" : `${item.value.toFixed(2)} ${item.unit}`}</strong><small>{item.source ?? "FRED"} · {item.asOf}</small></article>)}</div></Card>
           </div>
         )}
 
@@ -501,8 +549,15 @@ export default function InvestmentApp() {
             <div className="summary-strip"><div><span>Valor actual</span><strong>{money(totalPortfolio)}</strong></div><div><span>Costo invertido</span><strong>{money(costPortfolio)}</strong></div><div><span>Resultado</span><strong className={portfolioReturn >= 0 ? "up" : "down"}>{portfolioReturn >= 0 ? "+" : ""}{portfolioReturn.toFixed(2)}%</strong></div><div><span>Posiciones</span><strong>{positions.length}</strong></div></div>
             <div className="two-column form-layout"><Card><p className="eyebrow">Nueva posicion</p><h2>Agrega una compra</h2><form className="stack-form" onSubmit={addPosition}><label>Ticker<select name="ticker" defaultValue={selectedTicker}>{tickers.map((ticker) => <option key={ticker}>{ticker}</option>)}</select></label><div className="form-row"><label>Acciones<input name="shares" type="number" min="0.0001" step="0.0001" required /></label><label>Costo promedio<input name="averageCost" type="number" min="0.01" step="0.01" required /></label></div><button className="primary-button">Guardar posicion</button></form></Card><Card><p className="eyebrow">Diagnostico de cartera</p><h2>{positions.length ? "Exposicion registrada" : "Empieza por tus posiciones reales"}</h2><p className="muted">El asistente calcula valor, retorno y concentracion usando Alpaca por minuto cuando esta conectado. No calcula impuestos ni comisiones.</p><div className="metric-callout"><span>Mayor exposicion individual</span><strong>{positions.length ? `${Math.max(...positions.map((p) => (((liveQuotes[p.ticker]?.price ?? market.stocks[p.ticker]?.price ?? p.averageCost) * p.shares) / Math.max(totalPortfolio, 1)) * 100)).toFixed(1)}%` : "0%"}</strong></div></Card></div>
             <Card><div className="card-heading"><h2>Posiciones</h2><span className="tiny-label">Precio Alpaca cuando esta disponible</span></div>{positions.length ? <div className="data-table"><div className="table-head"><span>Activo</span><span>Cantidad</span><span>Costo</span><span>Actual</span><span>Resultado</span><span /></div>{positions.map((position) => { const current = liveQuotes[position.ticker]?.price ?? market.stocks[position.ticker]?.price ?? position.averageCost; const result = ((current - position.averageCost) / position.averageCost) * 100; return <div key={position.id}><strong>{position.ticker}</strong><span>{position.shares}</span><span>{money(position.averageCost)}</span><span>{money(current)}</span><span className={result >= 0 ? "up" : "down"}>{result >= 0 ? "+" : ""}{result.toFixed(1)}%</span><button onClick={() => removeItem("portfolio", position.id)} aria-label={`Eliminar ${position.ticker}`}>×</button></div>; })}</div> : <EmptyState title="Aun no hay posiciones" text="Agrega tu primera compra para evaluar concentracion y resultado." />}</Card>
+            <PortfolioRiskLab positions={positions} prices={portfolioPrices} risk={riskDataset} />
           </div>
         )}
+
+        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} />}
+
+        {view === "methodology" && <MethodologyLab market={market} stock={stock} manifest={researchManifest} />}
+
+        {view === "construction" && <ConstructionLab journal={buildJournal} manifest={researchManifest} />}
 
         {view === "watchlist" && (
           <div className="management-page"><div className="two-column form-layout"><Card><p className="eyebrow">Lista de vigilancia</p><h2>Define que estas esperando</h2><form className="stack-form" onSubmit={addWatch}><div className="form-row"><label>Ticker<select name="ticker" defaultValue={selectedTicker}>{tickers.map((ticker) => <option key={ticker}>{ticker}</option>)}</select></label><label>Precio objetivo<input name="targetPrice" type="number" min="0" step="0.01" placeholder="Opcional" /></label></div><label>Condicion o nota<textarea name="note" placeholder="Ej.: esperar confirmacion de margen y entrada por debajo de..." /></label><button className="primary-button">Agregar a vigilancia</button></form></Card><Card><p className="eyebrow">Disciplina</p><h2>Una lista no es una recomendacion</h2><p className="muted">Registra por adelantado el precio, evento o cambio fundamental que justificaria revisar la tesis. Esto reduce decisiones por impulso.</p></Card></div><Card><div className="card-heading"><h2>Activos vigilados</h2><Badge tone="neutral">{watchlist.length}</Badge></div>{watchlist.length ? <div className="watch-grid">{watchlist.map((item) => { const current = liveQuotes[item.ticker]?.price ?? market.stocks[item.ticker]?.price; return <article key={item.id}><div><span className="ticker-logo small">{item.ticker.slice(0, 2)}</span><div><strong>{item.ticker}</strong><small>{market.stocks[item.ticker]?.name ?? "Sin datos de mercado"}</small></div><button onClick={() => removeItem("watchlist", item.id)}>×</button></div><p>{item.note || "Sin condicion registrada."}</p><div><span>Actual <b>{current ? money(current) : "N/D"}</b></span><span>Objetivo <b>{item.targetPrice ? money(item.targetPrice) : "N/D"}</b></span></div></article>; })}</div> : <EmptyState title="Tu lista esta vacia" text="Agrega activos y la condicion que debe cumplirse antes de actuar." />}</Card></div>
@@ -515,11 +570,12 @@ export default function InvestmentApp() {
         {view === "settings" && (
           <div className="settings-page">
             <Card>
-              <p className="eyebrow">Motor de puntuacion</p>
-              <h2>Ajusta la importancia de cada evidencia</h2>
-              <p className="muted">Los cinco pesos deben sumar 100%. El score profundo se vuelve a calcular con el proceso diario, no cada minuto.</p>
+              <p className="eyebrow">Simulador personal · no altera el modelo auditado</p>
+              <h2>Prueba otros pesos sin reescribir el experimento</h2>
+              <p className="muted">Los cinco pesos deben sumar 100%. El resultado oficial conserva los pesos versionados y validados por el pipeline; este control calcula solamente un escenario privado.</p>
               <div className="weight-list">{(Object.keys(weights) as ScoreKey[]).map((key) => <label key={key}><span>{scoreLabels[key]}</span><input type="range" min="0" max="50" value={weights[key]} onChange={(e) => setWeights({ ...weights, [key]: Number(e.target.value) })} /><output>{weights[key]}%</output></label>)}</div>
-              <div className="settings-actions"><strong className={Object.values(weights).reduce((a, b) => a + b, 0) === 100 ? "up" : "down"}>Total: {Object.values(weights).reduce((a, b) => a + b, 0)}%</strong><button className="primary-button" onClick={saveWeights}>Guardar pesos</button></div>
+              <div className="scenario-result"><span>Score oficial <strong>{stock.score.toFixed(1)}</strong></span><span>Escenario personal <strong>{scenarioScore.toFixed(1)}</strong></span></div>
+              <div className="settings-actions"><strong className={Object.values(weights).reduce((a, b) => a + b, 0) === 100 ? "up" : "down"}>Total: {Object.values(weights).reduce((a, b) => a + b, 0)}%</strong><button className="primary-button" onClick={saveWeights}>Guardar escenario</button></div>
             </Card>
 
             <div className="two-column">
@@ -546,11 +602,11 @@ export default function InvestmentApp() {
             </div>
 
             <div className="two-column">
-              <Card><p className="eyebrow">Analisis profundo diario</p><h2>{market.mode === "live" ? "Pipeline ejecutado" : "Muestra incluida"}</h2><p className="muted">{market.mode === "live" ? `Ultima generacion: ${market.generatedAt}` : "Ejecuta el workflow Actualizar datos de mercado en GitHub Actions para reemplazar la muestra por datos reales."}</p><Badge tone={dataTone}>{dataLabel}</Badge></Card>
+              <Card><p className="eyebrow">Analisis profundo diario</p><h2>{market.mode === "live" ? "Pipeline ejecutado" : "Muestra incluida"}</h2><p className="muted">{market.mode === "live" ? `Ultima generacion: ${market.generatedAt}` : "Ejecuta el workflow Actualizar datos e investigacion en GitHub Actions para reemplazar la muestra por datos reales."}</p><Badge tone={dataTone}>{dataLabel}</Badge></Card>
               <Card><p className="eyebrow">Uso del precio</p><h2>Panel, vigilancia y portafolio</h2><p className="muted">Cuando Alpaca responde, esas tres areas usan la cotizacion reciente. Si falla, la aplicacion vuelve al ultimo precio del analisis diario.</p><Badge tone={liveQuoteStatus === "live" ? "positive" : "neutral"}>{liveQuoteStatus === "live" ? "Precio reciente en uso" : "Respaldo diario en uso"}</Badge></Card>
             </div>
 
-            <Card><p className="eyebrow">Limites honestos</p><h2>Lo que este sistema no hace</h2><ul className="limits"><li>No ejecuta operaciones ni garantiza rentabilidad.</li><li>No intenta adivinar un precio futuro exacto.</li><li>El precio por minuto no recalcula automaticamente fundamentales, noticias ni score.</li><li>Alpaca Basic usa el feed IEX, que puede diferir de una cotizacion consolidada de todo el mercado.</li><li>La actualizacion por minuto funciona mientras la pagina esta abierta; al volver a la pestana consulta de inmediato.</li><li>No sustituye la verificacion de estados financieros o fuentes primarias.</li><li>Nunca pegues claves privadas de Alpaca dentro de GitHub ni en esta aplicacion.</li></ul></Card>
+            <Card><p className="eyebrow">Limites honestos</p><h2>Lo que este sistema no hace</h2><ul className="limits"><li>No ejecuta operaciones ni garantiza rentabilidad.</li><li>No intenta adivinar un precio futuro exacto.</li><li>El precio por minuto no recalcula automaticamente fundamentales, noticias ni score.</li><li>El backtest no convierte una correlación histórica en causalidad.</li><li>Alpaca Basic usa el feed IEX, que puede diferir de una cotizacion consolidada de todo el mercado.</li><li>La actualizacion por minuto funciona mientras la pagina esta abierta; al volver a la pestana consulta de inmediato.</li><li>No sustituye la verificacion de estados financieros o fuentes primarias.</li><li>Nunca pegues claves privadas de Alpaca dentro de GitHub ni en esta aplicacion.</li></ul></Card>
           </div>
         )}
       </main>

@@ -5,6 +5,12 @@ Aplicacion personal de investigacion bursatil para un horizonte aproximado de
 riesgo en un score explicable. No compra ni vende activos y no garantiza
 rentabilidad.
 
+La V4 transforma el dashboard en un **Research Lab auditable**. Además del
+score diario, publica validación walk-forward, comparación contra SPY,
+calibración probabilística, explicación de contribuciones, event studies,
+riesgo cuantitativo, procedencia de datos y un manifiesto reproducible por
+ejecución.
+
 ## Que incluye
 
 - Inicio de sesion con correo/contrasena y Google mediante Firebase.
@@ -19,6 +25,18 @@ rentabilidad.
   navegador.
 - Score 0-100 con tecnico 25%, fundamental 30%, noticias 15%, macro 15% y
   riesgo 15%.
+- Descomposición exacta del score alrededor de una base neutral, con fórmula,
+  fuente, fecha, peso y estado de cada contribución.
+- Backtest walk-forward de cuatro modelos, sin utilizar datos futuros y con
+  costos de transacción.
+- Probabilidades del modelo estadístico evaluadas con Brier score y curvas de
+  calibración.
+- Event studies de noticias frente a SPY a 1, 5 y 20 sesiones.
+- VaR, CVaR, correlaciones, beta, concentración y pruebas de estrés del
+  portafolio calculados localmente en el navegador.
+- Run ID, versión del modelo, commit, cobertura y hashes SHA-256 de artefactos.
+- Nueve pruebas automáticas contra leakage, errores del score, datos inseguros
+  y cálculos de riesgo.
 - Indicadores SMA 50/200, RSI, MACD, volatilidad y drawdown.
 - Fundamentales con SEC EDGAR cuando es posible y datos de mercado como
   respaldo.
@@ -41,10 +59,13 @@ flowchart TD
   G[GitHub Actions] --> Y[Precios y fundamentos]
   G --> N[Noticias RSS]
   G --> M[FRED y SEC]
+  G --> R[Research Lab y backtest]
   Y --> J[market.json]
   N --> J
   M --> J
+  R --> B[backtest y riesgo]
   J --> P
+  B --> P
 ```
 
 GitHub Pages solo sirve archivos estaticos; no puede ejecutar Python ni guardar
@@ -125,12 +146,13 @@ los documentos depende de `firestore.rules`.
 3. Opcionalmente crea `SEC_USER_AGENT` con un texto descriptivo y un correo de
    contacto, por ejemplo `MiResearchApp contacto@correo.com`.
 4. En **Settings > Pages > Build and deployment**, elige **GitHub Actions**.
-5. Abre **Actions** y ejecuta manualmente **Actualizar datos de mercado**.
+5. Abre **Actions** y ejecuta manualmente **Actualizar datos e investigacion**.
 6. Ejecuta **Publicar aplicacion en GitHub Pages** o haz un nuevo `push`.
 
 La actualizacion completa corre todos los dias alrededor de las 5:20 p. m. de
-Lima. Asi tambien puede incorporar noticias de fin de semana. Si cambia
-`public/data/market.json`, el commit automatico vuelve a publicar la pagina.
+Lima. También ejecuta pruebas, feature store, backtest, riesgo, event studies y
+manifiesto reproducible. Si cambia cualquiera de los artefactos públicos, el
+commit automático vuelve a publicar la página.
 
 La grafica y el bloque de noticias de TradingView se cargan directamente en el
 navegador y no necesitan que GitHub vuelva a publicar la aplicacion. Esos
@@ -167,6 +189,12 @@ npm run preview:pages
 python -m pip install -r requirements.txt
 python scripts/collect_market_data.py
 python scripts/validate_market_data.py public/data/market.json
+
+# Ejecutar las nueve pruebas sin dependencias adicionales
+python scripts/run_tests.py
+
+# Ejecutar mercado, features, backtest, riesgo, eventos y manifiesto
+python scripts/run_research_pipeline.py
 ```
 
 ## Datos guardados en Firestore
@@ -205,12 +233,24 @@ invalidarian la tesis.
 - Los widgets gratuitos de TradingView pueden mostrar cotizaciones retrasadas,
   y su contenido no es consumido por el motor de puntuacion.
 - La clasificacion de noticias de esta version usa reglas transparentes por
-  palabras; no equivale a FinBERT.
+  palabras como línea base; no equivale a FinBERT hasta medir ambos sobre un
+  conjunto humano etiquetado.
+- El backtest histórico utiliza mercado y riesgo. No introduce fundamentales o
+  noticias retrospectivas mientras no exista un archivo point-in-time fiable.
+- El universo actual es pequeño y tiene riesgo de supervivencia.
 - Los datos fundamentales pueden llegar con retraso o faltar para algunos
   emisores y ETFs.
 - No se calculan impuestos, comisiones, liquidez del mercado ni idoneidad
   personal.
 - Antes de decidir, revisa la fuente primaria, fecha y moneda de cada dato.
+
+## Documentación de investigación
+
+- `RESEARCH_METHODOLOGY.md`: hipótesis, fórmulas y validación temporal.
+- `MODEL_CARD.md`: uso previsto, métricas y riesgos del modelo.
+- `DATA_CARD.md`: artefactos, fechas, datos faltantes y privacidad.
+- `CAMBIOS_V4_RESEARCH_LAB.md`: instrucciones exactas para actualizar GitHub.
+- `data/NEWS_LABELING_GUIDE.md`: protocolo para el experimento de NLP.
 
 ## Licencia
 

@@ -13,3 +13,12 @@ cerrado por UID y revisa las reglas despues de cada cambio.
 
 Si expones una credencial privada, revocala en el proveedor; borrar solo el
 ultimo commit no la elimina del historial del repositorio.
+
+## Separación de datos
+
+Los artefactos de `public/data/` son públicos. Solo contienen investigación de
+mercado agregada. Las posiciones, vigilancia, diario, correo y UID permanecen
+en Firebase y nunca deben copiarse al pipeline o al manifiesto público.
+
+`scripts/validate_market_data.py` rechaza marcadores de posibles credenciales,
+pero esa validación no reemplaza la revisión de secretos de GitHub.

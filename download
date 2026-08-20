@@ -38,6 +38,7 @@ yarn-error.log*
 next-env.d.ts
 /dist/
 /dist-pages/
+/research_work/
 /.wrangler/
 /.sites-runtime/
 /outputs/

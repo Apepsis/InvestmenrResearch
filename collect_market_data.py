@@ -16,12 +16,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote_plus
+import re
 
 import feedparser
 import numpy as np
 import pandas as pd
 import requests
 import yfinance as yf
+
+from research_core import score_explanation
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,9 +59,27 @@ def display_percent(value: float | None) -> str:
 
 
 def fred_series(series_id: str) -> pd.Series:
-    url = f"https://fredgraph.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-    response = requests.get(url, timeout=30)
-    response.raise_for_status()
+    urls = [
+        f"https://fredgraph.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
+        f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
+    ]
+    last_error: Exception | None = None
+    response = None
+    for url in urls:
+        for attempt in range(3):
+            try:
+                response = requests.get(url, timeout=40, headers={"User-Agent": USER_AGENT, "Accept": "text/csv"})
+                response.raise_for_status()
+                if len(response.text) < 20:
+                    raise ValueError("Respuesta FRED vacía")
+                break
+            except Exception as exc:  # noqa: BLE001
+                last_error = exc
+                time.sleep(.6 * (attempt + 1))
+        if response is not None and response.ok and len(response.text) >= 20:
+            break
+    if response is None or not response.ok:
+        raise RuntimeError(f"FRED no disponible: {last_error}")
     frame = pd.read_csv(io.StringIO(response.text))
     value_column = frame.columns[-1]
     frame[value_column] = pd.to_numeric(frame[value_column], errors="coerce")
@@ -67,7 +88,7 @@ def fred_series(series_id: str) -> pd.Series:
     return series.sort_index()
 
 
-def collect_macro() -> tuple[dict[str, dict[str, Any]], float]:
+def collect_macro(previous: dict[str, dict[str, Any]] | None = None) -> tuple[dict[str, dict[str, Any]], float]:
     definitions = {
         "fedRate": ("FEDFUNDS", "Tasa FED", "%"),
         "cpi": ("CPIAUCSL", "Inflacion EE. UU.", "%"),
@@ -92,8 +113,18 @@ def collect_macro() -> tuple[dict[str, dict[str, Any]], float]:
                 "source": f"FRED:{series_id}",
             }
         except Exception as exc:  # noqa: BLE001 - provider isolation is intentional
-            raw[key] = None
-            output[key] = {"label": label, "value": None, "unit": unit, "asOf": "No disponible", "source": f"FRED:{series_id}", "error": type(exc).__name__}
+            old = (previous or {}).get(key, {})
+            old_value = finite(old.get("value"))
+            raw[key] = old_value
+            output[key] = {
+                "label": label,
+                "value": old_value,
+                "unit": unit,
+                "asOf": old.get("asOf", "No disponible"),
+                "source": f"FRED:{series_id}" + (" · último valor verificado" if old_value is not None else ""),
+                "error": type(exc).__name__,
+                "stale": old_value is not None,
+            }
 
     score = 50.0
     if raw.get("fedRate") is not None:
@@ -247,8 +278,17 @@ def fundamental_analysis(ticker: yf.Ticker, cik: str | None) -> tuple[float, lis
     return clamp(score), indicators, len(signals)
 
 
-POSITIVE_WORDS = {"beat", "growth", "profit", "record", "upgrade", "expands", "surge", "approval", "partnership"}
-NEGATIVE_WORDS = {"miss", "lawsuit", "probe", "downgrade", "decline", "cuts", "layoff", "ban", "recall", "fraud"}
+POSITIVE_WORDS = {"beat", "growth", "profit", "record", "upgrade", "expands", "surge", "approval", "partnership", "launch", "wins", "raises"}
+NEGATIVE_WORDS = {"miss", "lawsuit", "probe", "downgrade", "decline", "cuts", "layoff", "ban", "recall", "fraud", "investigation", "warning"}
+
+
+def title_tokens(value: str) -> set[str]:
+    return {token for token in re.findall(r"[a-z0-9]+", value.lower()) if len(token) > 2}
+
+
+def title_similarity(left: str, right: str) -> float:
+    first, second = title_tokens(left), title_tokens(right)
+    return len(first & second) / len(first | second) if first | second else 0.0
 
 
 def classify_news(title: str) -> tuple[str, float, str, str]:
@@ -258,12 +298,20 @@ def classify_news(title: str) -> tuple[str, float, str, str]:
     sentiment = "positive" if positive > negative else "negative" if negative > positive else "neutral"
     confidence = min(0.85, 0.45 + abs(positive - negative) * 0.13)
     lowered = title.lower()
-    if any(word in lowered for word in ("lawsuit", "probe", "ban", "regulator")):
-        event_type, duration = "regulatorio", "structural"
+    if any(word in lowered for word in ("lawsuit", "court", "litigation")):
+        event_type, duration = "litigio", "structural"
+    elif any(word in lowered for word in ("probe", "ban", "regulator", "regulation")):
+        event_type, duration = "regulación", "structural"
     elif any(word in lowered for word in ("earnings", "revenue", "profit", "quarter")):
         event_type, duration = "resultados", "medium"
-    elif any(word in lowered for word in ("partnership", "acquisition", "launch")):
-        event_type, duration = "estrategico", "medium"
+    elif any(word in lowered for word in ("ceo", "cfo", "executive", "management")):
+        event_type, duration = "administración", "medium"
+    elif any(word in lowered for word in ("competitor", "competition", "market share")):
+        event_type, duration = "competencia", "medium"
+    elif any(word in lowered for word in ("launch", "product", "service")):
+        event_type, duration = "producto", "medium"
+    elif any(word in lowered for word in ("partnership", "acquisition", "merger")):
+        event_type, duration = "estratégico", "medium"
     else:
         event_type, duration = "mercado", "temporary"
     return sentiment, confidence, event_type, duration
@@ -274,10 +322,22 @@ def collect_news(ticker: str, company: str) -> tuple[list[dict[str, Any]], float
     feed = feedparser.parse(f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en")
     items: list[dict[str, Any]] = []
     values: list[float] = []
-    for entry in feed.entries[:6]:
+    company_tokens = title_tokens(f"{ticker} {company}")
+    seen_titles: list[str] = []
+    impacts: list[float] = []
+    for entry in feed.entries[:16]:
         title = str(entry.get("title", "Sin titulo"))
+        if any(title_similarity(title, previous) >= .82 for previous in seen_titles):
+            continue
         sentiment, confidence, event_type, duration = classify_news(title)
-        values.append(70 if sentiment == "positive" else 30 if sentiment == "negative" else 50)
+        tokens = title_tokens(title)
+        matched = bool(tokens & company_tokens)
+        relevance = min(1.0, .35 + .16 * len(tokens & company_tokens) + (.18 if matched else 0))
+        novelty = 1 - max((title_similarity(title, previous) for previous in seen_titles), default=0)
+        direction = 1 if sentiment == "positive" else -1 if sentiment == "negative" else 0
+        impact = direction * confidence * relevance * novelty
+        impacts.append(impact)
+        values.append(50 + impact * 42)
         source = entry.get("source", {})
         source_name = source.get("title", "Google News RSS") if isinstance(source, dict) else "Google News RSS"
         items.append({
@@ -289,10 +349,17 @@ def collect_news(ticker: str, company: str) -> tuple[list[dict[str, Any]], float
             "eventType": event_type,
             "duration": duration,
             "confidence": round(confidence, 2),
+            "relevance": round(relevance, 3),
+            "novelty": round(novelty, 3),
+            "entityMatched": matched,
+            "impactWeight": round(impact, 4),
         })
+        seen_titles.append(title)
+        if len(items) >= 8:
+            break
     if not items:
-        items.append({"title": "No se recuperaron noticias en esta ejecucion", "source": "Pipeline", "url": "#", "publishedAt": datetime.now(timezone.utc).isoformat(), "sentiment": "neutral", "eventType": "disponibilidad", "duration": "temporary", "confidence": 0})
-    return items, float(np.mean(values)) if values else 50.0
+        items.append({"title": "No se recuperaron noticias en esta ejecución", "source": "Pipeline", "url": "#", "publishedAt": datetime.now(timezone.utc).isoformat(), "sentiment": "neutral", "eventType": "disponibilidad", "duration": "temporary", "confidence": 0, "relevance": 0, "novelty": 0, "entityMatched": False, "impactWeight": 0})
+    return items, clamp(float(np.mean(values)) if values else 50.0)
 
 
 def risk_score(volatility: float, max_drawdown: float) -> float:
@@ -310,7 +377,7 @@ def verdict(score: float) -> str:
     return "Evitar"
 
 
-def build_stock(meta: dict[str, Any], macro_score: float) -> dict[str, Any]:
+def build_stock(meta: dict[str, Any], macro_score: float, macro_coverage: float) -> dict[str, Any]:
     symbol = meta["ticker"]
     ticker = yf.Ticker(symbol)
     history = yf.download(symbol, period="5y", interval="1d", auto_adjust=True, progress=False, threads=False)
@@ -333,8 +400,11 @@ def build_stock(meta: dict[str, Any], macro_score: float) -> dict[str, Any]:
         "risk": safety_score,
     }
     total = sum(scores[key] * WEIGHTS[key] for key in WEIGHTS)
-    completeness = 3 + min(fundamental_signal_count, 7) + min(len(news), 4)
-    confidence = clamp(48 + completeness * 3.1, 48, 88)
+    technical_coverage = min(len(history) / 252, 1)
+    fundamental_coverage = min(fundamental_signal_count / 7, 1)
+    news_coverage = min(sum(item.get("entityMatched", False) for item in news) / 4, 1)
+    data_coverage = .30 * technical_coverage + .35 * fundamental_coverage + .20 * news_coverage + .15 * macro_coverage
+    confidence = clamp(data_coverage * 100, 0, 100)
     trend_positive = technical_score >= 60
     fundamentals_positive = fundamental_score >= 60
 
@@ -354,12 +424,27 @@ def build_stock(meta: dict[str, Any], macro_score: float) -> dict[str, Any]:
         "Evento regulatorio o competitivo que altere estructuralmente la economia del negocio.",
     ]
     committee = [
-        {"agent": "Buffett", "focus": "Calidad", "view": "Calidad favorable." if fundamentals_positive else "Calidad aun no concluyente.", "tone": "positive" if fundamentals_positive else "neutral"},
-        {"agent": "Graham", "focus": "Valoracion", "view": next((item["interpretation"] for item in fundamental if item["label"] == "Valoracion"), "Requiere comparables."), "tone": next((item["tone"] for item in fundamental if item["label"] == "Valoracion"), "neutral")},
-        {"agent": "Lynch", "focus": "Crecimiento", "view": "Crecimiento verificable en los datos disponibles." if fundamental_score >= 58 else "Crecimiento necesita mas evidencia.", "tone": "positive" if fundamental_score >= 58 else "neutral"},
-        {"agent": "Quant", "focus": "Estadistica", "view": "Momentum y tendencia favorables." if trend_positive else "Senales estadisticas sin confirmacion.", "tone": "positive" if trend_positive else "neutral"},
-        {"agent": "Risk", "focus": "Riesgo", "view": "Riesgo controlable con dimension prudente." if safety_score >= 60 else "Riesgo elevado; reducir tamano o esperar.", "tone": "positive" if safety_score >= 60 else "negative"},
+        {"agent": "Calidad", "focus": "Regla fundamental", "view": "Calidad favorable." if fundamentals_positive else "Calidad aún no concluyente.", "tone": "positive" if fundamentals_positive else "neutral"},
+        {"agent": "Valoración", "focus": "Múltiplos", "view": next((item["interpretation"] for item in fundamental if item["label"] == "Valoracion"), "Requiere comparables."), "tone": next((item["tone"] for item in fundamental if item["label"] == "Valoracion"), "neutral")},
+        {"agent": "Crecimiento", "focus": "Ingresos y caja", "view": "Crecimiento verificable en los datos disponibles." if fundamental_score >= 58 else "El crecimiento necesita más evidencia.", "tone": "positive" if fundamental_score >= 58 else "neutral"},
+        {"agent": "Mercado", "focus": "Regla estadística", "view": "Momentum y tendencia favorables." if trend_positive else "Señales estadísticas sin confirmación.", "tone": "positive" if trend_positive else "neutral"},
+        {"agent": "Riesgo", "focus": "Volatilidad y drawdown", "view": "Riesgo controlable con dimensión prudente." if safety_score >= 60 else "Riesgo elevado; reducir tamaño o esperar.", "tone": "positive" if safety_score >= 60 else "negative"},
     ]
+
+    trace = {
+        "prices": "Yahoo Finance via yfinance",
+        "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
+        "news": "Google News RSS y fuente original",
+        "macro": "FRED",
+        "method": "Deterministic weighted score v2 with auditable baseline decomposition",
+    }
+    explanation = score_explanation(
+        scores,
+        WEIGHTS,
+        {"technical": trace["prices"], "fundamental": trace["fundamentals"], "news": trace["news"], "macro": trace["macro"], "risk": trace["prices"]},
+        history.index[-1].date().isoformat(),
+        data_coverage,
+    )
 
     return {
         "ticker": symbol,
@@ -382,24 +467,26 @@ def build_stock(meta: dict[str, Any], macro_score: float) -> dict[str, Any]:
         "invalidation": invalidation,
         "committee": committee,
         "news": news,
-        "trace": {
-            "prices": "Yahoo Finance via yfinance",
-            "fundamentals": "SEC EDGAR company facts when available; Yahoo Finance fallback",
-            "news": "Google News RSS",
-            "macro": "FRED",
-            "method": "Deterministic weighted score v1",
-        },
+        "trace": trace,
+        "explanation": explanation,
     }
 
 
 def main() -> None:
     tickers = json.loads(TICKER_FILE.read_text(encoding="utf-8"))
-    macro, macro_score = collect_macro()
+    previous_macro: dict[str, dict[str, Any]] = {}
+    if OUTPUT_FILE.exists():
+        try:
+            previous_macro = json.loads(OUTPUT_FILE.read_text(encoding="utf-8")).get("macro", {})
+        except (json.JSONDecodeError, OSError):
+            previous_macro = {}
+    macro, macro_score = collect_macro(previous_macro)
+    macro_coverage = sum(item.get("value") is not None for item in macro.values()) / max(len(macro), 1)
     stocks: dict[str, dict[str, Any]] = {}
     errors: dict[str, str] = {}
     for meta in tickers:
         try:
-            stocks[meta["ticker"]] = build_stock(meta, macro_score)
+            stocks[meta["ticker"]] = build_stock(meta, macro_score, macro_coverage)
         except Exception as exc:  # noqa: BLE001
             errors[meta["ticker"]] = f"{type(exc).__name__}: {str(exc)[:160]}"
         time.sleep(0.35)

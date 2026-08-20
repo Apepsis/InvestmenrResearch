@@ -11,5 +11,14 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist-pages"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/@firebase") || id.includes("node_modules/firebase")) return "firebase";
+          if (id.includes("node_modules/react")) return "react";
+          return undefined;
+        },
+      },
+    },
   },
 });
