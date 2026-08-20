@@ -18,6 +18,7 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
+import { LiveMarketChart, LiveMarketNews } from "@/app/components/TradingViewWidgets";
 import { demoMarket } from "@/data/demo";
 import { firebaseConfigured, getFirebaseServices } from "@/lib/firebase";
 import type {
@@ -58,30 +59,6 @@ function Card({ children, className = "" }: { children: ReactNode; className?: s
 
 function Badge({ children, tone = "neutral" }: { children: ReactNode; tone?: "positive" | "neutral" | "negative" }) {
   return <span className={`badge badge-${tone}`}>{children}</span>;
-}
-
-function Sparkline({ values }: { values: number[] }) {
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const spread = max - min || 1;
-  const points = values
-    .map((v, i) => `${(i / Math.max(values.length - 1, 1)) * 300},${100 - ((v - min) / spread) * 82 - 9}`)
-    .join(" ");
-  return (
-    <svg className="sparkline" viewBox="0 0 300 110" role="img" aria-label="Tendencia historica simplificada">
-      <defs>
-        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#70e6b1" stopOpacity="0.34" />
-          <stop offset="100%" stopColor="#70e6b1" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <line x1="0" y1="28" x2="300" y2="28" className="grid-line" />
-      <line x1="0" y1="58" x2="300" y2="58" className="grid-line" />
-      <line x1="0" y1="88" x2="300" y2="88" className="grid-line" />
-      <polygon points={`0,110 ${points} 300,110`} fill="url(#chartFill)" />
-      <polyline points={points} fill="none" stroke="#70e6b1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -335,14 +312,19 @@ export default function InvestmentApp() {
 
         {view === "dashboard" && (
           <div className="page-grid dashboard-page">
-            <Card className="hero-card">
-              <div className="stock-heading">
-                <div className="ticker-logo">{stock.ticker.slice(0, 2)}</div>
-                <div><div className="title-line"><h2>{stock.name}</h2><Badge tone="neutral">{stock.ticker}</Badge></div><p>{stock.sector} · {stock.currency}</p></div>
+            <Card className="hero-card live-market-card">
+              <div className="card-heading live-card-heading">
+                <div className="stock-heading">
+                  <div className="ticker-logo">{stock.ticker.slice(0, 2)}</div>
+                  <div><div className="title-line"><h2>{stock.name}</h2><Badge tone="neutral">{stock.ticker}</Badge></div><p>{stock.sector} · {stock.currency}</p></div>
+                </div>
+                <Badge tone="positive">Grafica dinamica</Badge>
               </div>
-              <div className="price-row"><div><strong>{money(stock.price)}</strong><span className={stock.changePct >= 0 ? "up" : "down"}>{stock.changePct >= 0 ? "+" : ""}{stock.changePct.toFixed(2)}%</span></div><span>{stock.asOf}</span></div>
-              <Sparkline values={stock.history} />
-              <div className="range-row"><span>5 anos</span><span>1 ano</span><span>6 meses</span><span className="active">3 meses</span></div>
+              <LiveMarketChart ticker={stock.ticker} />
+              <div className="analysis-data-stamp">
+                <span>El score y el portafolio usan el ultimo analisis guardado.</span>
+                <strong>{market.mode === "live" ? market.generatedAt : "Modo demostracion"}</strong>
+              </div>
             </Card>
 
             <Card className="score-card">
@@ -378,6 +360,11 @@ export default function InvestmentApp() {
         {view === "analysis" && (
           <div className="analysis-page">
             <section className="analysis-intro"><div><p className="eyebrow">{stock.ticker} · Analisis integrado</p><h2>{stock.name}</h2><p>La salida combina evidencias independientes y conserva lo que invalidaria la tesis.</p></div><ScoreRing score={stock.score} /></section>
+            <Card className="live-news-card">
+              <div className="card-heading live-card-heading"><div><p className="eyebrow">Vigilancia informativa</p><h2>Noticias dinamicas de {stock.ticker}</h2></div><Badge tone="positive">Actualizacion externa</Badge></div>
+              <p className="live-card-copy">Utiliza este bloque para detectar eventos recientes. Las noticias clasificadas y el score que aparecen debajo corresponden a la ultima ejecucion completa del agente.</p>
+              <LiveMarketNews ticker={stock.ticker} />
+            </Card>
             <div className="two-column">
               <Card><div className="card-heading"><h2>Analisis tecnico</h2><Badge tone="positive">{stock.scores.technical}/100</Badge></div><div className="indicator-list">{stock.technical.map((item) => <article key={item.label}><span className={`tone-dot ${item.tone}`} /><div><strong>{item.label}</strong><p>{item.interpretation}</p></div><b>{item.value}</b></article>)}</div></Card>
               <Card><div className="card-heading"><h2>Analisis fundamental</h2><Badge tone="positive">{stock.scores.fundamental}/100</Badge></div><div className="indicator-list">{stock.fundamental.map((item) => <article key={item.label}><span className={`tone-dot ${item.tone}`} /><div><strong>{item.label}</strong><p>{item.interpretation}</p></div><b>{item.value}</b></article>)}</div></Card>
@@ -407,7 +394,7 @@ export default function InvestmentApp() {
         )}
 
         {view === "settings" && (
-          <div className="settings-page"><Card><p className="eyebrow">Motor de puntuacion</p><h2>Ajusta la importancia de cada evidencia</h2><p className="muted">Los cinco pesos deben sumar 100%. Los valores originales del blueprint se muestran por defecto.</p><div className="weight-list">{(Object.keys(weights) as ScoreKey[]).map((key) => <label key={key}><span>{scoreLabels[key]}</span><input type="range" min="0" max="50" value={weights[key]} onChange={(e) => setWeights({ ...weights, [key]: Number(e.target.value) })} /><output>{weights[key]}%</output></label>)}</div><div className="settings-actions"><strong className={Object.values(weights).reduce((a, b) => a + b, 0) === 100 ? "up" : "down"}>Total: {Object.values(weights).reduce((a, b) => a + b, 0)}%</strong><button className="primary-button" onClick={saveWeights}>Guardar pesos</button></div></Card><div className="two-column"><Card><p className="eyebrow">Firebase</p><h2>{firebaseConfigured ? "Conexion configurada" : "Configuracion pendiente"}</h2><p className="muted">{user ? `Sesion activa para ${user.email}. Tus datos usan una ruta exclusiva asociada a tu UID.` : "Estas explorando la demo. Inicia sesion para sincronizar datos."}</p><Badge tone={user ? "positive" : "neutral"}>{user ? "Sincronizacion activa" : "Solo este dispositivo"}</Badge></Card><Card><p className="eyebrow">Datos de mercado</p><h2>{market.mode === "live" ? "Pipeline ejecutado" : "Muestra incluida"}</h2><p className="muted">{market.mode === "live" ? `Ultima generacion: ${market.generatedAt}` : "Ejecuta el workflow Actualizar datos de mercado en GitHub Actions para reemplazar la muestra por datos reales."}</p><Badge tone={dataTone}>{dataLabel}</Badge></Card></div><Card><p className="eyebrow">Limites honestos</p><h2>Lo que este sistema no hace</h2><ul className="limits"><li>No ejecuta operaciones ni garantiza rentabilidad.</li><li>No intenta adivinar un precio futuro exacto.</li><li>No sustituye la verificacion de estados financieros o fuentes primarias.</li><li>No debe exponer claves privadas, tokens de brokers ni cuentas bancarias.</li></ul></Card></div>
+          <div className="settings-page"><Card><p className="eyebrow">Motor de puntuacion</p><h2>Ajusta la importancia de cada evidencia</h2><p className="muted">Los cinco pesos deben sumar 100%. Los valores originales del blueprint se muestran por defecto.</p><div className="weight-list">{(Object.keys(weights) as ScoreKey[]).map((key) => <label key={key}><span>{scoreLabels[key]}</span><input type="range" min="0" max="50" value={weights[key]} onChange={(e) => setWeights({ ...weights, [key]: Number(e.target.value) })} /><output>{weights[key]}%</output></label>)}</div><div className="settings-actions"><strong className={Object.values(weights).reduce((a, b) => a + b, 0) === 100 ? "up" : "down"}>Total: {Object.values(weights).reduce((a, b) => a + b, 0)}%</strong><button className="primary-button" onClick={saveWeights}>Guardar pesos</button></div></Card><div className="two-column"><Card><p className="eyebrow">Firebase</p><h2>{firebaseConfigured ? "Conexion configurada" : "Configuracion pendiente"}</h2><p className="muted">{user ? `Sesion activa para ${user.email}. Tus datos usan una ruta exclusiva asociada a tu UID.` : "Estas explorando la demo. Inicia sesion para sincronizar datos."}</p><Badge tone={user ? "positive" : "neutral"}>{user ? "Sincronizacion activa" : "Solo este dispositivo"}</Badge></Card><Card><p className="eyebrow">Datos de mercado</p><h2>{market.mode === "live" ? "Pipeline ejecutado" : "Muestra incluida"}</h2><p className="muted">{market.mode === "live" ? `Ultima generacion: ${market.generatedAt}` : "Ejecuta el workflow Actualizar datos de mercado en GitHub Actions para reemplazar la muestra por datos reales."}</p><Badge tone={dataTone}>{dataLabel}</Badge></Card></div><Card><p className="eyebrow">Limites honestos</p><h2>Lo que este sistema no hace</h2><ul className="limits"><li>No ejecuta operaciones ni garantiza rentabilidad.</li><li>No intenta adivinar un precio futuro exacto.</li><li>La grafica y las noticias dinamicas no recalculan automaticamente el score.</li><li>Las cotizaciones de widgets gratuitos pueden tener retraso.</li><li>No sustituye la verificacion de estados financieros o fuentes primarias.</li><li>No debe exponer claves privadas, tokens de brokers ni cuentas bancarias.</li></ul></Card></div>
         )}
       </main>
     </div>
