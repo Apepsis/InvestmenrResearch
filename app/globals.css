@@ -84,7 +84,7 @@ a { color: inherit; text-decoration: none; }
 .tradingview-widget-container, .tradingview-widget-container__widget { width: 100%; height: 100%; }
 .tradingview-widget-container iframe { display: block; width: 100% !important; height: 100% !important; min-height: 100% !important; border: 0; }
 .live-market-widget { flex: 1 1 auto; height: auto; min-height: clamp(440px, 42vw, 620px); }
-.live-news-widget { flex: 1 1 auto; height: auto; min-height: clamp(420px, 38vw, 580px); }
+.live-news-widget { flex: 0 0 auto; width: 100%; height: 425px; min-height: 0; }
 .live-widget-foot { min-height: 38px; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; gap: 14px; border-top: 1px solid var(--line); background: rgba(255,255,255,.018); }
 .live-widget-foot span { color: var(--dim); font-size: 8px; line-height: 1.45; }
 .live-widget-foot a { color: var(--mint); font-size: 8px; font-weight: 800; white-space: nowrap; }
@@ -289,7 +289,7 @@ a { color: inherit; text-decoration: none; }
   .card { border-radius: 16px; padding: 17px; }
   .hero-card, .score-card { min-height: 0; }
   .live-market-widget { min-height: clamp(390px, 82vw, 520px); }
-  .live-news-widget { min-height: clamp(390px, 88vw, 520px); }
+  .live-news-widget { height: 410px; min-height: 0; }
   .score-card { grid-template-columns: 112px minmax(0,1fr); column-gap: 15px; }
   .score-ring { width: 108px; }
   .score-ring strong { font-size: 28px; }
@@ -320,5 +320,5 @@ a { color: inherit; text-decoration: none; }
   .market-api-status { align-items: flex-start; flex-direction: column; }
   .market-api-status small { text-align: left; }
   .live-market-widget { min-height: 370px; }
-  .live-news-widget { min-height: 400px; }
+  .live-news-widget { height: 380px; min-height: 0; }
 }
