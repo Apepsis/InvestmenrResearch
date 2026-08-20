@@ -63,7 +63,7 @@ a { color: inherit; text-decoration: none; }
 .down { color: var(--red) !important; }
 
 .page-grid { display: grid; gap: 16px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
-.hero-card { grid-column: span 7; min-height: 386px; }
+.hero-card { grid-column: span 7; min-height: 520px; }
 .score-card { grid-column: span 5; min-height: 386px; }
 .thesis-card { grid-column: span 7; }
 .risk-card { grid-column: span 5; }
@@ -75,6 +75,20 @@ a { color: inherit; text-decoration: none; }
 .title-line { display: flex; gap: 10px; align-items: center; }
 .title-line h2 { font-size: 19px; }
 .stock-heading p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+.live-market-card { display: flex; flex-direction: column; gap: 15px; }
+.live-card-heading { align-items: center; }
+.live-card-copy { max-width: 780px; margin: 10px 0 16px; color: var(--muted); font-size: 10px; line-height: 1.65; }
+.live-widget-wrap { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: #061410; }
+.tradingview-widget-container, .tradingview-widget-container__widget { width: 100%; }
+.live-market-widget { height: 382px; }
+.live-news-widget { height: 520px; }
+.live-widget-foot { min-height: 38px; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; gap: 14px; border-top: 1px solid var(--line); background: rgba(255,255,255,.018); }
+.live-widget-foot span { color: var(--dim); font-size: 8px; line-height: 1.45; }
+.live-widget-foot a { color: var(--mint); font-size: 8px; font-weight: 800; white-space: nowrap; }
+.analysis-data-stamp { margin-top: auto; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-radius: 11px; border: 1px solid rgba(243,197,108,.1); background: rgba(243,197,108,.045); }
+.analysis-data-stamp span { color: var(--amber); font-size: 8px; line-height: 1.45; }
+.analysis-data-stamp strong { color: var(--ink); font-size: 8px; text-align: right; }
+.live-news-card { overflow: hidden; }
 .price-row { margin: 26px 0 8px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
 .price-row > div { display: flex; align-items: baseline; gap: 13px; }
 .price-row strong { font-size: 34px; letter-spacing: -.05em; }
@@ -258,6 +272,8 @@ a { color: inherit; text-decoration: none; }
   .top-actions > .badge { display: none; }
   .card { border-radius: 16px; padding: 17px; }
   .hero-card, .score-card { min-height: 0; }
+  .live-market-widget { height: 350px; }
+  .live-news-widget { height: 470px; }
   .score-card { grid-template-columns: 112px minmax(0,1fr); column-gap: 15px; }
   .score-ring { width: 108px; }
   .score-ring strong { font-size: 28px; }
@@ -281,4 +297,8 @@ a { color: inherit; text-decoration: none; }
   .analysis-intro { align-items: flex-start; gap: 15px; }
   .analysis-intro .score-ring { flex: 0 0 90px; }
   .title-line { flex-wrap: wrap; }
+  .live-card-heading, .live-widget-foot, .analysis-data-stamp { align-items: flex-start; flex-direction: column; }
+  .analysis-data-stamp strong { text-align: left; }
+  .live-market-widget { height: 330px; }
+  .live-news-widget { height: 440px; }
 }
