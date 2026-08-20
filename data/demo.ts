@@ -16,7 +16,7 @@ const base = (
   currency: "USD",
   price,
   changePct,
-  asOf: "Datos ilustrativos - ejecuta la actualizacion automatica",
+  asOf: "Muestra ilustrativa; no es una cotización actual",
   score,
   verdict: score >= 80 ? "Oportunidad interesante" : score >= 60 ? "Analizar entrada" : score >= 40 ? "Mantener vigilancia" : "Evitar",
   source: "sample",
@@ -51,25 +51,33 @@ const base = (
     "Cambio regulatorio estructural que afecte la economia de la unidad.",
   ],
   committee: [
-    { agent: "Buffett", focus: "Calidad", view: "Negocio mejorando; vigilar ventaja competitiva.", tone: "positive" },
-    { agent: "Graham", focus: "Valoracion", view: "Precio sin amplio margen de seguridad.", tone: "neutral" },
-    { agent: "Lynch", focus: "Crecimiento", view: "Crecimiento entendible y aun verificable.", tone: "positive" },
-    { agent: "Quant", focus: "Estadistica", view: "Momentum favorable, confirmacion incompleta.", tone: "neutral" },
-    { agent: "Risk", focus: "Riesgo", view: "Entrada gradual; limitar concentracion sectorial.", tone: "negative" },
+    { agent: "Calidad", focus: "Regla fundamental", view: "Negocio mejorando; vigilar ventaja competitiva.", tone: "positive" },
+    { agent: "Valoración", focus: "Múltiplos", view: "Precio sin amplio margen de seguridad.", tone: "neutral" },
+    { agent: "Crecimiento", focus: "Ingresos y caja", view: "Crecimiento entendible y aún verificable.", tone: "positive" },
+    { agent: "Mercado", focus: "Modelo estadístico", view: "Momentum favorable, confirmación incompleta.", tone: "neutral" },
+    { agent: "Riesgo", focus: "Volatilidad", view: "Entrada gradual; limitar concentración sectorial.", tone: "negative" },
   ],
   news: [
     { title: "Ejemplo: el pipeline reemplazara esta noticia por una fuente real", source: "Modo demostracion", url: "#", publishedAt: "Sin fecha real", sentiment: "neutral", eventType: "demostracion", duration: "temporary", confidence: 0 },
   ],
+  trace: {
+    prices: "Muestra local claramente identificada",
+    fundamentals: "Muestra local claramente identificada",
+    news: "Muestra local claramente identificada",
+    macro: "Sin datos macro inventados",
+    method: "Deterministic weighted score v2",
+  },
 });
 
 export const demoMarket: MarketDataset = {
   generatedAt: "Modo demostracion",
   mode: "sample",
   macro: {
-    fedRate: { label: "Tasa FED", value: null, unit: "%", asOf: "Pendiente de actualizacion" },
-    inflation: { label: "Inflacion EE. UU.", value: null, unit: "%", asOf: "Pendiente de actualizacion" },
-    unemployment: { label: "Desempleo EE. UU.", value: null, unit: "%", asOf: "Pendiente de actualizacion" },
-    oil: { label: "Petroleo WTI", value: null, unit: "USD", asOf: "Pendiente de actualizacion" },
+    fedRate: { label: "Tasa FED", value: null, unit: "%", asOf: "Sin dato real en modo demostración", source: "FRED:FEDFUNDS" },
+    inflation: { label: "Inflación EE. UU.", value: null, unit: "%", asOf: "Sin dato real en modo demostración", source: "FRED:CPIAUCSL" },
+    unemployment: { label: "Desempleo EE. UU.", value: null, unit: "%", asOf: "Sin dato real en modo demostración", source: "FRED:UNRATE" },
+    dollar: { label: "Índice dólar", value: null, unit: "índice", asOf: "Sin dato real en modo demostración", source: "FRED:DTWEXBGS" },
+    oil: { label: "Petróleo WTI", value: null, unit: "USD", asOf: "Sin dato real en modo demostración", source: "FRED:DCOILWTICO" },
   },
   stocks: {
     UBER: base("UBER", "Uber Technologies", "Movilidad", 91.84, 1.26, 72, { technical: 76, fundamental: 74, news: 67, macro: 61, risk: 63 }, [58,61,60,64,67,66,71,73,70,74,78,80,77,82,85,84,88,91]),

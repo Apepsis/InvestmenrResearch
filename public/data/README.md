@@ -1,8 +1,13 @@
-# Datos de mercado
+# Artefactos de investigación
 
-El archivo `market.json` se genera automaticamente mediante
-`.github/workflows/update-market-data.yml`.
+El workflow `.github/workflows/update-market-data.yml` genera:
 
-Mientras no exista un `market.json` valido, la interfaz muestra datos de
-demostracion claramente identificados. No edites manualmente el archivo
-generado.
+- `market.json`
+- `backtest.json`
+- `risk_model.json`
+- `event_studies.json`
+- `research_manifest.json`
+
+`build_journal.json` es documentación versionada del proceso. Mientras todavía
+no existan resultados válidos, la interfaz muestra estructuras de demostración
+claramente identificadas. No edites manualmente los artefactos generados.

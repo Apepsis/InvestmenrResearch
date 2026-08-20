@@ -1,0 +1,76 @@
+{
+  "version": "4.0",
+  "question": "¿Puede un sistema transparente combinar mercado, fundamentos, macroeconomía y noticias para investigar retornos excedentes a 60 sesiones?",
+  "principles": [
+    "No usar información futura",
+    "Separar evidencia de interpretación",
+    "Publicar errores y limitaciones",
+    "Preferir modelos simples que puedan auditarse"
+  ],
+  "milestones": [
+    {
+      "date": "2026-08",
+      "title": "Prototipo funcional",
+      "problem": "Los datos personales debían persistir entre dispositivos.",
+      "decision": "Firebase Authentication y Firestore con aislamiento por UID.",
+      "evidence": "Inicio de sesión, portafolio, vigilancia y diario sincronizados.",
+      "status": "completed"
+    },
+    {
+      "date": "2026-08",
+      "title": "Cotización reciente sin exponer secretos",
+      "problem": "GitHub Pages no puede proteger claves privadas.",
+      "decision": "Cloudflare Worker como proxy de solo lectura para Alpaca IEX.",
+      "evidence": "Claves fuera del navegador y actualización cada minuto mientras la página está abierta.",
+      "status": "completed"
+    },
+    {
+      "date": "2026-08",
+      "title": "Research Lab auditable",
+      "problem": "Un score aislado no demostraba validez ni procedencia.",
+      "decision": "Agregar backtesting walk-forward, explicabilidad, riesgo, event studies y manifiestos reproducibles.",
+      "evidence": "Código, pruebas y pantallas incluidos; los resultados reales se generan en GitHub Actions.",
+      "status": "in-progress"
+    },
+    {
+      "date": "Próximo",
+      "title": "Evaluación de NLP",
+      "problem": "El sentimiento por palabras no mide adecuadamente contexto financiero.",
+      "decision": "Construir un conjunto etiquetado y comparar lexicón, regresión logística y FinBERT.",
+      "evidence": "Se publicarán F1, precisión, recall, matriz de confusión y errores representativos.",
+      "status": "planned"
+    }
+  ],
+  "failedExperiments": [
+    {
+      "experiment": "Presentar un comité de inversores famosos como agentes",
+      "result": "La interfaz podía sugerir una inteligencia multiagente que las reglas no implementaban realmente.",
+      "lesson": "Renombrar como lentes metodológicos y publicar la regla exacta de cada lente."
+    },
+    {
+      "experiment": "Usar noticias externas como evidencia principal",
+      "result": "El widget era visualmente útil, pero no demostraba clasificación ni medición propia.",
+      "lesson": "Mantenerlo como vigilancia secundaria y construir un pipeline auditable de eventos."
+    },
+    {
+      "experiment": "Interpretar un score heurístico como probabilidad",
+      "result": "Un score ponderado no tiene calibración probabilística por sí mismo.",
+      "lesson": "Separar el score explicativo de la probabilidad del modelo estadístico y publicar el Brier score."
+    }
+  ],
+  "limitations": [
+    "Alpaca Basic utiliza IEX y puede diferir del mercado consolidado.",
+    "Los fundamentales históricos point-in-time requieren especial cuidado para evitar revisiones posteriores.",
+    "El universo de nueve activos produce evidencia exploratoria, no una conclusión universal.",
+    "Existe riesgo de supervivencia porque el universo inicial contiene empresas vigentes hoy.",
+    "Las pruebas de estrés describen sensibilidad y no son predicciones.",
+    "El clasificador de noticias actual continúa siendo una línea base léxica hasta completar el conjunto etiquetado."
+  ],
+  "nextExperiments": [
+    "Etiquetar manualmente entre 200 y 500 titulares con doble revisión.",
+    "Comparar clasificador lexicográfico, regresión logística y FinBERT.",
+    "Ampliar el universo con componentes históricos para reducir sesgo de supervivencia.",
+    "Incorporar fundamentales point-in-time usando fecha real de presentación ante la SEC.",
+    "Agregar intervalos bootstrap para las métricas de backtesting."
+  ]
+}
