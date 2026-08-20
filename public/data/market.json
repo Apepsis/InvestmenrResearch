@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T22:46:54+00:00",
+  "generatedAt": "2026-08-20T22:48:40+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -873,20 +873,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
-          "source": "The Motley Fool",
-          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
-          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.875,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Microsoft Stock (MSFT) Opinions on Azure and AI Growth - Quiver Quantitative",
           "source": "Quiver Quantitative",
           "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQaW9FOW9RTTc3Q3VsT0dDb0h4eUI5dGVKeWNNbnB6azVpckRFUUhvLVBkSWktU3BMMTJ1aW1JQ2ZnMWhwSUQ1azRtUEV6M1ktcEtPbGxtQUpIM1VqUHctRzhUZU1VSERRM2hjQ1doOXhoaXlJZ0pfOFJnQ1hfS0ZzQlllenYtVnJqa2dTV0NCdFd4YWx2Y0E?oc=5",
@@ -905,6 +891,20 @@
           "source": "Barchart.com",
           "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOWHpQNW5ZV1dla0JBOHpkRFlKZGJid20zOW5UZk1sRVN4UVNhNllRNVVKOU1nRHM2QXVfSUlrTm9PZlQ1TEpRMlRQZ0xldlRFcTVGbUlkU0dPcEZjM3IybmdMTlBQZ1Q1YkhFMlZVcEdwekprY08yOV9reTR0cXIzRmZPd01ER1hOaWNNWGxVRWE4RHgzWjl6azZKc1dVd2p5dmZfSG53R2JKQQ?oc=5",
           "publishedAt": "Thu, 20 Aug 2026 18:12:06 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.889,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
+          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
@@ -1248,24 +1248,24 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Nvidia Stock Won't Be Overvalued by 2028: My Case for Buying NVDA Today - The Motley Fool",
-          "source": "The Motley Fool",
-          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNX1lwekk2Z2E1dWd6NWlCSFJRMDMyU05tb29HOHRFMklubzdqR3NkMDhFVmpjMlZuTUNRSzdRNkNVREROclpSaEhvRzVSaTAySENnVmxtQkZVMlhoRlRMcnAwSGZuckpwMGdCeU9CQ1dlZlFrQkVRNXdiWFpHUTNZM2J1S3p0S0RwX1B2Z2gzZUdIZ0hTcmxpQQ?oc=5",
-          "publishedAt": "Wed, 19 Aug 2026 06:30:00 GMT",
+          "title": "Nvidia (NVDA) Stock Slips Despite Firefox Support for GeForce NOW - TipRanks",
+          "source": "TipRanks",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPQlR5dkZOZU1wQUxodjBwZ09Kb3FXdUFWajNHNTJud0EtX0E2azZVaHh3SGJYUDhqdUpxS0RfTVlsY2wxSW5DaWZQekQteUdxckNNZUJvWTZKa2p0SERHVVk0QzdDZE5xMlRwQmRhX2hJazhXUXJsNHE0R290Y1ZSYWRyWUZXU2JNZWZ2WV9aeUVWZXA5TVNpQg?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:51:38 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.85,
-          "novelty": 0.895,
+          "novelty": 0.812,
           "entityMatched": true,
           "impactWeight": 0.0
         },
         {
-          "title": "Nvidia (NVDA) Stock Slips Despite Firefox Support for GeForce NOW - TipRanks",
-          "source": "TipRanks",
-          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPQlR5dkZOZU1wQUxodjBwZ09Kb3FXdUFWajNHNTJud0EtX0E2azZVaHh3SGJYUDhqdUpxS0RfTVlsY2wxSW5DaWZQekQteUdxckNNZUJvWTZKa2p0SERHVVk0QzdDZE5xMlRwQmRhX2hJazhXUXJsNHE0R290Y1ZSYWRyWUZXU2JNZWZ2WV9aeUVWZXA5TVNpQg?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 15:51:38 GMT",
+          "title": "Nvidia Stock Won't Be Overvalued by 2028: My Case for Buying NVDA Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNX1lwekk2Z2E1dWd6NWlCSFJRMDMyU05tb29HOHRFMklubzdqR3NkMDhFVmpjMlZuTUNRSzdRNkNVREROclpSaEhvRzVSaTAySENnVmxtQkZVMlhoRlRMcnAwSGZuckpwMGdCeU9CQ1dlZlFrQkVRNXdiWFpHUTNZM2J1S3p0S0RwX1B2Z2gzZUdIZ0hTcmxpQQ?oc=5",
+          "publishedAt": "Wed, 19 Aug 2026 06:30:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
@@ -1457,7 +1457,7 @@
         },
         {
           "label": "Valoracion",
-          "value": "P/E 25.1",
+          "value": "P/E 25.0",
           "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
           "tone": "neutral"
         }
@@ -1712,14 +1712,14 @@
       "price": 340.67,
       "changePct": -1.175,
       "asOf": "2026-08-20",
-      "score": 65.2,
+      "score": 64.9,
       "verdict": "Analizar entrada",
       "source": "live",
       "confidence": 100.0,
       "scores": {
         "technical": 60.0,
         "fundamental": 80.1,
-        "news": 51.8,
+        "news": 50.0,
         "macro": 65.0,
         "risk": 57.7
       },
@@ -1900,17 +1900,17 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
-          "source": "Barron's",
-          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
+          "title": "How to Buy SpaceX Stock & Anthropic (The Ultimate Backdoor) - MarketWise",
+          "source": "MarketWise",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1wNVBCdDRsVEtMRUh1Y0l4cngyVXluWWNibUdaNUctbkFDWnVLQzFIR1lfaDVtU2xva1ZuclVSdE9qMy02QVFWQ0lYQ1FPZnlxNS1UcGpOU0dNSF9DNnJPZVBNZy1uX3M0dmhadGpKaXdZRDRESlE?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 20:19:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.9,
-          "entityMatched": true,
+          "relevance": 0.35,
+          "novelty": 0.947,
+          "entityMatched": false,
           "impactWeight": 0.0
         },
         {
@@ -1928,30 +1928,30 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Mosaic Family Wealth Partners LLC Raises Stock Holdings in Alphabet Inc. $GOOG - MarketBeat",
+          "title": "Alphabet (NASDAQ:GOOGL) Trading Down 1.2% - Here's What Happened - MarketBeat",
           "source": "MarketBeat",
-          "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNQUpnU1pQRTFFWVM1LVJ2Z1h6enhaZzAzank1R2hGMXlUWTZRX2RNLWlyaFNRTUdsTHJFd2g2TmYyQkROc2lWVkdTejAwc1R0Nm1KamYyMC1CRmZXS0xTcDZ2MEI4YnNCekU2UHRqMUFhS1FvOHNzRlhoMzQycFZFZHB2V0tyaTZMSExkeTk1V0hEdy1kOVpSLUx4YndfV1hpMDhuQXpDb09JM0JybUJBalNHek80NTN1VnNvWVQ4dlM2aFRXQ3FmMmRQOEM3bjdUcUxv?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 09:12:42 GMT",
-          "sentiment": "positive",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOZnFsQTBPSFB6ZHpKRkpRY3hWeXhMTG1MU3ZTVjNSWWhpVU5YbHpKLV9BdXBNTm5HX1dHaWMyN2JYdjc2cmVxalRGZFdiZXU1ZGlaRWtQZ3ZRUnBfM21NMFZWMjRlS2U3QUEzalh5Q2JORkZHdnFzd2trcy1tb1lwU2VnTUdxd2tqMGlzeGllbW5NalVJMXVHM1hJY01QR0pjb3VJUWNPbDc3U1VoT3RV?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 21:51:14 GMT",
+          "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
-          "confidence": 0.58,
-          "relevance": 0.69,
-          "novelty": 0.85,
+          "confidence": 0.45,
+          "relevance": 0.85,
+          "novelty": 0.75,
           "entityMatched": true,
-          "impactWeight": 0.3402
+          "impactWeight": 0.0
         },
         {
-          "title": "Google’s Gemma AI Models Surpass 1 Billion Downloads As Developers Build over 100,000 Variants — GOOGL Stock Slips - Stocktwits",
-          "source": "Stocktwits",
-          "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxQR3hIRGtSNnlsZ29sWnVwN2dyU2FVSUlvWS1jWXVtb2pWRlM1YUdOS2lhWlZYSlFsTjYtdURSZUlrZkN5a21NWWVVN3pHXzlUUEN6N3h0YmpvY2UyQm1DOVp1b2lpVUVTUG5BcjBTaVhiNkVSWlBiZUFpdXdNSlZsSVk2SkYyRGxLbmxZVFVJVDVjUWtJcW8yOGpmYkJyekdJaDhOelh2UW9DWFZlVGtvRkFORVZDcXR3bnVua010dnYwMUwtXzMxQkRDeXVDRkVDNDZFQlBuaG5VUzVKVzJCRzJsb3JJX2JVSjEtSHZVVUwzWjRHRldINWtCdU5jZGpJdVZ3?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 19:29:06 GMT",
+          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.92,
+          "novelty": 0.9,
           "entityMatched": true,
           "impactWeight": 0.0
         }
@@ -1965,10 +1965,10 @@
       },
       "explanation": {
         "base": 50.0,
-        "result": 65.189,
+        "result": 64.921,
         "interval": {
-          "low": 60.23,
-          "high": 70.15,
+          "low": 59.92,
+          "high": 69.92,
           "level": 80
         },
         "dataQuality": 100.0,
@@ -2001,11 +2001,11 @@
           {
             "feature": "Eventos informativos",
             "group": "news",
-            "rawValue": "51.8/100",
-            "normalized": 51.7859,
+            "rawValue": "50.0/100",
+            "normalized": 50.0,
             "weight": 15.0,
-            "contribution": 0.2679,
-            "formula": "(51.79 - 50) × 0.150",
+            "contribution": 0.0,
+            "formula": "(50.00 - 50) × 0.150",
             "source": "Google News RSS y fuente original",
             "asOf": "2026-08-20",
             "status": "verified"
@@ -2233,9 +2233,9 @@
           "impactWeight": 0.0
         },
         {
-          "title": "What's Going On With Meta Platforms Stock Monday? - TradingView",
-          "source": "TradingView",
-          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNVW85R1ZjcmM5bWVaOWl2Vk9VekgxSDdWbXdkV01xTW5namZOUjN6eFJJUG1rNk1KMmNOYnRDMklkWGtUNGE2bEJUT2xwb2tETldpQnRaNGVRZExvVWN5VENjYjFLN29kb3htVzF3S2gwdzdiRGwtV01rdzczVVI1WnJJQ25zdS10VkdBTjZtZHpHbzhTeTR6YjlHbHRLMmt2YndlVGJLbzBKWUE?oc=5",
+          "title": "What's Going On With Meta Platforms Stock Monday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNdXR3N2Q3RU1pOFpzaXZtREdjT2phTzUzUlQ1TUk4cmhPSm5xUTgwQ0VMSld2OS14VVhKTzJpUjBvRTllVGhUX0gwNExXTDFsSlJvTmR6MF9VZVZWYkVsdmZnbzk2Y0RnVDl3dktVTmowTVdXdE5OUHZ1Tk42WDFFTXE0ODk0TjhLR3V3YXR1TnBkRGJZNVlCcVV1WFdRRTFiTjBaTQ?oc=5",
           "publishedAt": "Mon, 17 Aug 2026 18:16:23 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
