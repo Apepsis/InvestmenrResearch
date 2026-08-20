@@ -1,9 +1,9 @@
-name: Actualizar datos de mercado
+name: Actualizar datos e investigacion
 
 on:
   schedule:
-    # De lunes a viernes, después del cierre del mercado estadounidense
-    - cron: "20 22 * * 1-5"
+    # Todos los dias: incorpora noticias de fin de semana y conserva el score profundo diario.
+    - cron: "20 22 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,13 +17,12 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
       - name: Descargar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Preparar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -31,23 +30,18 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
-      - name: Obtener datos actuales del mercado
-        run: python scripts/collect_market_data.py
+      - name: Ejecutar pruebas cuantitativas
+        run: python scripts/run_tests.py
+
+      - name: Ejecutar pipeline reproducible
+        run: python scripts/run_research_pipeline.py
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
 
-      - name: Validar datos obtenidos
-        run: python scripts/validate_market_data.py public/data/market.json
-
-      - name: Guardar actualización
+      - name: Guardar actualizacion
         run: |
           git config user.name "market-data-bot"
           git config user.email "market-data-bot@users.noreply.github.com"
-          git add public/data/market.json
+          git add public/data/market.json public/data/backtest.json public/data/risk_model.json public/data/event_studies.json public/data/research_manifest.json public/data/build_journal.json
           git diff --cached --quiet || git commit -m "data: actualizar mercado"
           git push
-
-      - name: Volver a publicar la página
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy-pages.yml --ref main
