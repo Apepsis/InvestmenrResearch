@@ -37,6 +37,7 @@ jobs:
         run: python scripts/run_research_pipeline.py
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       - name: Guardar actualizacion
         run: |
