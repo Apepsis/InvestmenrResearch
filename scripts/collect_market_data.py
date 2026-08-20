@@ -32,6 +32,7 @@ TICKER_FILE = ROOT / "data" / "tickers.json"
 OUTPUT_FILE = ROOT / "public" / "data" / "market.json"
 WEIGHTS = {"technical": 0.25, "fundamental": 0.30, "news": 0.15, "macro": 0.15, "risk": 0.15}
 USER_AGENT = os.getenv("SEC_USER_AGENT") or "investment-research-agent/1.0 contact@example.com"
+FRED_API_KEY = os.getenv("FRED_API_KEY", "").strip()
 
 
 def finite(value: Any, fallback: float | None = None) -> float | None:
@@ -59,11 +60,40 @@ def display_percent(value: float | None) -> str:
 
 
 def fred_series(series_id: str) -> pd.Series:
+    last_error: Exception | None = None
+
+    # Primary route: official FRED API. The key lives only in GitHub Actions.
+    if FRED_API_KEY:
+        try:
+            response = requests.get(
+                "https://api.stlouisfed.org/fred/series/observations",
+                params={
+                    "series_id": series_id,
+                    "api_key": FRED_API_KEY,
+                    "file_type": "json",
+                    "sort_order": "asc",
+                },
+                timeout=40,
+                headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+            )
+            response.raise_for_status()
+            observations = response.json().get("observations", [])
+            frame = pd.DataFrame(observations)
+            if frame.empty or "date" not in frame or "value" not in frame:
+                raise ValueError("FRED API no devolvió observaciones")
+            frame["value"] = pd.to_numeric(frame["value"], errors="coerce")
+            frame = frame.dropna(subset=["value"])
+            if frame.empty:
+                raise ValueError("FRED API no devolvió valores numéricos")
+            return pd.Series(frame["value"].values, index=pd.to_datetime(frame["date"])).sort_index()
+        except Exception as exc:  # noqa: BLE001 - public CSV remains as fallback
+            last_error = exc
+
+    # Free no-key fallback. Keeping both routes makes the daily job resilient.
     urls = [
         f"https://fredgraph.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
         f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
     ]
-    last_error: Exception | None = None
     response = None
     for url in urls:
         for attempt in range(3):
