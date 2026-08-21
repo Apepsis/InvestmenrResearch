@@ -1,19 +1,30 @@
-# Modelos persistentes V8
+# Artefactos de investigación
 
-Esta carpeta contiene estado reproducible del sistema neural; no contiene
-claves, posiciones personales ni credenciales.
+El workflow `.github/workflows/update-market-data.yml` genera:
 
-- `champion.json`: pesos del Champion neural, únicamente después de aprobar
-  todos los controles.
-- `challengers/incumbent.json`: mejor challenger no promovido; se reevalúa en
-  ejecuciones futuras.
-- `challengers/runner_up.json`: segunda línea independiente.
-- `archive/*.json`: antiguos champions disponibles para rollback o
-  reconsideración.
-- `neural_registry.json`: decisiones, hashes y cantidad total de ensayos.
+- `market.json`
+- `backtest.json`
+- `backtest_history.json` (mediciones walk-forward inmutables por huella)
+- `risk_model.json`
+- `event_studies.json`
+- `live_predictions.json`
+- `prediction_ledger.json`
+- `model_registry.json`
+- `model_monitoring.json`
+- `alerts.json`
+- `neural_lab.json`
+- `neural_prediction_ledger.json`
+- `research_manifest.json`
 
-Los JSON publican arquitectura, variables, medias y escalas, calibradores,
-semillas, pesos y aproximación diagonal de Fisher. Esto permite reproducir el
-forward pass. No edites estos archivos manualmente: el workflow diario los
-genera y `scripts/validate_research_artifacts.py` comprueba que el modelo activo
-coincida con el hash mostrado en la interfaz.
+El workflow `.github/workflows/refresh-fast-signals.yml` genera por separado:
+
+- `fast_signals.json` (titulares, dirección y urgencia cada 20 minutos)
+
+`build_journal.json` es documentación versionada del proceso. Mientras todavía
+no existan resultados válidos, la interfaz muestra estructuras de demostración
+claramente identificadas. No edites manualmente los artefactos generados y, en
+especial, no borres `prediction_ledger.json`: es el historial pre-registrado.
+Tampoco borres `neural_prediction_ledger.json`; sus probabilidades se publican
+antes del resultado y deben permanecer inmutables.
+No borres `backtest_history.json`: permite comparar la medición actual con las
+ejecuciones matemáticamente distintas publicadas anteriormente.

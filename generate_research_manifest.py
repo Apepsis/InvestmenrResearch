@@ -17,7 +17,7 @@ OUTPUT_FILE = PUBLIC_DATA / "research_manifest.json"
 START_FILE = ROOT / "research_work" / "pipeline_started_at.txt"
 TEST_FILE = ROOT / "research_work" / "test_summary.json"
 ARTIFACT_NAMES = [
-    "market.json", "backtest.json", "risk_model.json", "event_studies.json",
+    "market.json", "backtest.json", "backtest_history.json", "risk_model.json", "event_studies.json",
     "live_predictions.json", "prediction_ledger.json", "model_registry.json",
     "model_monitoring.json", "alerts.json", "build_journal.json",
     "fast_signals.json", "neural_lab.json", "neural_prediction_ledger.json",

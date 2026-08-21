@@ -52,6 +52,23 @@ def validate_backtest(payload: dict[str, Any]) -> None:
             raise ValueError("exposición bruta fuera de rango")
 
 
+def validate_backtest_history(payload: dict[str, Any]) -> None:
+    if payload.get("schemaVersion") != 1 or payload.get("mode") != "live":
+        raise ValueError("backtest_history tiene un esquema inesperado")
+    snapshots = payload.get("snapshots", [])
+    if not snapshots:
+        raise ValueError("backtest_history no contiene mediciones")
+    fingerprints = [item.get("fingerprint") for item in snapshots]
+    if len(fingerprints) != len(set(fingerprints)):
+        raise ValueError("backtest_history contiene mediciones duplicadas")
+    if payload.get("currentFingerprint") not in fingerprints:
+        raise ValueError("backtest_history no identifica la medición actual")
+    for item in snapshots:
+        if len(str(item.get("fingerprint", ""))) != 64:
+            raise ValueError("huella inválida en backtest_history")
+        validate_backtest(item.get("backtest", {}))
+
+
 def validate_risk(payload: dict[str, Any]) -> None:
     tickers = payload.get("tickers", [])
     if "SPY" not in tickers or len(tickers) < 3:
@@ -196,6 +213,7 @@ def validate_neural_ledger(payload: dict[str, Any]) -> None:
 
 def main() -> None:
     validate_backtest(load("backtest.json"))
+    validate_backtest_history(load("backtest_history.json"))
     validate_risk(load("risk_model.json"))
     validate_events(load("event_studies.json"))
     validate_predictions(load("live_predictions.json"))

@@ -1,6 +1,7 @@
 import type {
   AlertDataset,
   BacktestDataset,
+  BacktestHistoryDataset,
   EventStudyDataset,
   LivePredictionsDataset,
   ModelMonitoringDataset,
@@ -12,13 +13,14 @@ import type {
   ScoreContribution,
   StockAnalysis,
 } from "@/lib/types";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import PredictionV5Lab from "@/app/components/PredictionV5Lab";
 import NeuralV8Lab from "@/app/components/NeuralV8Lab";
 
 type Props = {
   stock: StockAnalysis;
   backtest: BacktestDataset;
+  backtestHistory: BacktestHistoryDataset;
   events: EventStudyDataset;
   manifest: ResearchManifest;
   predictions: LivePredictionsDataset;
@@ -107,7 +109,15 @@ function ScoreWaterfall({ stock }: { stock: StockAnalysis }) {
   );
 }
 
-export default function ResearchLab({ stock, backtest, events, manifest, predictions, ledger, registry, monitoring, alerts, neural, neuralLedger }: Props) {
+export default function ResearchLab({ stock, backtest: latestBacktest, backtestHistory, events, manifest, predictions, ledger, registry, monitoring, alerts, neural, neuralLedger }: Props) {
+  const [selectedFingerprint, setSelectedFingerprint] = useState(backtestHistory.currentFingerprint);
+  useEffect(() => {
+    setSelectedFingerprint(backtestHistory.currentFingerprint);
+  }, [backtestHistory.currentFingerprint]);
+  const historyNewestFirst = [...backtestHistory.snapshots].reverse();
+  const selectedSnapshot = backtestHistory.snapshots.find((item) => item.fingerprint === selectedFingerprint);
+  const backtest = selectedSnapshot?.backtest ?? latestBacktest;
+  const viewingArchivedRun = Boolean(selectedSnapshot && selectedSnapshot.fingerprint !== backtestHistory.currentFingerprint);
   const live = backtest.mode === "live";
   const statistical = backtest.metrics.statistical;
   const spy = backtest.metrics.spy;
@@ -140,9 +150,20 @@ export default function ResearchLab({ stock, backtest, events, manifest, predict
       <NeuralV8Lab ticker={stock.ticker} neural={neural} ledger={neuralLedger} />
 
       <section className="research-panel">
-        <div className="research-heading"><div><p className="eyebrow">Validación histórica</p><h2>Capital fuera de muestra vs. SPY</h2></div><StatusPill live={live}>{live ? `${backtest.period.start} — ${backtest.period.end}` : "Esperando pipeline"}</StatusPill></div>
+        <div className="research-heading">
+          <div><p className="eyebrow">Validación histórica</p><h2>Capital fuera de muestra vs. SPY</h2></div>
+          <div className="backtest-history-control">
+            <StatusPill live={live}>{viewingArchivedRun ? "Ejecución archivada" : live ? `${backtest.period.start} — ${backtest.period.end}` : "Esperando pipeline"}</StatusPill>
+            {historyNewestFirst.length > 0 && <label>Medición
+              <select value={selectedFingerprint || backtestHistory.currentFingerprint} onChange={(event) => setSelectedFingerprint(event.target.value)}>
+                {historyNewestFirst.map((item, index) => <option key={item.fingerprint} value={item.fingerprint}>{index === 0 ? "Actual · " : "Archivada · "}{item.backtest.generatedAt.slice(0, 10)} · {item.universeSize} activos</option>)}
+              </select>
+            </label>}
+          </div>
+        </div>
         <LineChart data={backtest.equity} keys={chartKeys} />
         <div className="method-strip"><span>Walk-forward anual</span><span>{backtest.horizonSessions} sesiones</span><span>{backtest.transactionCostBps} bps de costo</span><span>Sin información futura</span></div>
+        <p className="research-note">{backtestHistory.snapshots.length > 0 ? `Historial inmutable activo: ${backtestHistory.snapshots.length} medición${backtestHistory.snapshots.length === 1 ? "" : "es"} conservada${backtestHistory.snapshots.length === 1 ? "" : "s"}.` : "El próximo pipeline comenzará a conservar cada medición distinta sin sobrescribir las anteriores."}</p>
       </section>
 
       <section className="research-panel">

@@ -43,6 +43,7 @@ import { firebaseConfigured, getFirebaseServices } from "@/lib/firebase";
 import type {
   JournalEntry,
   BacktestDataset,
+  BacktestHistoryDataset,
   BuildJournal,
   EventStudyDataset,
   FastSignalsDataset,
@@ -90,8 +91,20 @@ const nav: { id: View; label: string; glyph: string }[] = [
 const money = (value: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(value);
 
-const bundledMarketApiUrl = String(import.meta.env.VITE_MARKET_API_URL || "").replace(/\/+$/, "");
-const normalizeMarketApiUrl = (value: string) => value.trim().replace(/\/+$/, "");
+const normalizeMarketApiUrl = (value: string) => {
+  const raw = value.trim();
+  if (!raw) return "";
+  try {
+    const parsed = new URL(raw);
+    parsed.hash = "";
+    parsed.search = "";
+    parsed.pathname = parsed.pathname.replace(/\/(?:health|quotes)\/?$/i, "").replace(/\/+$/, "");
+    return parsed.toString().replace(/\/+$/, "");
+  } catch {
+    return raw.replace(/\/(?:health|quotes)\/?$/i, "").replace(/\/+$/, "");
+  }
+};
+const bundledMarketApiUrl = normalizeMarketApiUrl(String(import.meta.env.VITE_MARKET_API_URL || ""));
 const quoteTime = (value: string) => {
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString("es-PE");
@@ -99,6 +112,14 @@ const quoteTime = (value: string) => {
 
 const mascotAsset = `${import.meta.env.BASE_URL}brand/research-mascot-512.png`;
 const heroAsset = `${import.meta.env.BASE_URL}brand/research-lab-hero.webp`;
+const emptyBacktestHistory: BacktestHistoryDataset = {
+  schemaVersion: 1,
+  generatedAt: "",
+  mode: "sample",
+  policy: "Cada resultado se conserva por huella; ninguna ejecución anterior se reescribe.",
+  currentFingerprint: "",
+  snapshots: [],
+};
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -290,6 +311,7 @@ export default function InvestmentApp() {
   const [view, setView] = useState<View>("dashboard");
   const [market, setMarket] = useState<MarketDataset>(demoMarket);
   const [backtest, setBacktest] = useState<BacktestDataset>(demoBacktest);
+  const [backtestHistory, setBacktestHistory] = useState<BacktestHistoryDataset>(emptyBacktestHistory);
   const [eventStudies, setEventStudies] = useState<EventStudyDataset>(demoEventStudy);
   const [fastSignals, setFastSignals] = useState<FastSignalsDataset>(demoFastSignals);
   const [riskDataset, setRiskDataset] = useState<RiskDataset>(demoRisk);
@@ -314,17 +336,39 @@ export default function InvestmentApp() {
   const [liveQuoteStatus, setLiveQuoteStatus] = useState<"disabled" | "loading" | "live" | "error">(
     bundledMarketApiUrl ? "loading" : "disabled",
   );
+  const [liveQuoteMessage, setLiveQuoteMessage] = useState("");
   const [notice, setNotice] = useState("");
   const services = useMemo(() => getFirebaseServices(), []);
   const requestedMarketSymbols = useMemo(() => Object.keys(market.stocks).sort().join(","), [market.stocks]);
 
   useEffect(() => {
-    fetch(new URL("data/market.json", document.baseURI))
-      .then((response) => (response.ok ? response.json() : Promise.reject()))
-      .then((data: MarketDataset) => {
-        if (data?.stocks && Object.keys(data.stocks).length) setMarket(data);
-      })
-      .catch(() => setMarket(demoMarket));
+    let active = true;
+
+    async function refreshMarketDataset() {
+      if (document.visibilityState === "hidden") return;
+      try {
+        const resource = new URL("data/market.json", document.baseURI);
+        resource.searchParams.set("v", String(Date.now()));
+        const response = await fetch(resource, { cache: "no-store" });
+        if (!response.ok) throw new Error("Mercado no disponible");
+        const data = (await response.json()) as MarketDataset;
+        if (active && data?.stocks && Object.keys(data.stocks).length) setMarket(data);
+      } catch {
+        // Conserva la última copia válida o la demostración inicial.
+      }
+    }
+
+    void refreshMarketDataset();
+    const timer = window.setInterval(() => void refreshMarketDataset(), 300_000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void refreshMarketDataset();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
   }, []);
 
   useEffect(() => {
@@ -358,8 +402,10 @@ export default function InvestmentApp() {
   }, []);
 
   useEffect(() => {
+    let active = true;
     const resources: Array<[string, (value: never) => void]> = [
       ["data/backtest.json", (value) => setBacktest(value as BacktestDataset)],
+      ["data/backtest_history.json", (value) => setBacktestHistory(value as BacktestHistoryDataset)],
       ["data/event_studies.json", (value) => setEventStudies(value as EventStudyDataset)],
       ["data/risk_model.json", (value) => setRiskDataset(value as RiskDataset)],
       ["data/research_manifest.json", (value) => setResearchManifest(value as ResearchManifest)],
@@ -372,12 +418,30 @@ export default function InvestmentApp() {
       ["data/neural_lab.json", (value) => setNeuralLab(value as NeuralLabDataset)],
       ["data/neural_prediction_ledger.json", (value) => setNeuralLedger(value as NeuralPredictionLedgerDataset)],
     ];
-    resources.forEach(([path, setter]) => {
-      fetch(new URL(path, document.baseURI))
-        .then((response) => response.ok ? response.json() : Promise.reject())
-        .then((value) => setter(value as never))
-        .catch(() => undefined);
-    });
+
+    async function refreshResearchArtifacts() {
+      if (document.visibilityState === "hidden") return;
+      await Promise.allSettled(resources.map(async ([path, setter]) => {
+        const resource = new URL(path, document.baseURI);
+        resource.searchParams.set("v", String(Date.now()));
+        const response = await fetch(resource, { cache: "no-store" });
+        if (!response.ok) throw new Error(`${path} no disponible`);
+        const value = await response.json();
+        if (active) setter(value as never);
+      }));
+    }
+
+    void refreshResearchArtifacts();
+    const timer = window.setInterval(() => void refreshResearchArtifacts(), 300_000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void refreshResearchArtifacts();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
   }, []);
 
   useEffect(() => {
@@ -390,7 +454,6 @@ export default function InvestmentApp() {
   }, [services]);
 
   useEffect(() => {
-    if (bundledMarketApiUrl) return;
     const savedUrl = normalizeMarketApiUrl(window.localStorage.getItem("marketApiUrl") || "");
     if (savedUrl) {
       setMarketApiUrl(savedUrl);
@@ -425,26 +488,40 @@ export default function InvestmentApp() {
       setLiveQuotes({});
       setLiveQuotesGeneratedAt("");
       setLiveQuoteStatus("disabled");
+      setLiveQuoteMessage("");
       return;
     }
 
     let active = true;
     setLiveQuoteStatus("loading");
+    setLiveQuoteMessage("Comprobando /health y /quotes…");
 
     async function refreshQuotes() {
       if (document.visibilityState === "hidden") return;
       try {
+        const healthResponse = await fetch(`${marketApiUrl}/health`, { cache: "no-store" });
+        const health = await healthResponse.json().catch(() => ({})) as { alpacaConfigured?: boolean; error?: string };
+        if (!healthResponse.ok) throw new Error(health.error || `El Worker respondió ${healthResponse.status} en /health`);
+        if (!health.alpacaConfigured) throw new Error("El Worker está activo, pero no reconoce las dos claves de Alpaca");
         const response = await fetch(`${marketApiUrl}/quotes?symbols=${encodeURIComponent(requestedMarketSymbols)}`, {
           cache: "no-store",
         });
-        if (!response.ok) throw new Error("Cotizacion no disponible");
+        const errorPayload = !response.ok ? await response.json().catch(() => ({})) as { error?: string } : null;
+        if (!response.ok) throw new Error(errorPayload?.error || `El Worker respondió ${response.status} en /quotes`);
         const dataset = (await response.json()) as LiveQuoteDataset;
+        const quoteCount = Object.keys(dataset.quotes || {}).length;
+        if (!quoteCount) throw new Error("Alpaca respondió, pero no devolvió ninguna cotización permitida");
         if (!active) return;
         setLiveQuotes(dataset.quotes || {});
         setLiveQuotesGeneratedAt(dataset.generatedAt || new Date().toISOString());
         setLiveQuoteStatus("live");
-      } catch {
-        if (active) setLiveQuoteStatus("error");
+        setLiveQuoteMessage(`${quoteCount}/${requestedMarketSymbols.split(",").length} símbolos recibidos desde Alpaca IEX.`);
+      } catch (error) {
+        if (active) {
+          setLiveQuoteStatus("error");
+          const detail = error instanceof Error ? error.message : "Error de red desconocido";
+          setLiveQuoteMessage(`${detail}. Si /health abre en otra pestaña, revisa ALLOWED_ORIGINS=https://apepsis.github.io y vuelve a desplegar el Worker.`);
+        }
       }
     }
 
@@ -769,7 +846,7 @@ export default function InvestmentApp() {
           </div>
         )}
 
-        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} predictions={predictions} ledger={predictionLedger} registry={modelRegistry} monitoring={modelMonitoring} alerts={alerts} neural={neuralLab} neuralLedger={neuralLedger} />}
+        {view === "research" && <ResearchLab stock={stock} backtest={backtest} backtestHistory={backtestHistory} events={eventStudies} manifest={researchManifest} predictions={predictions} ledger={predictionLedger} registry={modelRegistry} monitoring={modelMonitoring} alerts={alerts} neural={neuralLab} neuralLedger={neuralLedger} />}
 
         {view === "methodology" && <MethodologyLab market={market} stock={stock} manifest={researchManifest} />}
 
@@ -812,7 +889,7 @@ export default function InvestmentApp() {
                 </div>
                 <div className="market-api-status">
                   <Badge tone={liveQuoteStatus === "live" ? "positive" : liveQuoteStatus === "error" ? "negative" : "neutral"}>{liveQuoteStatus === "live" ? "Alpaca IEX activo" : liveQuoteStatus === "loading" ? "Conectando" : liveQuoteStatus === "error" ? "Revisar Worker" : "Desactivado"}</Badge>
-                  <small>{liveQuotesGeneratedAt ? `Ultima consulta: ${quoteTime(liveQuotesGeneratedAt)}` : "El precio diario sigue disponible como respaldo."}</small>
+                  <small>{liveQuotesGeneratedAt ? `Ultima consulta: ${quoteTime(liveQuotesGeneratedAt)} · ${liveQuoteMessage}` : liveQuoteMessage || "El precio diario sigue disponible como respaldo."}</small>
                 </div>
               </Card>
             </div>

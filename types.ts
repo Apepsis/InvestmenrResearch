@@ -167,6 +167,20 @@ export type BacktestDataset = {
   };
 };
 
+export type BacktestHistoryDataset = {
+  schemaVersion: 1;
+  generatedAt: string;
+  mode: "live" | "sample";
+  policy: string;
+  currentFingerprint: string;
+  snapshots: Array<{
+    fingerprint: string;
+    archivedAt: string;
+    universeSize: number;
+    backtest: BacktestDataset;
+  }>;
+};
+
 export type PredictionContribution = {
   feature: string;
   rawValue: number;

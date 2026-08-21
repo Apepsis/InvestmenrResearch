@@ -8,6 +8,7 @@ test date and the complete protocol is published with the output.
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 from pathlib import Path
 from typing import Iterable
@@ -16,13 +17,75 @@ import numpy as np
 import pandas as pd
 
 from research_core import fit_logistic, fit_platt, performance_metrics, reliability_bins
+from v5_core import risk_budget
 
 
 ROOT = Path(__file__).resolve().parents[1]
 FEATURE_FILE = ROOT / "research_work" / "feature_store.json"
 OUTPUT_FILE = ROOT / "public" / "data" / "backtest.json"
+HISTORY_FILE = ROOT / "public" / "data" / "backtest_history.json"
 COST = 0.001
 REBALANCE = 60
+
+
+def measurement_fingerprint(payload: dict[str, object]) -> str:
+    """Identify the mathematical result, ignoring its generation timestamp."""
+    material = {
+        "period": payload.get("period"),
+        "horizonSessions": payload.get("horizonSessions"),
+        "rebalanceSessions": payload.get("rebalanceSessions"),
+        "transactionCostBps": payload.get("transactionCostBps"),
+        "metrics": payload.get("metrics"),
+        "equity": payload.get("equity"),
+        "calibration": payload.get("calibration"),
+    }
+    canonical = json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def append_measurement(history: dict[str, object], payload: dict[str, object]) -> str:
+    fingerprint = measurement_fingerprint(payload)
+    snapshots = history.setdefault("snapshots", [])
+    if not isinstance(snapshots, list):
+        raise ValueError("backtest_history.json contiene snapshots inválidos")
+    if not any(isinstance(item, dict) and item.get("fingerprint") == fingerprint for item in snapshots):
+        universe = payload.get("universe", [])
+        snapshots.append({
+            "fingerprint": fingerprint,
+            "archivedAt": str(payload.get("generatedAt", pd.Timestamp.utcnow().isoformat())),
+            "universeSize": len(universe) if isinstance(universe, list) else 0,
+            "backtest": payload,
+        })
+    return fingerprint
+
+
+def publish_with_history(output: dict[str, object]) -> None:
+    history: dict[str, object] = {
+        "schemaVersion": 1,
+        "generatedAt": str(output["generatedAt"]),
+        "mode": "live",
+        "policy": "Cada resultado matemáticamente distinto se conserva por huella; ninguna medición anterior se reescribe.",
+        "currentFingerprint": "",
+        "snapshots": [],
+    }
+    if HISTORY_FILE.exists():
+        loaded = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
+        if isinstance(loaded, dict):
+            history.update(loaded)
+    if OUTPUT_FILE.exists():
+        previous = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+        if isinstance(previous, dict) and previous.get("mode") == "live":
+            append_measurement(history, previous)
+    current_fingerprint = append_measurement(history, output)
+    history.update({
+        "schemaVersion": 1,
+        "generatedAt": str(output["generatedAt"]),
+        "mode": "live",
+        "currentFingerprint": current_fingerprint,
+    })
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+    HISTORY_FILE.write_text(json.dumps(history, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
 
 
 def temporal_years(frame: pd.DataFrame) -> Iterable[tuple[int, pd.DataFrame, pd.DataFrame]]:
@@ -136,8 +199,9 @@ def main() -> None:
         raise RuntimeError("No se pudo construir ningún split walk-forward")
 
     predicted = pd.concat(predictions, ignore_index=True).sort_values(["date", "ticker"])
-    returns = {key: [] for key in ("spy", "technical", "heuristic", "statistical")}
+    returns = {key: [] for key in ("spy", "technical", "heuristic", "statistical", "riskControlled")}
     dates: list[str] = []
+    risk_allocations: list[dict[str, object]] = []
     for year in sorted(predicted["date"].dt.year.unique()):
         yearly = predicted[predicted["date"].dt.year == year]
         for date in sampled_rebalance_dates(yearly):
@@ -149,6 +213,26 @@ def main() -> None:
             for key, rank in (("technical", "technical_rank"), ("heuristic", "heuristic_rank"), ("statistical", "probability")):
                 chosen = cross_section.nlargest(min(3, len(cross_section)), rank)
                 returns[key].append(float(chosen["forward_return_60"].mean()) - COST)
+            # Challenger V5: at least five names, maximum 20% per position,
+            # volatility target, CVaR proxy and defensive SPY regime.
+            selected = cross_section.nlargest(min(5, len(cross_section)), "probability")
+            annual_volatility = float(selected["vol_60"].median())
+            spy_above_sma200 = bool(float(cross_section["spy_sma_200_ratio"].median()) >= 0)
+            budget = risk_budget(annual_volatility, spy_above_sma200)
+            per_position = min(float(budget["exposure"]) / len(selected), 0.20)
+            gross_exposure = per_position * len(selected)
+            controlled_return = gross_exposure * float(selected["forward_return_60"].mean()) - COST * gross_exposure
+            returns["riskControlled"].append(controlled_return)
+            risk_allocations.append({
+                "date": date.date().isoformat(),
+                "tickers": selected["ticker"].astype(str).tolist(),
+                "grossExposure": round(gross_exposure, 6),
+                "cashWeight": round(1 - gross_exposure, 6),
+                "maxPositionWeight": round(per_position, 6),
+                "spyAboveSma200": spy_above_sma200,
+                "estimatedAnnualVolatility": round(annual_volatility, 6),
+                "dailyCvarProxy": budget["dailyCvarProxy"],
+            })
 
     if len(dates) < 4:
         raise RuntimeError("Muy pocos periodos fuera de muestra para publicar")
@@ -168,6 +252,7 @@ def main() -> None:
         "horizonSessions": 60,
         "rebalanceSessions": REBALANCE,
         "transactionCostBps": int(COST * 10_000),
+        "universe": sorted(usable["ticker"].astype(str).unique().tolist()),
         "period": {"start": dates[0], "end": dates[-1]},
         "methodology": {
             "validation": "Walk-forward anual con entrenamiento, calibración y prueba estrictamente ordenados en el tiempo.",
@@ -176,17 +261,19 @@ def main() -> None:
                 "technical": "Regla técnica determinista",
                 "heuristic": "Score transparente de mercado y riesgo",
                 "statistical": "Regresión logística L2 con calibración de Platt temporal",
+                "riskControlled": "Probabilidad estadística con objetivo de volatilidad, CVaR, régimen SMA 200, 20% máximo por posición y efectivo",
             },
             "safeguards": [
                 "La fecha máxima de entrenamiento es anterior al inicio de calibración y prueba.",
                 "La normalización se calcula exclusivamente con filas de entrenamiento.",
                 "El objetivo futuro nunca aparece dentro de la matriz de features.",
                 "Se descuentan 10 puntos básicos en cada rebalanceo de las estrategias.",
+                "El challenger limita cada posición a 20% y mantiene efectivo cuando el presupuesto de riesgo no permite exposición completa.",
                 "Los splits y sus fechas se guardan dentro del artefacto.",
             ],
             "limitations": [
                 "Los fundamentales y noticias no se retroalimentan históricamente sin archivos point-in-time confiables.",
-                "El universo actual es pequeño y está compuesto por empresas que sobreviven hoy; existe riesgo de sesgo de supervivencia.",
+                "El universo ampliado sigue compuesto por empresas vigentes hoy; existe riesgo de sesgo de supervivencia.",
                 "Las observaciones de 60 sesiones son menos numerosas que las observaciones diarias.",
                 "El backtest es evidencia exploratoria y no una garantía de rentabilidad futura.",
             ],
@@ -203,9 +290,16 @@ def main() -> None:
             "sampleSize": int(len(labels)),
             "bins": reliability_bins(probabilities, labels, bins=5),
         },
+        "riskControls": {
+            "targetAnnualVolatility": 0.12,
+            "dailyCvarLimit": 0.02,
+            "maximumPositionWeight": 0.20,
+            "defensiveExposureBelowSpySma200": 0.35,
+            "cashReturnAssumption": 0.0,
+            "allocations": risk_allocations,
+        },
     }
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+    publish_with_history(output)
     print(f"Backtest: {len(dates)} rebalanceos, {len(labels)} predicciones, Brier {brier:.4f}.")
 
 
