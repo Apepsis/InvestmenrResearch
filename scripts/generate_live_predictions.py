@@ -1,5 +1,3 @@
-"""Publish daily 5/20/60-session forecasts and an append-only ledger."""
-
 from __future__ import annotations
 
 import hashlib
@@ -44,6 +42,20 @@ def previous_probability(records: list[dict[str, Any]], ticker: str, horizon: in
     return float(max(matches, key=lambda item: str(item["predictionDate"]))["probability"])
 
 
+def preserve_first_publication(existing_by_id: dict[str, dict[str, Any]], candidate: dict[str, Any]) -> tuple[dict[str, Any], bool]:
+    """Keep the first prediction published for a deterministic daily ID.
+
+    Providers can revise the final daily bar and a manual workflow can run more
+    than once.  Re-training may therefore produce a different probability for
+    the same date/model ID.  The ledger is pre-registered: a rerun must reuse
+    the original record instead of overwriting it or failing the whole pipeline.
+    """
+    record_id = str(candidate["id"])
+    if record_id in existing_by_id:
+        return dict(existing_by_id[record_id]), True
+    return candidate, False
+
+
 def contribution_rows(model: Any, calibrator: Any, values: np.ndarray, features: list[str]) -> list[dict[str, Any]]:
     standardized = model.standardizer.transform(values.reshape(1, -1))[0]
     contributions = standardized * model.coefficients * calibrator.slope
@@ -71,8 +83,10 @@ def main() -> None:
     data_hash = file_hash(FEATURE_FILE)
     existing_payload = json.loads(LEDGER_FILE.read_text(encoding="utf-8")) if LEDGER_FILE.exists() else {"records": []}
     existing = [evaluate_record(item, price_payload["prices"]) for item in existing_payload.get("records", [])]
+    existing_by_id = {str(item["id"]): item for item in existing}
     published: list[dict[str, Any]] = []
     fit_metadata: dict[str, Any] = {}
+    reused_publications = 0
 
     for horizon in HORIZONS:
         target = f"label_excess_positive_{horizon}"
@@ -138,7 +152,9 @@ def main() -> None:
                 "decisionThreshold": 0.5,
                 "contributions": contribution_rows(model, calibrator, values, features)[:8],
             }
-            published.append(prediction)
+            frozen, reused = preserve_first_publication(existing_by_id, prediction)
+            published.append(frozen)
+            reused_publications += int(reused)
 
     records = upsert_immutable_records(existing, published)
     evaluated = sum(item.get("status") == "evaluated" for item in records)
@@ -152,6 +168,10 @@ def main() -> None:
         "hypothesis": "Probabilidad de superar a SPY en 5, 20 o 60 sesiones usando solo información disponible al publicar.",
         "predictions": published,
         "modelFits": fit_metadata,
+        "rerunPolicy": {
+            "reusedPublications": reused_publications,
+            "rule": "La primera predicción publicada para cada fecha, activo, horizonte y versión permanece congelada en reruns.",
+        },
         "limitations": [
             "La banda de incertidumbre es empírica y no garantiza cobertura futura.",
             "El universo actual fue seleccionado con información contemporánea y puede contener sesgo de supervivencia.",
@@ -167,7 +187,7 @@ def main() -> None:
         "evaluatedCount": evaluated,
         "records": records,
     }, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
-    print(f"Predicciones V5: {len(published)} actuales; ledger {len(records)}, {evaluated} evaluadas.")
+    print(f"Predicciones V5: {len(published)} actuales; ledger {len(records)}, {evaluated} evaluadas; {reused_publications} reutilizadas por rerun.")
 
 
 if __name__ == "__main__":
