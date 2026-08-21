@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:19:01+00:00",
+  "generatedAt": "2026-08-21T00:24:46+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -568,34 +568,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Apple Stock Got an Upgrade. It Could Be the AI Gatekeeper. - Barron's",
-          "source": "Barron's",
-          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNSy1ubHlUUTJtVExLNjYtTFBCbTZ1Y0NNdl9PYWhtOGRhcjBZUGd2ZkFYU1pFVUp0Y3Q4amZYXzd4YWw3TkJ2RFg0MjYzemJnZ19uTnBob0JMaEtVQWVLZVFaQktiYWFrUUlRMVhsRG0zU2UtamNlWEM4Uk1heW9jcw?oc=5",
-          "publishedAt": "Mon, 17 Aug 2026 18:37:00 GMT",
-          "sentiment": "positive",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.58,
-          "relevance": 0.69,
-          "novelty": 0.8,
-          "entityMatched": true,
-          "impactWeight": 0.3202
-        },
-        {
-          "title": "Here’s How Much You Would Have Made Owning Apple Stock In The Last 5 Years - Benzinga",
-          "source": "Benzinga",
-          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPN3k5UFFrQk5adC1kSmJQamt6Q3NBV21WaWdvMHBFa1EwREpGdnFQTE9PZ2RjZ3NIQnRwVFFacEh6ZlNaYkl4VmN5MUh2bkdIbkNHRnd3elJ4eGV6R3Z2TkVuMnJPcy0zdUh3N2FHeFppNTZZdEdoZmRZRHRrdWRpNmZMaUJlMTNPN1VnZkRpVGZSRGc3dWcwVE1MdWhDVTFUejYwTHNZbGlDdV9pVEN1U2RB?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 22:45:25 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.842,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Why is Apple stock rallying today? - Investing.com",
           "source": "Investing.com",
           "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPb3VwM0diakdQaEpUeWlTdk1LRkx3SHVnMFMtMGZzNEZ2YTlGdHVWZ2VVWGpBamVRbjh5TjNhUTlYZWMzazJjTU1Calh4cktlMkw2d2JiX1JVNXJRWXF6YlY4MV8xbC00VmF4TFJlOWh0NTdhalJ4ci1HZXBHU3IyUldkdWhmWGR2RGFTMldqTlFnVVBXUGtYSXVpOA?oc=5",
@@ -610,6 +582,34 @@
           "impactWeight": 0.0
         },
         {
+          "title": "Apple Stock Got an Upgrade. It Could Be the AI Gatekeeper. - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNSy1ubHlUUTJtVExLNjYtTFBCbTZ1Y0NNdl9PYWhtOGRhcjBZUGd2ZkFYU1pFVUp0Y3Q4amZYXzd4YWw3TkJ2RFg0MjYzemJnZ19uTnBob0JMaEtVQWVLZVFaQktiYWFrUUlRMVhsRG0zU2UtamNlWEM4Uk1heW9jcw?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 18:37:00 GMT",
+          "sentiment": "positive",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.58,
+          "relevance": 0.69,
+          "novelty": 0.8,
+          "entityMatched": true,
+          "impactWeight": 0.3202
+        },
+        {
+          "title": "What's Going On With Apple Stock Thursday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQQnREUGVRdktzS1ctOGFrS1FWUHdQVWktYUpZa2NKUU9HZ2RsTXYxWGFBOWRTUDFwRjZIWFF4OWZsOVBsVE10OWRGYnh6M1V1RmIyb1dXNW1mYmVrRGdaYmdyeUMzV1ZqdXE4cXNnRHF2el9vOGthcTZja3d5WFFSNHlnd245cWlmREY0cVpJZjR3WUpPcTVsSHN4Zw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:30:35 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.824,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Back in-stock: Most affordable M5 MacBook Air at $1,099 via Apple refurb if you're quick ($200 off new list) - 9to5Toys",
           "source": "9to5Toys",
           "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1XVE5XZUp1VmNIdnNhSWpwN1NWQXJQQkpYV3UzeS1sWmxlN2tJY3g2bTZST2hwSmdxV2pjSGtaMFVSdXdfUWlJTlZEMUdQV0lVa21kUGwtNl9MWmVNZU9qM1hPSkV5YjhwbDJIZE1pS3lTQlhaTGQtZQ?oc=5",
@@ -619,7 +619,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.893,
+          "novelty": 0.909,
           "entityMatched": true,
           "impactWeight": 0.0
         }
@@ -711,7 +711,7 @@
       "sector": "Tecnologia",
       "currency": "USD",
       "price": 481.15,
-      "changePct": -0.652,
+      "changePct": -0.465,
       "asOf": "2026-08-20",
       "score": 69.7,
       "verdict": "Analizar entrada",
@@ -725,23 +725,23 @@
         "risk": 62.1
       },
       "history": [
-        392.26,
-        423.243,
-        428.322,
-        410.491,
-        406.889,
-        420.15,
-        426.99,
-        428.05,
-        390.34,
-        367.34,
-        368.57,
-        388.84,
-        384.93,
-        390.34,
-        390.54,
-        487.46,
-        492.43,
+        391.523,
+        422.448,
+        427.517,
+        409.72,
+        406.124,
+        419.361,
+        426.188,
+        427.246,
+        389.607,
+        366.65,
+        367.877,
+        388.109,
+        384.207,
+        389.607,
+        389.806,
+        486.544,
+        491.505,
         481.15
       ],
       "technical": [
@@ -753,7 +753,7 @@
         },
         {
           "label": "RSI 14",
-          "value": "58.8",
+          "value": "59.3",
           "interpretation": "Momentum relativo; extremos requieren confirmacion adicional.",
           "tone": "positive"
         },
@@ -1027,7 +1027,7 @@
             "feature": "Penalización de riesgo",
             "group": "risk",
             "rawValue": "62.1/100",
-            "normalized": 62.0625,
+            "normalized": 62.0628,
             "weight": 15.0,
             "contribution": 1.8094,
             "formula": "(62.06 - 50) × 0.150",
@@ -1457,7 +1457,7 @@
         },
         {
           "label": "Valoracion",
-          "value": "P/E 25.1",
+          "value": "P/E 25.0",
           "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
           "tone": "neutral"
         }
