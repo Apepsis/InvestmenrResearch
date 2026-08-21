@@ -1,0 +1,61 @@
+name: Actualizar noticias y señales rápidas
+
+on:
+  schedule:
+    # Tres ejecuciones por hora, separadas 20 minutos. El desfase evita el minuto 0,
+    # que suele concentrar más trabajos programados en GitHub Actions.
+    - cron: "7,27,47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  # Evita commits simultáneos con el pipeline diario y las alertas intradía.
+  group: market-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v7
+
+      - name: Preparar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Actualizar titulares y señales rápidas
+        run: python scripts/refresh_fast_signals.py
+        env:
+          FAST_NEWS_SYMBOLS: ${{ vars.FAST_NEWS_SYMBOLS }}
+
+      - name: Guardar señales nuevas
+        id: save
+        shell: bash
+        run: |
+          git config user.name "fast-signal-bot"
+          git config user.email "fast-signal-bot@users.noreply.github.com"
+          git add public/data/fast_signals.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "data: actualizar señales rápidas"
+            git pull --rebase origin main
+            git push origin main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Los commits hechos con GITHUB_TOKEN no activan otro workflow por push.
+      - name: Volver a publicar GitHub Pages
+        if: steps.save.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main
