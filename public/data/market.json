@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T22:48:40+00:00",
+  "generatedAt": "2026-08-21T00:02:37+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -179,6 +179,20 @@
       ],
       "news": [
         {
+          "title": "BetterInvesting™ Magazine Update on Uber Technologies and American Eagle Outfitters - Yahoo! Finance Canada",
+          "source": "Yahoo! Finance Canada",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQRXNWTl9IVVh0dWJLYXgxWDhwbjhKUnpuZ3hmallyLVpBdGV5d2E3MnBobGRSUkVaVmlhbm44WVhZNnQ3RWZoSWVYTGhkbl9TM0NaSmxSNkxLZm01N1Nib29TRXZpMFhIbnNhRDdyYXRsTk1ZN3U0RkhNdGx2XzJOdERrNnMwNmJYRjl3Q3pNQVhtQmpmSXNGTS1tbVl0UnpQRUE?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 23:18:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.85,
+          "novelty": 1,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Jim Cramer tells investors to consider buying tumbling market giant - thestreet.com",
           "source": "thestreet.com",
           "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE95MTMwX3RTdnFyMW0yUEZ5eTJvelI0QklOc0dVYVIza0ZkVU9Wb0t3Q1BiSl9sMFp5cXJYdTJhb3hOdzFVWUtsNm92RFMwOWRJanZSUVpnZm4xNGxVM1h3NEpseERjdDlFaWhnd3FTV3NPWnVuaVow?oc=5",
@@ -188,7 +202,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.35,
-          "novelty": 1,
+          "novelty": 1.0,
           "entityMatched": false,
           "impactWeight": 0.0
         },
@@ -202,7 +216,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 1.0,
+          "novelty": 0.944,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -235,34 +249,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Uber stock drops as bookings guidance disappoints; CEO bets on robotaxi push to grow overall business - Yahoo Finance",
-          "source": "Yahoo Finance",
-          "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxQTnZnQ1V0djJtd29YQV9zakhPdHVrd0ZkYldhbTd5WnNncnBWZDBTb0Eyang5aURsOTZETzFHbTI3OUhpWVQ2M1FKQ3pJRnA1RnNucUpxVzdJcHM0bEtRdC1TemxEa1F4aG81MjhUaUJxTTh4RlJ5NjRXTmd4eWNkdGZzTlNHeHBZb0lRUGxIU3g2c0dFZEFub1hkcG5PWVFYQ3ZEcGRHankydzlqdW13eWU4cUhOZHNDVW9zWEpjRHgxT0stQUhyVW83UEtzb3JvVmlMMDRiZ1NXU1FCYW5jM2lNdWNVSDVRcG5pUE4tM2pnbGdTMnI4?oc=5",
-          "publishedAt": "Wed, 05 Aug 2026 07:00:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "administración",
-          "duration": "medium",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.9,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
-          "title": "2 S&P 500 Stocks to Research Further and 1 We Ignore - StockStory",
-          "source": "StockStory",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaUQxTjh4MTRyVFhib0RJWXMwMWhiMU5BUUV0NHlPNjJUM1JRamsyQlBKZDhMT1BrV1R2WHMtNEc0ZUJ5RzVORHMyMWlkVnVhVlBJSVFWRkc0RldOU1d4d19icUpZNjl2aDlhNmI4ckxGdGlnZ3hwRG5XSlRnbVNTb2pQRmltNjFJbmJHZFdIM0I1VEM5ZXdEVTlfQmRVTU5JNlNwX1ljTmwzNDVHVnFmSzg5OF8?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 09:24:09 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.35,
-          "novelty": 1.0,
-          "entityMatched": false,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Uber stock sinks 5% after weak guidance despite revenue growth - CNBC",
           "source": "CNBC",
           "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE92REFDeW1weGZBZkFQUlhyTHZrZ1o1T3RNU2FDa3d6dWRhb2ZtdUVlRWoyTU9tYXVwekZ2cVFEOTlhdFAwaWFlaFVFa0ZqVUxUWUNjSXd6NHR4R09UTzBsellQdVU3MW54RktwaWlEZ01td9IBd0FVX3lxTFA5V0d1Y3BIYWFZaEg4V0N6MHBKWjlhR3FLQVp5TU5aeEFmZGFwT3h6VC1UNkU2SWVyZXA5OEJhLWRXRlV2cFRXVl9ybU5fMjJNS2ZWX1pQRDIwVzdFNFNESThwSWZ0UV9FQjU4OW5EemlPakZyWk5R?oc=5",
@@ -275,6 +261,20 @@
           "novelty": 0.812,
           "entityMatched": true,
           "impactWeight": 0.3252
+        },
+        {
+          "title": "2 S&P 500 Stocks to Research Further and 1 We Ignore - StockStory",
+          "source": "StockStory",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaUQxTjh4MTRyVFhib0RJWXMwMWhiMU5BUUV0NHlPNjJUM1JRamsyQlBKZDhMT1BrV1R2WHMtNEc0ZUJ5RzVORHMyMWlkVnVhVlBJSVFWRkc0RldOU1d4d19icUpZNjl2aDlhNmI4ckxGdGlnZ3hwRG5XSlRnbVNTb2pQRmltNjFJbmJHZFdIM0I1VEM5ZXdEVTlfQmRVTU5JNlNwX1ljTmwzNDVHVnFmSzg5OF8?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:24:09 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.35,
+          "novelty": 0.944,
+          "entityMatched": false,
+          "impactWeight": 0.0
         },
         {
           "title": "The Discount On UBER Stock Looks Overdone - Trefis",
@@ -582,20 +582,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "What's Going On With Apple Stock Thursday? - Benzinga",
-          "source": "Benzinga",
-          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQQnREUGVRdktzS1ctOGFrS1FWUHdQVWktYUpZa2NKUU9HZ2RsTXYxWGFBOWRTUDFwRjZIWFF4OWZsOVBsVE10OWRGYnh6M1V1RmIyb1dXNW1mYmVrRGdaYmdyeUMzV1ZqdXE4cXNnRHF2el9vOGthcTZja3d5WFFSNHlnd245cWlmREY0cVpJZjR3WUpPcTVsSHN4Zw?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 14:30:35 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.824,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Apple Stock Got an Upgrade. It Could Be the AI Gatekeeper. - Barron's",
           "source": "Barron's",
           "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNSy1ubHlUUTJtVExLNjYtTFBCbTZ1Y0NNdl9PYWhtOGRhcjBZUGd2ZkFYU1pFVUp0Y3Q4amZYXzd4YWw3TkJ2RFg0MjYzemJnZ19uTnBob0JMaEtVQWVLZVFaQktiYWFrUUlRMVhsRG0zU2UtamNlWEM4Uk1heW9jcw?oc=5",
@@ -608,6 +594,20 @@
           "novelty": 0.8,
           "entityMatched": true,
           "impactWeight": 0.3202
+        },
+        {
+          "title": "What's Going On With Apple Stock Thursday? - Benzinga",
+          "source": "Benzinga",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQQnREUGVRdktzS1ctOGFrS1FWUHdQVWktYUpZa2NKUU9HZ2RsTXYxWGFBOWRTUDFwRjZIWFF4OWZsOVBsVE10OWRGYnh6M1V1RmIyb1dXNW1mYmVrRGdaYmdyeUMzV1ZqdXE4cXNnRHF2el9vOGthcTZja3d5WFFSNHlnd245cWlmREY0cVpJZjR3WUpPcTVsSHN4Zw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 14:30:35 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.824,
+          "entityMatched": true,
+          "impactWeight": 0.0
         },
         {
           "title": "Back in-stock: Most affordable M5 MacBook Air at $1,099 via Apple refurb if you're quick ($200 off new list) - 9to5Toys",
@@ -887,24 +887,24 @@
           "impactWeight": 0.4006
         },
         {
-          "title": "Up almost 20%, Here’s Why Microsoft Stock Could Rise Even Further - Barchart.com",
-          "source": "Barchart.com",
-          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOWHpQNW5ZV1dla0JBOHpkRFlKZGJid20zOW5UZk1sRVN4UVNhNllRNVVKOU1nRHM2QXVfSUlrTm9PZlQ1TEpRMlRQZ0xldlRFcTVGbUlkU0dPcEZjM3IybmdMTlBQZ1Q1YkhFMlZVcEdwekprY08yOV9reTR0cXIzRmZPd01ER1hOaWNNWGxVRWE4RHgzWjl6azZKc1dVd2p5dmZfSG53R2JKQQ?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 18:12:06 GMT",
+          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
+          "source": "The Motley Fool",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.889,
+          "novelty": 0.867,
           "entityMatched": true,
           "impactWeight": 0.0
         },
         {
-          "title": "Why Microsoft Stock Dropped Today - The Motley Fool",
-          "source": "The Motley Fool",
-          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPX1dnSnJDOEhJclpPbXZOVUZ5M3BxdGF2UVVMaDdDeTJZaVFHOEEyT3VNSlRoX3o5dk1ubFQ0VTNUSHZMY2cwM01vaERsMkFLWDF0S0FnWW1QV3BMcjVHdDUyajRxZERGczVBZm5zTi1vR05wdGZhY1c5ZTF2WWNVOFNR?oc=5",
-          "publishedAt": "Mon, 17 Aug 2026 20:28:00 GMT",
+          "title": "Up almost 20%, Here’s Why Microsoft Stock Could Rise Even Further - Barchart.com",
+          "source": "Barchart.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOWHpQNW5ZV1dla0JBOHpkRFlKZGJid20zOW5UZk1sRVN4UVNhNllRNVVKOU1nRHM2QXVfSUlrTm9PZlQ1TEpRMlRQZ0xldlRFcTVGbUlkU0dPcEZjM3IybmdMTlBQZ1Q1YkhFMlZVcEdwekprY08yOV9reTR0cXIzRmZPd01ER1hOaWNNWGxVRWE4RHgzWjl6azZKc1dVd2p5dmZfSG53R2JKQQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 18:12:06 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
@@ -943,16 +943,16 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Microsoft Stock And 2 AI Infrastructure Picks For Rising Data Center Demand - simplywall.st",
-          "source": "simplywall.st",
-          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQMjRoTktkQ2VHZ3BrMnl2eVVjdWJWOXhFZzBwMFFyZUhHMHdBeEF4NGRtcW11bVpaTURrM2hmVkVNMmtlMG5WZTY4ZEYyNnBKSXRwU2t3Y0NBbHZkQW0xR1VFdDI1ZEYwYzlrYnhKTXE0QkdvaEJqdHdjcUlZS0lMak1kR0tBZy1nWEFBTGR6cDBTSHRDNVIybzFibWp0cWV5MG1MOFUwY2J4d2tuMHhnZlM5d25aT016c1E1WjNiUFZ4SEc0VzJF0gHMAUFVX3lxTFBLV2xUbFM4cUNSYWZ6ZDBwSW45X2JpZ2xKUlFtUVotWkhZbl9SOE9CNHVNS1lrclFpMmV2WFZNX3Yyd01ubE5ySzlScUQ2MmR0OEd4eG1wRUZ0UllzQmFkTExwRDdzNHlJQW1jX0RSVWtaejAtZDFPc3JDS3dPZjN3SXJraDk1TXVoZ3RfWjNUcGU4Nm0tcV9Ma1Z0YnhuYTNlQ2ZrZ1lfN243cUl3VmpraHVqaURWeExTTXc5VnB4RnZ2TmctS3FXSWZ0MA?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 03:45:52 GMT",
+          "title": "Why is Microsoft stock soaring? - ABC News - Breaking News, Latest News and Videos",
+          "source": "ABC News - Breaking News, Latest News and Videos",
+          "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBVdGEwenNmRldhNnhnMGh3TWhmWTNzRFN2V0VIMk9TUEg0aE9lRFpKVDFCclpVc0xYWVdyTEo2Mmd3YjN6SXpHMEx5RGRDQlo0VFNUeXFhbmpDZHVUSVdpQUlSSl9SLXBjdDhVd2h4R1FaSkdpeE5YTm5sSdIBgAFBVV95cUxQamJQNXRoWVFiNm4wTTZld0NLMXNLYTZYQmtEM3dpVEtzQWFxaXA4TkljWEhLRXlfdFVENTk2d3IzWXNYa0VSZVBicXVEc0JvOEhwSFE0N3JiUS1za1lFazBvOGMxT2lrakdTUzdBWWd6MjRSaXpfRDVmWm42U0dKZw?oc=5",
+          "publishedAt": "Fri, 31 Jul 2026 07:00:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.824,
+          "novelty": 0.8,
           "entityMatched": true,
           "impactWeight": 0.0
         }
@@ -1511,6 +1511,20 @@
       ],
       "news": [
         {
+          "title": "Cathie Wood and Stanley Druckenmiller Agree On Amazon (AMZN) and Alphabet (GOOGL) - Yahoo Finance",
+          "source": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPMW5OMmIwWUg3ZDdTalVJTWtXZjFDeUpvbEJUUUtQdjlXQzFMeHpjZ1ZxU2F3WG5zeFktdnpCTC1NVlcxc3lzeVV5MkRxR1NZM3dWWGNOeGZrQm16UlR2MS1FME1nTWo3ZkZ5NW9qNk50Y0xHNTc1NlBiOVBIRS1DMnhUUVJjMWxNTWJ2cGFpMXhrdDhBQ2NmT0p2QzJReWN5M3VGYXhicw?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 18:55:05 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.85,
+          "novelty": 1,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Clark, Amazon Web Services convene inaugural AI Agents Academy - Clark University",
           "source": "Clark University",
           "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOblhQb1VIdVd0ckcySzNMTXFrVE5zeWM3QU16b3BMMnpqZUZsbmFjVHJkZWw1YmhPRWpNeFhYaDl4SWVCdUZsOERlSzEzRWVBZHpZN09PVFBxV29fTWh2ZDRPVk1JYnMxd1R1Ym1uWnNINWVLQkhsOHJsUWZjNTRrZEN1cUdFZUNjSW9qZERJZVlOaHl0cnBmem81ZG5WU1cwMW5J?oc=5",
@@ -1520,7 +1534,7 @@
           "duration": "medium",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 1,
+          "novelty": 0.95,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -1539,20 +1553,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Here’s how Amazon’s stock could nearly double by the end of next year, according to Morgan Stanley - MarketWatch",
-          "source": "MarketWatch",
-          "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPV1RUWEpINjJIaFN6OGk5c19KQ0pJc1BuMUFnSXNrX0hLZXJsUVdNN0xkWV9OYnAyODVic2NhdXlJS1FDSVk1OWVHNlNnR3A2TXhhbWhPVUJoeGc4TTVpMnFGZXBfUnNsT2gxT2VWWmhfSWN0TEpRSmxRQ0ROaWJzT2d3cEtlSHNGbC0xZDBGdjBDcGhkdDhNM1Q5b1JUdEk0RXp6LWJhX3ZUYS1wTXZWRHctODZZeWxoT2ROWktwTDlGa0FMRUdBcG9UZE5UaEQwbmpLUQ?oc=5",
-          "publishedAt": "Mon, 17 Aug 2026 17:57:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.818,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "What's Going On With Amazon Stock Monday? - Benzinga",
           "source": "Benzinga",
           "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQQU1Ca3NzemluZU5FODlKalNubXpqV0VacmFCaHV4NEg1d2R0NmpGSmpXSTJfMjJpQlVqdDA0RXRRWlkzU3NwOFktQ2t4V0xicW00amJYNnBLRXA4NUdqVGI0THBaN3Y2QTZHQ3dkRmFQRDhfeGR2emtVMDVFRXZwWF9HY0c0WXFKeDlXWlpXd3ExcHlONmRLVzZJWWt0REZhend2eg?oc=5",
@@ -1567,6 +1567,20 @@
           "impactWeight": 0.0
         },
         {
+          "title": "Here’s how Amazon’s stock could nearly double by the end of next year, according to Morgan Stanley - MarketWatch",
+          "source": "MarketWatch",
+          "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPV1RUWEpINjJIaFN6OGk5c19KQ0pJc1BuMUFnSXNrX0hLZXJsUVdNN0xkWV9OYnAyODVic2NhdXlJS1FDSVk1OWVHNlNnR3A2TXhhbWhPVUJoeGc4TTVpMnFGZXBfUnNsT2gxT2VWWmhfSWN0TEpRSmxRQ0ROaWJzT2d3cEtlSHNGbC0xZDBGdjBDcGhkdDhNM1Q5b1JUdEk0RXp6LWJhX3ZUYS1wTXZWRHctODZZeWxoT2ROWktwTDlGa0FMRUdBcG9UZE5UaEQwbmpLUQ?oc=5",
+          "publishedAt": "Mon, 17 Aug 2026 17:57:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.818,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Stanley Druckenmiller loaded up on Amazon and chip stocks before July rout - CNBC",
           "source": "CNBC",
           "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNRDlSZnlyczVwT1BoOWxsUWI3OV9hd0dkaXY1c2JwblFOTHBUeW5fT2JacS1iOUxja0ktSlZrZ2VyT0MwbDlCTnA3ckt6N1Z0d1NvMlhSZzVKdVZKSS0wNmVocGJwVUdZbVF4eGRtdzZ5VmpFTjVMN3MyUncwWG93QmEwYmRCblpyWk5SeFA3dHkxTW9UVjVwNVhHTm93Q2p3akNLM3l3?oc=5",
@@ -1576,21 +1590,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.917,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
-          "title": "Amazon's AWS Backlog Just Hit $496 Billion: Is the Stock a Screaming Buy Under $270? - Currently.com",
-          "source": "Currently.com",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNcE9DV0dWLWtvN3d5M0Z3VElKXzVFQzhtdThjTTFMQ1pxU1ZUQjZqUUVTdmw0Sm1SaDhGMWlOS0piNEJGMVJmUlM2OEx0Z3RqaURRZ1NKZFpKQU16Y3ctZmQyMmF4TTY2dzdBZHd6eWZaR0FsQXl2NGlkNVJqZUcxYzNiZDZzdw?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 16:50:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.87,
+          "novelty": 0.789,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -1604,7 +1604,7 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.864,
+          "novelty": 0.867,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -1712,14 +1712,14 @@
       "price": 340.67,
       "changePct": -1.175,
       "asOf": "2026-08-20",
-      "score": 64.9,
+      "score": 65.2,
       "verdict": "Analizar entrada",
       "source": "live",
       "confidence": 100.0,
       "scores": {
         "technical": 60.0,
         "fundamental": 80.1,
-        "news": 50.0,
+        "news": 51.8,
         "macro": 65.0,
         "risk": 57.7
       },
@@ -1844,20 +1844,6 @@
       ],
       "news": [
         {
-          "title": "Alphabet Stock Ran After Its Ad Machine Had Already Shown Its Work - Trefis",
-          "source": "Trefis",
-          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQb0pFNlVfU0ZpYzJ3UFl2YW5TRjhLVUM4SWxWMzNMQTNJazl5ZlJfTTJUZXhoa2R3WlBmUXEtakd4QVJYZFhxeVRDcFhpSVJHX3V1UmY0SE1nN3ZQdDJMMk1aSEczeWhJSzRBbEpfV1JVQ1VCWWRQU0lPY2RBWkQ1cTU1UTJZcktDcXlCaFlEMklHMlJGN0RWTGRkNHFqNG16SGc2SURJXzh3QnJrNUx0QkRzVUNBbWpfY1Q1NUxQNXljcGIxbkhr?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 17:47:25 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 1,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "What's Going On With Marvell Stock Thursday? - Alphabet (NASDAQ:GOOGL), Alphabet (NASDAQ:GOOG), Marvell T - Benzinga",
           "source": "Benzinga",
           "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPdzZPUnUyQktMNGVqeVpIMjBVaTljYmhDdG1HQmJEOEUxcTUtX2JKd2NmcENHT0hIYng3OHktTGlPYXJzUG54THVKeERWa2N0dzFMUkNGcF9UaGE2MDVNN21LRXF4aXV4d0VCNWlYMmxVbm9YLW42Z0hyQ2hqeFdsUFlucmJNb1NhZlEyU0NRWlBXendoT1dDbnJnOWJlQjJKemRSZ2dvWUEyaEhZdHp6eDFhTGc0c3o5ejBRRGw0WFA4NWp4SDdQVVJyMDJTWElYWjRyZWVPZVFNNFdQb0ZCV0c5OW5ob3dYa2c2aGQtRWZ5cGNT?oc=5",
@@ -1867,6 +1853,20 @@
           "duration": "temporary",
           "confidence": 0.45,
           "relevance": 0.85,
+          "novelty": 1,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
+          "title": "Alphabet Stock Ran After Its Ad Machine Had Already Shown Its Work - Trefis",
+          "source": "Trefis",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQb0pFNlVfU0ZpYzJ3UFl2YW5TRjhLVUM4SWxWMzNMQTNJazl5ZlJfTTJUZXhoa2R3WlBmUXEtakd4QVJYZFhxeVRDcFhpSVJHX3V1UmY0SE1nN3ZQdDJMMk1aSEczeWhJSzRBbEpfV1JVQ1VCWWRQU0lPY2RBWkQ1cTU1UTJZcktDcXlCaFlEMklHMlJGN0RWTGRkNHFqNG16SGc2SURJXzh3QnJrNUx0QkRzVUNBbWpfY1Q1NUxQNXljcGIxbkhr?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 17:47:25 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
           "novelty": 0.9,
           "entityMatched": true,
           "impactWeight": 0.0
@@ -1886,6 +1886,20 @@
           "impactWeight": 0.0
         },
         {
+          "title": "Alphabet Inc. Cl C stock underperforms Thursday when compared to competitors - MarketWatch",
+          "source": "MarketWatch",
+          "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxORHllN21kalM4WlRfNW5LOEt6MVRNVzhtY0JmSXc4cjhXZnh0bXY1WldFbGlMT1dKbzFudVg4bnJ4Q1hpSzh3UVR0SXF2ZlloR3dIb1lNcnVNTFI5ZG5lbUxoUXFWaWNIcDM1TzVMbHd2Q3oycEY0ZUNBR2E1XzJSOG83SE9NOHl4QTZpRURNOGx6QzBzNVZYMHpDWFJBSlBWd1VFYXdEbnN0RThsU2tubUdJLXNQTHNPYnQzcGJpQTJnLWY0dV91ejBGSEFucG03WUFwSWp6Ti0zVDktRW9qbkt6MDVHQzVt?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 20:31:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "competencia",
+          "duration": "medium",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.824,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
           "title": "Alphabet: The $250 Billion Capex Offload Plan (NASDAQ:GOOG) - Seeking Alpha",
           "source": "Seeking Alpha",
           "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOb0RaRE14ZDJEQWd2V2Rod2lIVl9rTkU3RXVDZmUyeEJLZ09GMTVjakJlUmV1SzdxdTdDN1Uwdm5saUsxSkc5V0dtSjBySXBoN3dnRXNFQ1owcXd6cG5SSUxINkptc1BLUTdJbHhXN2Y4QVhCZDB0dzFUaUx5Ti11WmtzenFzSndCOXFjaw?oc=5",
@@ -1900,17 +1914,17 @@
           "impactWeight": 0.0
         },
         {
-          "title": "How to Buy SpaceX Stock & Anthropic (The Ultimate Backdoor) - MarketWise",
-          "source": "MarketWise",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1wNVBCdDRsVEtMRUh1Y0l4cngyVXluWWNibUdaNUctbkFDWnVLQzFIR1lfaDVtU2xva1ZuclVSdE9qMy02QVFWQ0lYQ1FPZnlxNS1UcGpOU0dNSF9DNnJPZVBNZy1uX3M0dmhadGpKaXdZRDRESlE?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 20:19:00 GMT",
+          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
           "confidence": 0.45,
-          "relevance": 0.35,
-          "novelty": 0.947,
-          "entityMatched": false,
+          "relevance": 0.69,
+          "novelty": 0.9,
+          "entityMatched": true,
           "impactWeight": 0.0
         },
         {
@@ -1928,32 +1942,18 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Alphabet (NASDAQ:GOOGL) Trading Down 1.2% - Here's What Happened - MarketBeat",
+          "title": "Mosaic Family Wealth Partners LLC Raises Stock Holdings in Alphabet Inc. $GOOG - MarketBeat",
           "source": "MarketBeat",
-          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOZnFsQTBPSFB6ZHpKRkpRY3hWeXhMTG1MU3ZTVjNSWWhpVU5YbHpKLV9BdXBNTm5HX1dHaWMyN2JYdjc2cmVxalRGZFdiZXU1ZGlaRWtQZ3ZRUnBfM21NMFZWMjRlS2U3QUEzalh5Q2JORkZHdnFzd2trcy1tb1lwU2VnTUdxd2tqMGlzeGllbW5NalVJMXVHM1hJY01QR0pjb3VJUWNPbDc3U1VoT3RV?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 21:51:14 GMT",
-          "sentiment": "neutral",
+          "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNQUpnU1pQRTFFWVM1LVJ2Z1h6enhaZzAzank1R2hGMXlUWTZRX2RNLWlyaFNRTUdsTHJFd2g2TmYyQkROc2lWVkdTejAwc1R0Nm1KamYyMC1CRmZXS0xTcDZ2MEI4YnNCekU2UHRqMUFhS1FvOHNzRlhoMzQycFZFZHB2V0tyaTZMSExkeTk1V0hEdy1kOVpSLUx4YndfV1hpMDhuQXpDb09JM0JybUJBalNHek80NTN1VnNvWVQ4dlM2aFRXQ3FmMmRQOEM3bjdUcUxv?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 09:12:42 GMT",
+          "sentiment": "positive",
           "eventType": "mercado",
           "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.85,
-          "novelty": 0.75,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
-          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
-          "source": "Barron's",
-          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
+          "confidence": 0.58,
           "relevance": 0.69,
-          "novelty": 0.9,
+          "novelty": 0.833,
           "entityMatched": true,
-          "impactWeight": 0.0
+          "impactWeight": 0.3335
         }
       ],
       "trace": {
@@ -1965,10 +1965,10 @@
       },
       "explanation": {
         "base": 50.0,
-        "result": 64.921,
+        "result": 65.183,
         "interval": {
-          "low": 59.92,
-          "high": 69.92,
+          "low": 60.23,
+          "high": 70.14,
           "level": 80
         },
         "dataQuality": 100.0,
@@ -2001,11 +2001,11 @@
           {
             "feature": "Eventos informativos",
             "group": "news",
-            "rawValue": "50.0/100",
-            "normalized": 50.0,
+            "rawValue": "51.8/100",
+            "normalized": 51.7509,
             "weight": 15.0,
-            "contribution": 0.0,
-            "formula": "(50.00 - 50) × 0.150",
+            "contribution": 0.2626,
+            "formula": "(51.75 - 50) × 0.150",
             "source": "Google News RSS y fuente original",
             "asOf": "2026-08-20",
             "status": "verified"
@@ -2555,7 +2555,7 @@
           "title": "JPMorgan Hints At Another Delay For Tesla Optimus Release - Investor's Business Daily",
           "source": "Investor's Business Daily",
           "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1GeEtSem03alY1bmgwMG5lMEZNQzF4S2ZMZENRd09NemlKM1I0QlU5LWRCRHdEeWlZOHU4VktRSHF3WVdFa1VaYTg2TkFnUm4tWlU1NTNRUWxLSEs0RzdBQktBZlBCd0ExMVkxd3hROHRBN1lEUkRDN2hQWEphRlU?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 19:17:00 GMT",
+          "publishedAt": "Thu, 20 Aug 2026 20:00:00 GMT",
           "sentiment": "neutral",
           "eventType": "mercado",
           "duration": "temporary",
