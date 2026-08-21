@@ -7,6 +7,8 @@ import type {
   LivePredictionsDataset,
   ModelMonitoringDataset,
   ModelRegistryDataset,
+  NeuralLabDataset,
+  NeuralPredictionLedgerDataset,
   PredictionLedgerDataset,
   ResearchManifest,
   RiskDataset,
@@ -133,6 +135,71 @@ export const demoAlerts: AlertDataset = {
   candidates: [],
   pendingAfterCooldown: 0,
   policy: "Digest deduplicado; no ejecuta operaciones.",
+};
+
+const sampleNeuralMetrics = {
+  rows: 0,
+  probabilities: 0,
+  brierScore: 0,
+  logLoss: 0,
+  accuracy: 0,
+  ece: 0,
+  temporalBlockWinRate: 0,
+  perHorizon: {},
+};
+
+const sampleNeuralCandidate = {
+  version: "Sin ejecutar",
+  candidateKind: "cold",
+  parentVersion: null,
+  artifactHash: "no-disponible",
+  metrics: sampleNeuralMetrics,
+  promotionChecks: {},
+  requiredBrierImprovement: 0,
+  qualified: false,
+  source: "trained-this-run" as const,
+};
+
+export const demoNeuralLab: NeuralLabDataset = {
+  schemaVersion: 1,
+  generatedAt: "Sin ejecutar",
+  mode: "sample",
+  modelFamily: "persistent-neural-research-v8",
+  status: "shadow-challenger",
+  hypothesis: "Una red pequeña y persistente debe superar una línea base simple fuera de muestra antes de convertirse en Champion.",
+  active: {
+    role: "shadow-challenger",
+    version: "Sin ejecutar",
+    artifactHash: "no-disponible",
+    dataHash: "no-disponible",
+    architecture: { input: 15, hidden: [24, 12], output: 3, activation: "tanh", loss: "binary-cross-entropy", optimizer: "Adam", ensembleMembers: 3 },
+    memory: { method: "Esperando primer entrenamiento", strength: 0, parentVersion: null },
+    modelPath: "models/challengers/incumbent.json",
+  },
+  reference: { kind: "regularized-logistic-baseline", version: "transparent-research-v5.0", metrics: sampleNeuralMetrics },
+  baseline: { version: "transparent-research-v5.0", metrics: sampleNeuralMetrics },
+  bestChallenger: sampleNeuralCandidate,
+  candidates: [],
+  decision: "Ejecuta el pipeline diario para entrenar y evaluar la V8.",
+  promotedThisRun: false,
+  governance: { trialCount: 0, selectionMetric: "Brier + log loss + ECE", promotionPolicy: "Todos los gates deben pasar.", archivedModelsReevaluated: 0, automaticTrading: false },
+  temporalSplit: { method: "Purged temporal shadow", trainStart: "—", trainEnd: "—", calibrationStart: "—", calibrationEnd: "—", shadowStart: "—", shadowEnd: "—", purgeSessions: 60, trainingRows: 0, calibrationRows: 0, shadowRows: 0 },
+  currentPredictions: [],
+  ledger: { records: 0, evaluated: 0 },
+  globalSensitivity: [],
+  reproducibility: { framework: "NumPy auditable", features: [], horizons: [5, 20, 60], sourceFile: "scripts/neural_core.py", trainingFile: "scripts/train_neural_challengers.py", savedWeights: true, seedsPublished: true },
+  limitations: ["La primera red todavía no ha sido entrenada."],
+  researchBasis: [],
+};
+
+export const demoNeuralLedger: NeuralPredictionLedgerDataset = {
+  generatedAt: "Sin ejecutar",
+  mode: "sample",
+  modelFamily: "persistent-neural-research-v8",
+  policy: "Append-only.",
+  recordCount: 0,
+  evaluatedCount: 0,
+  records: [],
 };
 
 export const demoEventStudy: EventStudyDataset = {

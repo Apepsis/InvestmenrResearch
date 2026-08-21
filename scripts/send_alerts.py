@@ -30,7 +30,12 @@ def parse_time(value: str) -> datetime | None:
         return None
 
 
-def build_candidates(live: dict[str, Any], monitoring: dict[str, Any], registry: dict[str, Any]) -> list[dict[str, Any]]:
+def build_candidates(
+    live: dict[str, Any],
+    monitoring: dict[str, Any],
+    registry: dict[str, Any],
+    neural: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
     for issue in monitoring.get("issues", []):
         if issue.get("severity") == "critical":
@@ -48,15 +53,27 @@ def build_candidates(live: dict[str, Any], monitoring: dict[str, Any], registry:
         by_ticker.setdefault(str(prediction["ticker"]), {})[int(prediction["horizonSessions"])] = prediction
     for ticker, horizons in by_ticker.items():
         short, medium, long = horizons.get(5), horizons.get(20), horizons.get(60)
-        if medium and long and float(medium["probability"]) >= .66 and float(long["probability"]) >= .60 and float(medium["uncertainty"]["low"]) >= .50:
+        neural_by_horizon = {
+            int(item["horizonSessions"]): item
+            for item in (neural or {}).get("currentPredictions", [])
+            if item.get("ticker") == ticker
+        } if (neural or {}).get("active", {}).get("role") == "champion" else {}
+        neural_medium, neural_long = neural_by_horizon.get(20), neural_by_horizon.get(60)
+        neural_agrees = not neural_by_horizon or (
+            neural_medium and neural_long
+            and float(neural_medium["probability"]) >= .60
+            and float(neural_long["probability"]) >= .57
+        )
+        if medium and long and neural_agrees and float(medium["probability"]) >= .66 and float(long["probability"]) >= .60 and float(medium["uncertainty"]["low"]) >= .50:
             strength = (float(medium["probability"]) + float(long["probability"])) / 2
+            agreement = " La red Champion también coincide." if neural_by_horizon else ""
             candidates.append({
                 "fingerprint": alert_fingerprint("research_opportunity", ticker),
                 "code": "research_opportunity",
                 "severity": "opportunity",
                 "ticker": ticker,
                 "title": f"Oportunidad de investigación: {ticker}",
-                "message": f"P(superar SPY): 20 sesiones {float(medium['probability']) * 100:.1f}% y 60 sesiones {float(long['probability']) * 100:.1f}%. Revisar evidencia y riesgo antes de decidir.",
+                "message": f"P(superar SPY): 20 sesiones {float(medium['probability']) * 100:.1f}% y 60 sesiones {float(long['probability']) * 100:.1f}%.{agreement} Revisar evidencia y riesgo antes de decidir.",
                 "strength": round(strength, 6),
                 "cooldownHours": 72,
             })
@@ -78,6 +95,16 @@ def build_candidates(live: dict[str, Any], monitoring: dict[str, Any], registry:
             "ticker": None,
             "title": "Nuevo champion promovido",
             "message": "El challenger con control de riesgo cumplió los criterios fuera de muestra durante tres ejecuciones diarias.",
+            "cooldownHours": 720,
+        })
+    if (neural or {}).get("promotedThisRun"):
+        candidates.append({
+            "fingerprint": alert_fingerprint("neural_model_promoted"),
+            "code": "neural_model_promoted",
+            "severity": "info",
+            "ticker": None,
+            "title": "Nuevo Neural Champion promovido",
+            "message": f"{(neural or {}).get('active', {}).get('version', 'La V8')} aprobó los gates temporales, de calibración y múltiples ensayos.",
             "cooldownHours": 720,
         })
     order = {"critical": 0, "warning": 1, "opportunity": 2, "info": 3}
@@ -103,7 +130,7 @@ def send_digest(sender: str, recipients: list[str], app_password: str, candidate
     message["Subject"] = f"Research Lab: {len(candidates)} alerta(s) para revisar"
     message["From"] = sender
     message["To"] = ", ".join(recipients)
-    lines = ["Investment Research Agent V5", f"Generado: {generated_at}", ""]
+    lines = ["Investment Research Agent V8", f"Generado: {generated_at}", ""]
     for item in candidates:
         lines.extend([f"[{str(item['severity']).upper()}] {item['title']}", str(item["message"]), ""])
     lines.extend([
@@ -121,9 +148,11 @@ def main() -> None:
     live = json.loads((DATA / "live_predictions.json").read_text(encoding="utf-8"))
     monitoring = json.loads((DATA / "model_monitoring.json").read_text(encoding="utf-8"))
     registry = json.loads((DATA / "model_registry.json").read_text(encoding="utf-8"))
+    neural_path = DATA / "neural_lab.json"
+    neural = json.loads(neural_path.read_text(encoding="utf-8")) if neural_path.exists() else None
     previous = json.loads(OUTPUT_FILE.read_text(encoding="utf-8")) if OUTPUT_FILE.exists() else {}
     history = list(previous.get("history", []))
-    candidates = build_candidates(live, monitoring, registry)
+    candidates = build_candidates(live, monitoring, registry, neural)
     pending = pending_after_cooldown(candidates, history, now)
     enabled = os.getenv("ALERTS_ENABLED", "").strip().lower() in {"1", "true", "yes", "si", "sí"}
     sender = os.getenv("ALERT_EMAIL_FROM", "").strip()

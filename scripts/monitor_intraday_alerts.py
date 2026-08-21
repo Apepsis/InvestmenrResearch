@@ -174,7 +174,7 @@ def get_quotes(api_url: str, symbols: list[str]) -> dict[str, Any]:
     query = urlencode({"symbols": ",".join(symbols)})
     request = Request(
         f"{api_url.rstrip('/')}/quotes?{query}",
-        headers={"Accept": "application/json", "User-Agent": "InvestmentResearchAgent/5.1"},
+        headers={"Accept": "application/json", "User-Agent": "InvestmentResearchAgent/8.0"},
     )
     with urlopen(request, timeout=30) as response:  # noqa: S310 - URL is a configured trusted Worker
         payload = json.loads(response.read().decode("utf-8"))
@@ -191,6 +191,11 @@ def main() -> None:
 
     market = json.loads((DATA / "market.json").read_text(encoding="utf-8"))
     live = json.loads((DATA / "live_predictions.json").read_text(encoding="utf-8"))
+    neural_path = DATA / "neural_lab.json"
+    if neural_path.exists():
+        neural = json.loads(neural_path.read_text(encoding="utf-8"))
+        if neural.get("active", {}).get("role") == "champion" and neural.get("currentPredictions"):
+            live = {"predictions": neural["currentPredictions"], "modelVersion": neural["active"]["version"]}
     previous = json.loads(ALERTS_FILE.read_text(encoding="utf-8")) if ALERTS_FILE.exists() else {}
     history = list(previous.get("history", []))
     symbols = sorted(str(value).upper() for value in market.get("stocks", {}).keys())

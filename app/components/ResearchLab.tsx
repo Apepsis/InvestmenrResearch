@@ -5,6 +5,8 @@ import type {
   LivePredictionsDataset,
   ModelMonitoringDataset,
   ModelRegistryDataset,
+  NeuralLabDataset,
+  NeuralPredictionLedgerDataset,
   PredictionLedgerDataset,
   ResearchManifest,
   ScoreContribution,
@@ -12,6 +14,7 @@ import type {
 } from "@/lib/types";
 import type { ReactNode } from "react";
 import PredictionV5Lab from "@/app/components/PredictionV5Lab";
+import NeuralV8Lab from "@/app/components/NeuralV8Lab";
 
 type Props = {
   stock: StockAnalysis;
@@ -23,6 +26,8 @@ type Props = {
   registry: ModelRegistryDataset;
   monitoring: ModelMonitoringDataset;
   alerts: AlertDataset;
+  neural: NeuralLabDataset;
+  neuralLedger: NeuralPredictionLedgerDataset;
 };
 
 const percent = (value: number, digits = 1) => `${value >= 0 ? "+" : ""}${(value * 100).toFixed(digits)}%`;
@@ -102,7 +107,7 @@ function ScoreWaterfall({ stock }: { stock: StockAnalysis }) {
   );
 }
 
-export default function ResearchLab({ stock, backtest, events, manifest, predictions, ledger, registry, monitoring, alerts }: Props) {
+export default function ResearchLab({ stock, backtest, events, manifest, predictions, ledger, registry, monitoring, alerts, neural, neuralLedger }: Props) {
   const live = backtest.mode === "live";
   const statistical = backtest.metrics.statistical;
   const spy = backtest.metrics.spy;
@@ -131,6 +136,8 @@ export default function ResearchLab({ stock, backtest, events, manifest, predict
       </div>
 
       <PredictionV5Lab ticker={stock.ticker} predictions={predictions} ledger={ledger} registry={registry} monitoring={monitoring} alerts={alerts} />
+
+      <NeuralV8Lab ticker={stock.ticker} neural={neural} ledger={neuralLedger} />
 
       <section className="research-panel">
         <div className="research-heading"><div><p className="eyebrow">Validación histórica</p><h2>Capital fuera de muestra vs. SPY</h2></div><StatusPill live={live}>{live ? `${backtest.period.start} — ${backtest.period.end}` : "Esperando pipeline"}</StatusPill></div>

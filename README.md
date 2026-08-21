@@ -5,12 +5,19 @@ Aplicacion personal de investigacion bursatil para un horizonte aproximado de
 riesgo en un score explicable. No compra ni vende activos y no garantiza
 rentabilidad.
 
-La V5 transforma el dashboard en un **Research Lab auditable y pre-registrado**. Además del
+La V8 transforma el dashboard en un **Research Lab auditable, pre-registrado y con aprendizaje persistente**. Además del
 score diario, publica validación walk-forward, comparación contra SPY,
 calibración probabilística, explicación de contribuciones, event studies,
 riesgo cuantitativo, procedencia de datos y un manifiesto reproducible por
 ejecución. También publica predicciones inmutables a 5, 20 y 60 sesiones,
 champion–challenger, drift y alertas opcionales por Gmail.
+
+La red neuronal V8 no se declara superior por existir: compite diariamente
+contra la regresión logística congelada y contra modelos anteriores. Guarda
+pesos, normalización, calibración, semillas, hash y linaje. Solo se convierte
+en Champion si mejora en un bloque temporal posterior con embargo de 60
+sesiones, estabilidad por subperiodos y un umbral que aumenta al probar más
+candidatos. Si no cumple todo, el Champion no cambia.
 
 ## Que incluye
 
@@ -43,11 +50,18 @@ champion–challenger, drift y alertas opcionales por Gmail.
   trazado de curvas y estados vivos; respeta `prefers-reduced-motion`.
 - Probabilidades del modelo estadístico evaluadas con Brier score y curvas de
   calibración.
+- Deep ensemble neuronal multi-horizonte con tres redes NumPy auditables,
+  calibración temporal, banda split-conformal y desacuerdo entre miembros.
+- Memoria EWC-style: el challenger puede continuar desde pesos del Champion
+  sin olvidar libremente los parámetros que el modelo anterior consideraba
+  importantes.
+- Model zoo persistente: conserva el mejor challenger rechazado y antiguos
+  champions para volver a evaluarlos cuando cambie el régimen.
 - Event studies de noticias frente a SPY a 1, 5 y 20 sesiones.
 - VaR, CVaR, correlaciones, beta, concentración y pruebas de estrés del
   portafolio calculados localmente en el navegador.
 - Run ID, versión del modelo, commit, cobertura y hashes SHA-256 de artefactos.
-- Dieciséis pruebas automáticas contra leakage, inmutabilidad, spam, errores del score, datos inseguros
+- Veintisiete pruebas automáticas contra leakage, inmutabilidad, spam, errores del score, datos inseguros
   y cálculos de riesgo.
 - Indicadores SMA 50/200, RSI, MACD, volatilidad y drawdown.
 - Fundamentales con SEC EDGAR cuando es posible y datos de mercado como
@@ -225,7 +239,7 @@ python scripts/validate_market_data.py public/data/market.json
 # Actualizar únicamente titulares y señales rápidas
 python scripts/refresh_fast_signals.py
 
-# Ejecutar las dieciséis pruebas
+# Ejecutar las veintisiete pruebas
 python scripts/run_tests.py
 
 # Ejecutar mercado, features, backtest, riesgo, eventos y manifiesto
@@ -284,6 +298,8 @@ invalidarian la tesis.
 ## Documentación de investigación
 
 - `RESEARCH_METHODOLOGY.md`: hipótesis, fórmulas y validación temporal.
+- `NEURAL_MODEL_V8.md`: arquitectura, memoria, promoción y fuentes técnicas.
+- `ACTIVAR_V8_NEURAL.md`: qué subir y cómo generar los primeros pesos reales.
 - `MODEL_CARD.md`: uso previsto, métricas y riesgos del modelo.
 - `DATA_CARD.md`: artefactos, fechas, datos faltantes y privacidad.
 - `CAMBIOS_V5_PREDICCIONES_ALERTAS.md`: instrucciones de la V5.

@@ -23,6 +23,23 @@ class AlertTests(unittest.TestCase):
         history = [{"fingerprint": "same", "sentAt": "2026-08-19T00:00:00+00:00"}]
         self.assertEqual(pending_after_cooldown([candidate], history, now), [])
 
+    def test_neural_champion_can_veto_statistical_opportunity(self) -> None:
+        predictions = {
+            "predictions": [
+                {"ticker": "ABC", "horizonSessions": 20, "probability": .70, "uncertainty": {"low": .55}},
+                {"ticker": "ABC", "horizonSessions": 60, "probability": .65, "uncertainty": {"low": .51}},
+            ]
+        }
+        neural = {
+            "active": {"role": "champion"},
+            "currentPredictions": [
+                {"ticker": "ABC", "horizonSessions": 20, "probability": .42},
+                {"ticker": "ABC", "horizonSessions": 60, "probability": .45},
+            ],
+        }
+        candidates = build_candidates(predictions, {"issues": []}, {"champion": {"key": "statistical"}}, neural)
+        self.assertFalse(any(item["code"] == "research_opportunity" for item in candidates))
+
 
 if __name__ == "__main__":
     unittest.main()

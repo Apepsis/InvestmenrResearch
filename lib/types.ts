@@ -268,6 +268,114 @@ export type AlertDataset = {
   policy: string;
 };
 
+export type NeuralMetricSet = {
+  rows: number;
+  probabilities: number;
+  brierScore: number;
+  logLoss: number;
+  accuracy: number;
+  ece: number;
+  temporalBlockWinRate?: number;
+  meanEnsembleDisagreement?: number;
+  perHorizon: Record<string, { brierScore: number; logLoss: number; accuracy: number; ece: number }>;
+};
+
+export type NeuralPrediction = {
+  id: string;
+  predictionDate: string;
+  ticker: string;
+  horizonSessions: 5 | 20 | 60;
+  probability: number;
+  uncertainty: {
+    low: number;
+    high: number;
+    ensembleStd: number;
+    conformalRadius80: number;
+    method: string;
+  };
+  initialPrice: number;
+  estimatedMaturityDate: string;
+  modelVersion: string;
+  modelFamily: string;
+  modelRole: "champion" | "shadow-challenger";
+  modelHash: string;
+  dataHash: string;
+  status: "pending" | "evaluated";
+  changeFromPrevious: number | null;
+  decisionThreshold: number;
+  contributions: Array<{ feature: string; probabilityContribution: number; method: string }>;
+  evaluatedOn?: string;
+  excessReturn?: number;
+  outcome?: 0 | 1;
+  correct?: boolean;
+};
+
+export type NeuralCandidate = {
+  version: string;
+  candidateKind: string;
+  parentVersion: string | null;
+  artifactHash: string;
+  metrics: NeuralMetricSet;
+  promotionChecks: Record<string, boolean>;
+  requiredBrierImprovement: number;
+  qualified: boolean;
+  source: "trained-this-run" | "re-evaluated-saved-model";
+};
+
+export type NeuralLabDataset = {
+  schemaVersion: number;
+  generatedAt: string;
+  mode: "live" | "sample";
+  modelFamily: string;
+  status: "neural-champion" | "shadow-challenger";
+  hypothesis: string;
+  active: {
+    role: "champion" | "shadow-challenger";
+    version: string;
+    artifactHash: string;
+    dataHash: string;
+    architecture: { input: number; hidden: number[]; output: number; activation: string; loss: string; optimizer: string; ensembleMembers: number };
+    memory: { method: string; strength: number; parentVersion: string | null };
+    modelPath: string;
+  };
+  reference: { kind: string; version: string; metrics: NeuralMetricSet };
+  baseline: { version: string; metrics: NeuralMetricSet };
+  bestChallenger: NeuralCandidate;
+  candidates: NeuralCandidate[];
+  decision: string;
+  promotedThisRun: boolean;
+  governance: { trialCount: number; selectionMetric: string; promotionPolicy: string; archivedModelsReevaluated: number; automaticTrading: boolean };
+  temporalSplit: {
+    method: string;
+    trainStart: string;
+    trainEnd: string;
+    calibrationStart: string;
+    calibrationEnd: string;
+    shadowStart: string;
+    shadowEnd: string;
+    purgeSessions: number;
+    trainingRows: number;
+    calibrationRows: number;
+    shadowRows: number;
+  };
+  currentPredictions: NeuralPrediction[];
+  ledger: { records: number; evaluated: number };
+  globalSensitivity: Array<{ feature: string; meanAbsoluteProbabilityChange: number; method: string }>;
+  reproducibility: { framework: string; features: string[]; horizons: number[]; sourceFile: string; trainingFile: string; savedWeights: boolean; seedsPublished: boolean };
+  limitations: string[];
+  researchBasis: Array<{ method: string; purpose: string }>;
+};
+
+export type NeuralPredictionLedgerDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  modelFamily: string;
+  policy: string;
+  recordCount: number;
+  evaluatedCount: number;
+  records: NeuralPrediction[];
+};
+
 export type EventStudyItem = {
   ticker: string;
   title: string;

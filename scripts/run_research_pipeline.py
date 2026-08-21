@@ -28,6 +28,7 @@ def main() -> None:
     run("calculate_portfolio_risk.py")
     run("run_event_study.py")
     run("generate_live_predictions.py")
+    run("train_neural_challengers.py")
     run("update_model_registry.py")
     run("monitor_model.py")
     run("send_alerts.py")

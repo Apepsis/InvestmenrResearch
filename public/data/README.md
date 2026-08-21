@@ -11,6 +11,8 @@ El workflow `.github/workflows/update-market-data.yml` genera:
 - `model_registry.json`
 - `model_monitoring.json`
 - `alerts.json`
+- `neural_lab.json`
+- `neural_prediction_ledger.json`
 - `research_manifest.json`
 
 El workflow `.github/workflows/refresh-fast-signals.yml` genera por separado:
@@ -21,3 +23,5 @@ El workflow `.github/workflows/refresh-fast-signals.yml` genera por separado:
 no existan resultados válidos, la interfaz muestra estructuras de demostración
 claramente identificadas. No edites manualmente los artefactos generados y, en
 especial, no borres `prediction_ledger.json`: es el historial pre-registrado.
+Tampoco borres `neural_prediction_ledger.json`; sus probabilidades se publican
+antes del resultado y deben permanecer inmutables.

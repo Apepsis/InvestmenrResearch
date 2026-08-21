@@ -10,6 +10,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "public" / "data"
+MODELS = ROOT / "models"
 
 
 def load(name: str) -> dict[str, Any]:
@@ -143,6 +144,56 @@ def validate_fast_signals(payload: dict[str, Any]) -> None:
                 raise ValueError("titular rápido sin identidad o procedencia temporal")
 
 
+def validate_neural_lab(payload: dict[str, Any]) -> None:
+    if payload.get("mode") != "live" or payload.get("modelFamily") != "persistent-neural-research-v8":
+        raise ValueError("neural_lab no representa una ejecución V8 real")
+    active = payload.get("active", {})
+    if active.get("role") not in {"champion", "shadow-challenger"}:
+        raise ValueError("rol neural desconocido")
+    architecture = active.get("architecture", {})
+    if architecture.get("input") != len(payload.get("reproducibility", {}).get("features", [])):
+        raise ValueError("arquitectura neural inconsistente con las variables")
+    if architecture.get("output") != 3 or architecture.get("ensembleMembers", 0) < 2:
+        raise ValueError("la red V8 debe conservar tres horizontes y un ensemble")
+    split = payload.get("temporalSplit", {})
+    if not split.get("trainEnd", "") < split.get("calibrationStart", "") <= split.get("calibrationEnd", "") < split.get("shadowStart", ""):
+        raise ValueError("posible leakage en el split neural")
+    if int(split.get("purgeSessions", 0)) < 60:
+        raise ValueError("el split neural carece del embargo de 60 sesiones")
+    for item in payload.get("currentPredictions", []):
+        probability = finite(item["probability"], "neural probability")
+        low = finite(item["uncertainty"]["low"], "neural uncertainty.low")
+        high = finite(item["uncertainty"]["high"], "neural uncertainty.high")
+        if not 0 <= low <= probability <= high <= 1:
+            raise ValueError("predicción neural fuera de rango")
+    for candidate in payload.get("candidates", []):
+        metrics = candidate.get("metrics", {})
+        for key in ("brierScore", "logLoss", "accuracy", "ece", "temporalBlockWinRate"):
+            finite(metrics[key], f"neural candidate {key}")
+    model_path = ROOT / str(active.get("modelPath", ""))
+    if not model_path.exists() or not model_path.is_relative_to(MODELS):
+        raise ValueError("el artefacto de pesos activo no existe dentro de models/")
+    model = json.loads(model_path.read_text(encoding="utf-8"))
+    if model.get("artifactHash") != active.get("artifactHash") or model.get("version") != active.get("version"):
+        raise ValueError("los pesos activos no coinciden con neural_lab")
+    serialized = json.dumps(model).lower()
+    for forbidden in ("alpaca_api_secret", "gmail_app_password", "firebase-adminsdk", "private_key"):
+        if forbidden in serialized:
+            raise ValueError("el artefacto neural contiene una cadena compatible con credenciales")
+
+
+def validate_neural_ledger(payload: dict[str, Any]) -> None:
+    records = payload.get("records", [])
+    identifiers = [item.get("id") for item in records]
+    if len(identifiers) != len(set(identifiers)):
+        raise ValueError("neural ledger contiene IDs duplicados")
+    for item in records:
+        if item.get("modelFamily") != "persistent-neural-research-v8":
+            raise ValueError("registro neural con familia incorrecta")
+        if item.get("status") not in {"pending", "evaluated"}:
+            raise ValueError("estado inválido en neural ledger")
+
+
 def main() -> None:
     validate_backtest(load("backtest.json"))
     validate_risk(load("risk_model.json"))
@@ -153,6 +204,8 @@ def main() -> None:
     validate_monitoring(load("model_monitoring.json"))
     validate_alerts(load("alerts.json"))
     validate_fast_signals(load("fast_signals.json"))
+    validate_neural_lab(load("neural_lab.json"))
+    validate_neural_ledger(load("neural_prediction_ledger.json"))
     print("Artefactos de investigación válidos.")
 
 

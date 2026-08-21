@@ -20,9 +20,9 @@ ARTIFACT_NAMES = [
     "market.json", "backtest.json", "risk_model.json", "event_studies.json",
     "live_predictions.json", "prediction_ledger.json", "model_registry.json",
     "model_monitoring.json", "alerts.json", "build_journal.json",
-    "fast_signals.json",
+    "fast_signals.json", "neural_lab.json", "neural_prediction_ledger.json",
 ]
-MODEL_VERSION = "transparent-research-v5.0"
+MODEL_VERSION = "persistent-neural-research-v8"
 
 
 def sha256(path: Path) -> str:
@@ -49,6 +49,10 @@ def main() -> None:
         path = PUBLIC_DATA / name
         if path.exists():
             artifacts.append({"name": name, "sha256": sha256(path), "bytes": path.stat().st_size})
+    for relative in ("champion.json", "neural_registry.json", "challengers/incumbent.json", "challengers/runner_up.json"):
+        path = ROOT / "models" / relative
+        if path.exists():
+            artifacts.append({"name": f"models/{relative}", "sha256": sha256(path), "bytes": path.stat().st_size})
     combined = hashlib.sha256("".join(item["sha256"] for item in artifacts).encode("utf-8")).hexdigest()
     market_path = PUBLIC_DATA / "market.json"
     market = json.loads(market_path.read_text(encoding="utf-8")) if market_path.exists() else {"stocks": {}, "errors": {}}
