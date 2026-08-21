@@ -42,7 +42,7 @@ jobs:
           VITE_MARKET_API_URL: ${{ vars.VITE_MARKET_API_URL }}
 
       - name: Subir artefacto
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist-pages
 
@@ -55,4 +55,4 @@ jobs:
     steps:
       - name: Publicar
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
