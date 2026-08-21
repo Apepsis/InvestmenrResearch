@@ -1,9 +1,9 @@
 """Create a point-in-time market feature store for temporal validation.
 
 Only features computable from information available on each date are included.
-The future 60-session return is stored as a target and is never passed to the
-model as an input.  Fundamentals and news are intentionally excluded from the
-historical model until reliable point-in-time archives exist.
+Future returns for 5, 20 and 60 sessions are stored as targets and are never
+passed to the model as inputs. Fundamentals and news are intentionally excluded
+from the historical model until reliable point-in-time archives exist.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ TICKERS_FILE = ROOT / "data" / "tickers.json"
 WORK_DIR = ROOT / "research_work"
 FEATURE_FILE = WORK_DIR / "feature_store.json"
 PRICE_FILE = WORK_DIR / "prices.json"
-HORIZON = 60
+HORIZONS = (5, 20, 60)
 
 
 def download_history(symbol: str) -> pd.DataFrame:
@@ -65,12 +65,18 @@ def market_features(frame: pd.DataFrame, spy: pd.Series) -> pd.DataFrame:
     feature["volume_z_20"] = (volume - volume.rolling(20).mean()) / volume.rolling(20).std().replace(0, np.nan)
     feature["spy_ret_20"] = aligned_spy.pct_change(20)
     feature["spy_ret_60"] = aligned_spy.pct_change(60)
+    feature["spy_sma_200_ratio"] = aligned_spy / aligned_spy.rolling(200).mean() - 1
+    feature["spy_vol_60"] = spy_daily.rolling(60).std() * np.sqrt(252)
     feature["beta_60"] = rolling_covariance / rolling_variance.replace(0, np.nan)
-    feature["forward_return_60"] = close.shift(-HORIZON) / close - 1
-    feature["forward_spy_60"] = aligned_spy.shift(-HORIZON) / aligned_spy - 1
-    feature["forward_excess_60"] = feature["forward_return_60"] - feature["forward_spy_60"]
-    feature["label_excess_positive"] = (feature["forward_excess_60"] > 0).astype(float)
-    feature.loc[feature["forward_excess_60"].isna(), "label_excess_positive"] = np.nan
+    for horizon in HORIZONS:
+        feature[f"forward_return_{horizon}"] = close.shift(-horizon) / close - 1
+        feature[f"forward_spy_{horizon}"] = aligned_spy.shift(-horizon) / aligned_spy - 1
+        feature[f"forward_excess_{horizon}"] = feature[f"forward_return_{horizon}"] - feature[f"forward_spy_{horizon}"]
+        label = f"label_excess_positive_{horizon}"
+        feature[label] = (feature[f"forward_excess_{horizon}"] > 0).astype(float)
+        feature.loc[feature[f"forward_excess_{horizon}"].isna(), label] = np.nan
+    # Compatibility alias for the V4 backtest and older consumers.
+    feature["label_excess_positive"] = feature["label_excess_positive_60"]
     return feature.replace([np.inf, -np.inf], np.nan)
 
 
@@ -123,12 +129,14 @@ def main() -> None:
     }
     feature_payload = {
         "generatedAt": pd.Timestamp.utcnow().isoformat(),
-        "horizonSessions": HORIZON,
+        "horizonSessions": list(HORIZONS),
         "features": [
             "ret_5", "ret_20", "ret_60", "sma_50_ratio", "sma_200_ratio", "rsi_14",
-            "vol_20", "vol_60", "drawdown_252", "volume_z_20", "spy_ret_20", "spy_ret_60", "beta_60",
+            "vol_20", "vol_60", "drawdown_252", "volume_z_20", "spy_ret_20", "spy_ret_60",
+            "spy_sma_200_ratio", "spy_vol_60", "beta_60",
         ],
-        "target": "label_excess_positive",
+        "targets": {str(horizon): f"label_excess_positive_{horizon}" for horizon in HORIZONS},
+        "target": "label_excess_positive_60",
         "rows": rows,
         "errors": errors,
     }

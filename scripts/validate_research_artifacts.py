@@ -35,7 +35,7 @@ def validate_backtest(payload: dict[str, Any]) -> None:
         raise ValueError("horizonte inesperado")
     if len(payload.get("equity", [])) < 4:
         raise ValueError("backtest insuficiente")
-    for name in ("spy", "technical", "heuristic", "statistical"):
+    for name in ("spy", "technical", "heuristic", "statistical", "riskControlled"):
         metric = payload.get("metrics", {}).get(name)
         if not metric:
             raise ValueError(f"falta métrica {name}")
@@ -44,6 +44,11 @@ def validate_backtest(payload: dict[str, Any]) -> None:
     for split in payload.get("methodology", {}).get("splits", []):
         if not split["trainEnd"] < split["calibrationStart"] <= split["calibrationEnd"] < split["testStart"]:
             raise ValueError(f"posible leakage temporal en {split}")
+    for allocation in payload.get("riskControls", {}).get("allocations", []):
+        if finite(allocation["maxPositionWeight"], "maxPositionWeight") > .200001:
+            raise ValueError("el challenger excede 20% por posición")
+        if not 0 <= finite(allocation["grossExposure"], "grossExposure") <= 1:
+            raise ValueError("exposición bruta fuera de rango")
 
 
 def validate_risk(payload: dict[str, Any]) -> None:
@@ -72,10 +77,60 @@ def validate_events(payload: dict[str, Any]) -> None:
                 raise ValueError(f"{key} fuera de rango")
 
 
+def validate_predictions(payload: dict[str, Any]) -> None:
+    if payload.get("horizons") != [5, 20, 60]:
+        raise ValueError("horizontes V5 inesperados")
+    for item in payload.get("predictions", []):
+        probability = finite(item["probability"], "probability")
+        low = finite(item["uncertainty"]["low"], "uncertainty.low")
+        high = finite(item["uncertainty"]["high"], "uncertainty.high")
+        if not 0 <= low <= probability <= high <= 1:
+            raise ValueError("probabilidad o incertidumbre fuera de rango")
+
+
+def validate_ledger(payload: dict[str, Any]) -> None:
+    records = payload.get("records", [])
+    identifiers = [item.get("id") for item in records]
+    if len(identifiers) != len(set(identifiers)):
+        raise ValueError("prediction ledger contiene IDs duplicados")
+    for item in records:
+        if item.get("status") not in {"pending", "evaluated"}:
+            raise ValueError("estado inválido en prediction ledger")
+        if item.get("status") == "evaluated" and "excessReturn" not in item:
+            raise ValueError("predicción evaluada sin resultado")
+
+
+def validate_registry(payload: dict[str, Any]) -> None:
+    if payload.get("champion", {}).get("key") not in {"statistical", "riskControlled"}:
+        raise ValueError("champion desconocido")
+    if int(payload.get("qualificationStreak", -1)) < 0:
+        raise ValueError("streak inválido")
+
+
+def validate_monitoring(payload: dict[str, Any]) -> None:
+    if payload.get("status") not in {"healthy", "warning", "critical"}:
+        raise ValueError("estado de monitoring inválido")
+    coverage = finite(payload.get("data", {}).get("predictionCoverage"), "predictionCoverage")
+    if not 0 <= coverage <= 1:
+        raise ValueError("cobertura de monitoring fuera de rango")
+
+
+def validate_alerts(payload: dict[str, Any]) -> None:
+    serialized = json.dumps(payload).lower()
+    for forbidden in ("gmail_app_password", "alert_email_to", "alert_email_from", "smtp.gmail.com"):
+        if forbidden in serialized:
+            raise ValueError("alerts.json expone configuración privada")
+
+
 def main() -> None:
     validate_backtest(load("backtest.json"))
     validate_risk(load("risk_model.json"))
     validate_events(load("event_studies.json"))
+    validate_predictions(load("live_predictions.json"))
+    validate_ledger(load("prediction_ledger.json"))
+    validate_registry(load("model_registry.json"))
+    validate_monitoring(load("model_monitoring.json"))
+    validate_alerts(load("alerts.json"))
     print("Artefactos de investigación válidos.")
 
 

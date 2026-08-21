@@ -16,8 +16,12 @@ PUBLIC_DATA = ROOT / "public" / "data"
 OUTPUT_FILE = PUBLIC_DATA / "research_manifest.json"
 START_FILE = ROOT / "research_work" / "pipeline_started_at.txt"
 TEST_FILE = ROOT / "research_work" / "test_summary.json"
-ARTIFACT_NAMES = ["market.json", "backtest.json", "risk_model.json", "event_studies.json", "build_journal.json"]
-MODEL_VERSION = "transparent-research-v4.0"
+ARTIFACT_NAMES = [
+    "market.json", "backtest.json", "risk_model.json", "event_studies.json",
+    "live_predictions.json", "prediction_ledger.json", "model_registry.json",
+    "model_monitoring.json", "alerts.json", "build_journal.json",
+]
+MODEL_VERSION = "transparent-research-v5.0"
 
 
 def sha256(path: Path) -> str:
@@ -60,6 +64,10 @@ def main() -> None:
     macro_coverage = macro_available / macro_expected
     coverage = max(0.0, min(1.0, .55 * asset_coverage + .30 * evidence_coverage + .15 * macro_coverage))
     tests = json.loads(TEST_FILE.read_text(encoding="utf-8")) if TEST_FILE.exists() else {}
+    ledger_path = PUBLIC_DATA / "prediction_ledger.json"
+    ledger = json.loads(ledger_path.read_text(encoding="utf-8")) if ledger_path.exists() else {"records": []}
+    alerts_path = PUBLIC_DATA / "alerts.json"
+    alerts = json.loads(alerts_path.read_text(encoding="utf-8")) if alerts_path.exists() else {"candidates": []}
     started = float(START_FILE.read_text(encoding="utf-8")) if START_FILE.exists() else time.time()
     now = datetime.now(timezone.utc)
     run_id = now.strftime("%Y%m%dT%H%M%SZ") + "-" + combined[:8]
@@ -70,7 +78,7 @@ def main() -> None:
         "modelVersion": MODEL_VERSION,
         "gitCommit": git_commit(),
         "dataHash": f"sha256:{combined}",
-        "horizon": "60 sesiones",
+        "horizon": "5, 20 y 60 sesiones",
         "assetsProcessed": len(stocks),
         "assetsExpected": expected,
         "newsClassified": sum(len(stock.get("news", [])) for stock in stocks.values()),
@@ -78,6 +86,10 @@ def main() -> None:
         "testsPassed": int(tests.get("passed", 0)),
         "dataCoverage": round(coverage * 100, 2),
         "durationSeconds": round(max(0, time.time() - started), 2),
+        "predictionsPublished": len(ledger.get("records", [])),
+        "predictionsEvaluated": sum(item.get("status") == "evaluated" for item in ledger.get("records", [])),
+        "alertsDetected": len(alerts.get("candidates", [])),
+        "alertDeliveryStatus": alerts.get("deliveryStatus", "disabled"),
         "artifacts": artifacts,
     }
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
