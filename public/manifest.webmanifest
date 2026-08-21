@@ -1,10 +1,10 @@
 {
-  "name": "Investment Research Agent",
-  "short_name": "Invest Agent",
-  "description": "Analisis de inversiones trazable y centrado en riesgo.",
+  "name": "Investment Research Lab",
+  "short_name": "Research Lab",
+  "description": "Investigacion de inversiones trazable, reproducible y centrada en riesgo.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#071411",
   "theme_color": "#071411",
-  "icons": [{"src":"./favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [{"src":"./brand/research-mascot-128.png","sizes":"128x128","type":"image/png","purpose":"any maskable"}]
 }

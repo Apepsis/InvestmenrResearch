@@ -60,6 +60,7 @@ import type {
 } from "@/lib/types";
 
 type View = "dashboard" | "analysis" | "research" | "portfolio" | "watchlist" | "methodology" | "construction" | "journal" | "settings";
+type EntryScreen = "landing" | "login" | "register";
 
 const defaultWeights: Weights = { technical: 25, fundamental: 30, news: 15, macro: 15, risk: 15 };
 const scoreLabels: Record<ScoreKey, string> = {
@@ -92,6 +93,26 @@ const quoteTime = (value: string) => {
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString("es-PE");
 };
 
+const mascotAsset = `${import.meta.env.BASE_URL}brand/research-mascot-512.png`;
+const heroAsset = `${import.meta.env.BASE_URL}brand/research-lab-hero.webp`;
+
+function BrandMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className={`brand-mascot${compact ? " compact" : ""}`}>
+      <img src={mascotAsset} alt="" aria-hidden="true" />
+    </span>
+  );
+}
+
+function BrandLockup({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={`brand-lockup${compact ? " compact" : ""}`}>
+      <BrandMark compact={compact} />
+      <div><strong>Investment</strong><span>Research Lab</span></div>
+    </div>
+  );
+}
+
 const isRecent = (value: string, minutes = 90) => {
   const parsed = new Date(value).getTime();
   return Number.isFinite(parsed) && Date.now() - parsed <= minutes * 60_000;
@@ -113,13 +134,44 @@ function ScoreRing({ score }: { score: number }) {
   );
 }
 
-function SetupNotice({ onDemo }: { onDemo: () => void }) {
+function LandingScreen({ onLogin, onRegister, onDemo }: { onLogin: () => void; onRegister: () => void; onDemo: () => void }) {
+  return (
+    <main className="landing-shell">
+      <header className="landing-header">
+        <BrandLockup />
+        <div className="landing-auth-actions">
+          <button className="landing-login" onClick={onLogin}>Iniciar sesion</button>
+          <button className="landing-signup" onClick={onRegister}>Crear cuenta</button>
+        </div>
+      </header>
+
+      <section className="landing-hero">
+        <img className="landing-hero-art" src={heroAsset} alt="El personaje verde investiga datos financieros en un laboratorio nocturno" />
+        <div className="landing-hero-shade" />
+        <div className="landing-hero-copy">
+          <p className="landing-kicker"><span /> Research Lab auditable</p>
+          <h1>Investiga antes<br />de invertir.</h1>
+          <p>
+            Un laboratorio computacional que combina mercado, fundamentales, macroeconomia y noticias
+            para producir hipotesis transparentes, reproducibles y medibles.
+          </p>
+          <button className="landing-cta" onClick={onDemo}>Explorar la investigacion <span>↗</span></button>
+          <div className="landing-proof">
+            <span><b>01</b> Datos trazables</span>
+            <span><b>02</b> Modelos explicables</span>
+            <span><b>03</b> Validacion historica</span>
+          </div>
+        </div>
+      </section>
+      <p className="landing-footnote">Proyecto independiente de investigacion. No constituye asesoria financiera.</p>
+    </main>
+  );
+}
+
+function SetupNotice({ onDemo, onBack }: { onDemo: () => void; onBack: () => void }) {
   return (
     <main className="auth-shell">
-      <div className="auth-brand">
-        <div className="brand-mark">↗</div>
-        <span>Investment Research Agent</span>
-      </div>
+      <BrandLockup />
       <Card className="setup-card">
         <p className="eyebrow">Un paso antes de ingresar</p>
         <h1>Conecta tu proyecto de Firebase</h1>
@@ -133,15 +185,16 @@ function SetupNotice({ onDemo }: { onDemo: () => void }) {
           <li>Publica las reglas incluidas en <code>firestore.rules</code>.</li>
         </ol>
         <button className="primary-button" onClick={onDemo}>Explorar la demostracion</button>
+        <button className="text-button" onClick={onBack}>Volver al inicio</button>
         <p className="fine-print">La clave web de Firebase identifica tu proyecto; la proteccion real esta en las reglas de Firestore incluidas.</p>
       </Card>
     </main>
   );
 }
 
-function AuthScreen({ onDemo }: { onDemo: () => void }) {
+function AuthScreen({ initialMode, onDemo, onBack }: { initialMode: "login" | "register"; onDemo: () => void; onBack: () => void }) {
   const services = useMemo(() => getFirebaseServices(), []);
-  const [mode, setMode] = useState<"login" | "register">("login");
+  const [mode, setMode] = useState<"login" | "register">(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -176,26 +229,51 @@ function AuthScreen({ onDemo }: { onDemo: () => void }) {
   }
 
   return (
-    <main className="auth-shell">
-      <div className="auth-brand"><div className="brand-mark">↗</div><span>Investment Research Agent</span></div>
-      <Card className="auth-card">
-        <p className="eyebrow">Investigacion personal</p>
-        <h1>{mode === "login" ? "Bienvenido de nuevo" : "Crea tu cuenta"}</h1>
-        <p className="muted">Tus posiciones, tesis y listas se sincronizan entre laptop y celular.</p>
-        <div className="auth-tabs">
-          <button className={mode === "login" ? "active" : ""} onClick={() => setMode("login")}>Ingresar</button>
-          <button className={mode === "register" ? "active" : ""} onClick={() => setMode("register")}>Registrarme</button>
+    <main className="auth-experience">
+      <section className="auth-form-panel">
+        <div className="auth-form-top">
+          <BrandLockup />
+          <button className="auth-back" onClick={onBack}>← Volver</button>
         </div>
-        <form onSubmit={submit} className="stack-form">
-          <label>Correo<input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@correo.com" /></label>
-          <label>Contrasena<input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimo 6 caracteres" /></label>
-          {error && <p className="form-error">{error}</p>}
-          <button className="primary-button" disabled={busy}>{busy ? "Procesando..." : mode === "login" ? "Ingresar" : "Crear cuenta"}</button>
-        </form>
-        <div className="or"><span>o</span></div>
-        <button className="secondary-button" onClick={googleLogin} disabled={busy}>Continuar con Google</button>
-        <button className="text-button" onClick={onDemo}>Ver demo sin iniciar sesion</button>
-      </Card>
+        <div className="auth-form-content">
+          <p className="eyebrow">Espacio de investigacion personal</p>
+          <h1>{mode === "login" ? "Bienvenido de nuevo" : "Crea tu cuenta"}</h1>
+          <p className="auth-intro">
+            {mode === "login"
+              ? "Accede a tus posiciones, tesis, alertas y predicciones registradas."
+              : "Sincroniza tu laboratorio de inversion entre laptop y celular."}
+          </p>
+
+          <button className="google-auth-button" onClick={googleLogin} disabled={busy}>
+            <span className="google-g">G</span> Continuar con Google
+          </button>
+          <div className="or"><span>o usa tu correo</span></div>
+
+          <form onSubmit={submit} className="auth-form">
+            <label>Correo electronico<input type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@correo.com" /></label>
+            <label>Contrasena<input type="password" required minLength={6} autoComplete={mode === "login" ? "current-password" : "new-password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimo 6 caracteres" /></label>
+            {error && <p className="form-error">{error}</p>}
+            <button className="auth-submit" disabled={busy}>{busy ? "Procesando..." : mode === "login" ? "Iniciar sesion" : "Crear cuenta"}</button>
+          </form>
+
+          <p className="auth-switch">
+            {mode === "login" ? "¿Todavia no tienes cuenta?" : "¿Ya tienes una cuenta?"}
+            <button onClick={() => setMode(mode === "login" ? "register" : "login")}>
+              {mode === "login" ? "Crear cuenta" : "Iniciar sesion"}
+            </button>
+          </p>
+          <button className="auth-demo-link" onClick={onDemo}>Explorar la demostracion publica →</button>
+        </div>
+      </section>
+      <aside className="auth-art-panel">
+        <img src={heroAsset} alt="Laboratorio financiero ilustrado con el personaje verde" />
+        <div className="auth-art-overlay" />
+        <div className="auth-art-copy">
+          <span>HIPOTESIS · EVIDENCIA · VALIDACION</span>
+          <strong>La investigacion deja una huella auditable.</strong>
+          <p>Cada resultado conserva fuentes, version del modelo, fecha efectiva y limitaciones.</p>
+        </div>
+      </aside>
     </main>
   );
 }
@@ -204,6 +282,7 @@ export default function InvestmentApp() {
   const [authReady, setAuthReady] = useState(!firebaseConfigured);
   const [user, setUser] = useState<User | null>(null);
   const [demo, setDemo] = useState(false);
+  const [entryScreen, setEntryScreen] = useState<EntryScreen>("landing");
   const [view, setView] = useState<View>("dashboard");
   const [market, setMarket] = useState<MarketDataset>(demoMarket);
   const [backtest, setBacktest] = useState<BacktestDataset>(demoBacktest);
@@ -490,9 +569,28 @@ export default function InvestmentApp() {
     flash(nextUrl ? "Precio de Alpaca conectado. La aplicacion probara la conexion ahora." : "Precio por minuto desactivado.");
   }
 
-  if (!authReady) return <main className="loading-screen"><div className="loader" /><span>Preparando tu espacio...</span></main>;
-  if (!firebaseConfigured && !demo) return <SetupNotice onDemo={() => setDemo(true)} />;
-  if (firebaseConfigured && !user && !demo) return <AuthScreen onDemo={() => setDemo(true)} />;
+  if (!authReady) return <main className="loading-screen"><BrandMark /><div className="loader" /><span>Preparando tu espacio...</span></main>;
+  if (!user && !demo) {
+    if (entryScreen === "landing") {
+      return (
+        <LandingScreen
+          onLogin={() => setEntryScreen("login")}
+          onRegister={() => setEntryScreen("register")}
+          onDemo={() => setDemo(true)}
+        />
+      );
+    }
+    if (!firebaseConfigured) {
+      return <SetupNotice onDemo={() => setDemo(true)} onBack={() => setEntryScreen("landing")} />;
+    }
+    return (
+      <AuthScreen
+        initialMode={entryScreen}
+        onDemo={() => setDemo(true)}
+        onBack={() => setEntryScreen("landing")}
+      />
+    );
+  }
 
   const dataTone = market.mode === "live" ? "positive" : "neutral";
   const dataLabel = market.mode === "live" ? "Datos actualizados" : "Datos de demostracion";
@@ -500,11 +598,13 @@ export default function InvestmentApp() {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <div className="brand"><div className="brand-mark">↗</div><div><strong>Investment</strong><span>Research Agent</span></div></div>
+        <div className="brand"><BrandMark compact /><div><strong>Investment</strong><span>Research Lab</span></div></div>
         <nav>{nav.map((item) => <button key={item.id} className={view === item.id ? "active" : ""} onClick={() => setView(item.id)}><span>{item.glyph}</span>{item.label}</button>)}</nav>
         <div className="sidebar-foot">
           <div className="user-chip"><div>{(user?.email ?? "D").charAt(0).toUpperCase()}</div><span><strong>{user ? "Cuenta conectada" : "Modo demo"}</strong><small>{user?.email ?? "Sin sincronizacion"}</small></span></div>
-          {user ? <button className="logout" onClick={() => services && signOut(services.auth)}>Cerrar sesion</button> : <button className="logout" onClick={() => setDemo(false)}>Ir al acceso</button>}
+          {user
+            ? <button className="logout" onClick={() => { setEntryScreen("landing"); if (services) void signOut(services.auth); }}>Cerrar sesion</button>
+            : <button className="logout" onClick={() => { setEntryScreen("landing"); setDemo(false); }}>Volver al inicio</button>}
         </div>
       </aside>
 
