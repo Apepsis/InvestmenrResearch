@@ -33,6 +33,8 @@ import {
   demoLedger,
   demoManifest,
   demoMonitoring,
+  demoNeuralLab,
+  demoNeuralLedger,
   demoPredictions,
   demoRegistry,
   demoRisk,
@@ -50,6 +52,8 @@ import type {
   MarketDataset,
   ModelMonitoringDataset,
   ModelRegistryDataset,
+  NeuralLabDataset,
+  NeuralPredictionLedgerDataset,
   Position,
   PredictionLedgerDataset,
   ResearchManifest,
@@ -296,6 +300,8 @@ export default function InvestmentApp() {
   const [modelRegistry, setModelRegistry] = useState<ModelRegistryDataset>(demoRegistry);
   const [modelMonitoring, setModelMonitoring] = useState<ModelMonitoringDataset>(demoMonitoring);
   const [alerts, setAlerts] = useState<AlertDataset>(demoAlerts);
+  const [neuralLab, setNeuralLab] = useState<NeuralLabDataset>(demoNeuralLab);
+  const [neuralLedger, setNeuralLedger] = useState<NeuralPredictionLedgerDataset>(demoNeuralLedger);
   const [selectedTicker, setSelectedTicker] = useState("UBER");
   const [positions, setPositions] = useState<Position[]>([]);
   const [watchlist, setWatchlist] = useState<WatchItem[]>([]);
@@ -363,6 +369,8 @@ export default function InvestmentApp() {
       ["data/model_registry.json", (value) => setModelRegistry(value as ModelRegistryDataset)],
       ["data/model_monitoring.json", (value) => setModelMonitoring(value as ModelMonitoringDataset)],
       ["data/alerts.json", (value) => setAlerts(value as AlertDataset)],
+      ["data/neural_lab.json", (value) => setNeuralLab(value as NeuralLabDataset)],
+      ["data/neural_prediction_ledger.json", (value) => setNeuralLedger(value as NeuralPredictionLedgerDataset)],
     ];
     resources.forEach(([path, setter]) => {
       fetch(new URL(path, document.baseURI))
@@ -761,7 +769,7 @@ export default function InvestmentApp() {
           </div>
         )}
 
-        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} predictions={predictions} ledger={predictionLedger} registry={modelRegistry} monitoring={modelMonitoring} alerts={alerts} />}
+        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} predictions={predictions} ledger={predictionLedger} registry={modelRegistry} monitoring={modelMonitoring} alerts={alerts} neural={neuralLab} neuralLedger={neuralLedger} />}
 
         {view === "methodology" && <MethodologyLab market={market} stock={stock} manifest={researchManifest} />}
 

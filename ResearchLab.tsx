@@ -1,17 +1,33 @@
 import type {
+  AlertDataset,
   BacktestDataset,
   EventStudyDataset,
+  LivePredictionsDataset,
+  ModelMonitoringDataset,
+  ModelRegistryDataset,
+  NeuralLabDataset,
+  NeuralPredictionLedgerDataset,
+  PredictionLedgerDataset,
   ResearchManifest,
   ScoreContribution,
   StockAnalysis,
 } from "@/lib/types";
 import type { ReactNode } from "react";
+import PredictionV5Lab from "@/app/components/PredictionV5Lab";
+import NeuralV8Lab from "@/app/components/NeuralV8Lab";
 
 type Props = {
   stock: StockAnalysis;
   backtest: BacktestDataset;
   events: EventStudyDataset;
   manifest: ResearchManifest;
+  predictions: LivePredictionsDataset;
+  ledger: PredictionLedgerDataset;
+  registry: ModelRegistryDataset;
+  monitoring: ModelMonitoringDataset;
+  alerts: AlertDataset;
+  neural: NeuralLabDataset;
+  neuralLedger: NeuralPredictionLedgerDataset;
 };
 
 const percent = (value: number, digits = 1) => `${value >= 0 ? "+" : ""}${(value * 100).toFixed(digits)}%`;
@@ -27,10 +43,11 @@ function Metric({ label, value, help }: { label: string; value: string; help: st
 
 function LineChart({ data, keys }: { data: Array<Record<string, string | number>>; keys: Array<{ key: string; label: string; color: string }> }) {
   if (!data.length) return <div className="chart-empty"><strong>Backtest todavía no ejecutado</strong><span>Ejecuta “Actualizar datos e investigación” en GitHub Actions.</span></div>;
+  const availableKeys = keys.filter(({ key }) => data.some((point) => Number.isFinite(Number(point[key]))));
   const width = 900;
   const height = 310;
   const pad = 28;
-  const values = data.flatMap((point) => keys.map(({ key }) => Number(point[key]))).filter(Number.isFinite);
+  const values = data.flatMap((point) => availableKeys.map(({ key }) => Number(point[key]))).filter(Number.isFinite);
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = Math.max(max - min, 0.0001);
@@ -43,9 +60,9 @@ function LineChart({ data, keys }: { data: Array<Record<string, string | number>
     <div className="research-chart-wrap">
       <svg className="research-line-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Curvas de capital del backtest">
         {[0, 1, 2, 3, 4].map((line) => <line key={line} x1={pad} x2={width - pad} y1={pad + line * ((height - pad * 2) / 4)} y2={pad + line * ((height - pad * 2) / 4)} />)}
-        {keys.map(({ key, color }) => <path key={key} d={pathFor(key)} style={{ stroke: color }} />)}
+        {availableKeys.map(({ key, color }) => <path key={key} d={pathFor(key)} style={{ stroke: color }} />)}
       </svg>
-      <div className="chart-legend">{keys.map(({ key, label, color }) => <span key={key}><i style={{ background: color }} />{label}</span>)}</div>
+      <div className="chart-legend">{availableKeys.map(({ key, label, color }) => <span key={key}><i style={{ background: color }} />{label}</span>)}</div>
       <div className="chart-axis"><span>{String(data[0]?.date ?? "")}</span><span>{String(data[data.length - 1]?.date ?? "")}</span></div>
     </div>
   );
@@ -90,7 +107,7 @@ function ScoreWaterfall({ stock }: { stock: StockAnalysis }) {
   );
 }
 
-export default function ResearchLab({ stock, backtest, events, manifest }: Props) {
+export default function ResearchLab({ stock, backtest, events, manifest, predictions, ledger, registry, monitoring, alerts, neural, neuralLedger }: Props) {
   const live = backtest.mode === "live";
   const statistical = backtest.metrics.statistical;
   const spy = backtest.metrics.spy;
@@ -100,6 +117,7 @@ export default function ResearchLab({ stock, backtest, events, manifest }: Props
     { key: "technical", label: "Técnico", color: "#f3c56c" },
     { key: "heuristic", label: "Heurístico", color: "#68a8ff" },
     { key: "statistical", label: "Estadístico", color: "#70e6b1" },
+    { key: "riskControlled", label: "Control de riesgo", color: "#d884ff" },
   ];
   return (
     <div className="research-page">
@@ -117,6 +135,10 @@ export default function ResearchLab({ stock, backtest, events, manifest }: Props
         <Metric label="Cobertura de datos" value={`${manifest.dataCoverage.toFixed(1)}%`} help={`${manifest.assetsProcessed}/${manifest.assetsExpected} activos procesados`} />
       </div>
 
+      <PredictionV5Lab ticker={stock.ticker} predictions={predictions} ledger={ledger} registry={registry} monitoring={monitoring} alerts={alerts} />
+
+      <NeuralV8Lab ticker={stock.ticker} neural={neural} ledger={neuralLedger} />
+
       <section className="research-panel">
         <div className="research-heading"><div><p className="eyebrow">Validación histórica</p><h2>Capital fuera de muestra vs. SPY</h2></div><StatusPill live={live}>{live ? `${backtest.period.start} — ${backtest.period.end}` : "Esperando pipeline"}</StatusPill></div>
         <LineChart data={backtest.equity} keys={chartKeys} />
@@ -124,7 +146,7 @@ export default function ResearchLab({ stock, backtest, events, manifest }: Props
       </section>
 
       <section className="research-panel">
-        <div className="research-heading"><div><p className="eyebrow">Comparación de modelos</p><h2>Cuatro líneas base bajo el mismo protocolo</h2></div><StatusPill live={live}>{backtest.metrics.statistical?.observations ?? 0} rebalanceos</StatusPill></div>
+        <div className="research-heading"><div><p className="eyebrow">Comparación de modelos</p><h2>Cinco métodos bajo el mismo protocolo</h2></div><StatusPill live={live}>{backtest.metrics.statistical?.observations ?? 0} rebalanceos</StatusPill></div>
         <div className="model-table">
           <div className="model-table-head"><span>Modelo</span><span>CAGR</span><span>Sharpe</span><span>Sortino</span><span>Drawdown</span><span>Aciertos</span><span>Alpha</span><span>Beta</span></div>
           {Object.entries(backtest.metrics).map(([key, metric]) => <div key={key}><strong>{backtest.methodology.models[key] ?? key}</strong><span>{live ? percent(metric.cagr) : "N/D"}</span><span>{live ? number(metric.sharpe) : "N/D"}</span><span>{live ? number(metric.sortino) : "N/D"}</span><span>{live ? percent(metric.maxDrawdown) : "N/D"}</span><span>{live ? percent(metric.hitRate) : "N/D"}</span><span>{live ? percent(metric.alpha) : "N/D"}</span><span>{live ? number(metric.beta) : "N/D"}</span></div>)}

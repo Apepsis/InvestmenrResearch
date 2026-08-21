@@ -37,11 +37,24 @@ jobs:
         run: python scripts/run_research_pipeline.py
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ALERTS_ENABLED: ${{ vars.ALERTS_ENABLED }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
 
       - name: Guardar actualizacion
         run: |
           git config user.name "market-data-bot"
           git config user.email "market-data-bot@users.noreply.github.com"
-          git add public/data/market.json public/data/backtest.json public/data/risk_model.json public/data/event_studies.json public/data/research_manifest.json public/data/build_journal.json
+          git add public/data/*.json models
           git diff --cached --quiet || git commit -m "data: actualizar mercado"
           git push
+
+      # Los commits realizados con GITHUB_TOKEN no disparan workflows por push.
+      # workflow_dispatch sí está permitido, por eso se solicita el despliegue
+      # explícitamente después de guardar los artefactos de investigación.
+      - name: Volver a publicar GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main
