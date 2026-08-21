@@ -3,7 +3,8 @@
 ## Pregunta
 
 ¿Puede un modelo transparente estimar la probabilidad de que una acción supere
-al SPY durante las siguientes 60 sesiones sin utilizar información futura?
+al SPY durante las siguientes 5, 20 o 60 sesiones sin utilizar información
+futura, publicar la predicción antes del resultado y controlar el riesgo?
 
 La aplicación separa dos salidas:
 
@@ -46,13 +47,15 @@ no reemplaza el score oficial ni modifica el experimento auditado.
 - drawdown de 252 sesiones;
 - z-score de volumen de 20 sesiones;
 - retorno del SPY de 20 y 60 sesiones;
+- distancia de SPY a SMA 200 y volatilidad de SPY a 60 sesiones;
 - beta móvil de 60 sesiones.
 
 El objetivo se calcula aparte:
 
 ```text
-exceso_futuro_60 = retorno_activo_futuro_60 - retorno_SPY_futuro_60
-label = 1 si exceso_futuro_60 > 0; en otro caso 0
+exceso_futuro_h = retorno_activo_futuro_h - retorno_SPY_futuro_h
+label_h = 1 si exceso_futuro_h > 0; en otro caso 0
+h ∈ {5, 20, 60}
 ```
 
 Las columnas futuras están prohibidas dentro de la matriz de features y existe
@@ -79,10 +82,40 @@ que sus gradientes, regularización y normalización puedan inspeccionarse.
 - Regla técnica determinista.
 - Score heurístico de mercado y riesgo.
 - Regresión logística L2 calibrada temporalmente.
+- Challenger estadístico con control de riesgo.
 
 Cada 60 sesiones las tres acciones con mayor ranking se ponderan por igual. Se
 descuentan 10 puntos básicos por rebalanceo. Se publican CAGR, Sharpe, Sortino,
 drawdown máximo, volatilidad, hit rate, alpha y beta.
+
+El challenger selecciona hasta cinco activos, limita cada peso a 20%, apunta a
+12% de volatilidad anual, usa un proxy de CVaR diario de 2% y reduce la
+exposición máxima a 35% cuando SPY está bajo su SMA 200. El resto permanece en
+efectivo con retorno asumido de 0%. Estas reglas son fijas y se evalúan con el
+mismo periodo fuera de muestra.
+
+## Ledger de predicciones
+
+Cada ejecución diaria publica una predicción por activo y horizonte. ID, fecha,
+probabilidad, banda empírica, precio inicial, versión y hash no pueden cambiar.
+Cuando existen exactamente 5, 20 o 60 observaciones posteriores, el sistema
+agrega retorno del activo, retorno de SPY, exceso y acierto. No vuelve a entrenar
+el pasado para sustituir esa predicción.
+
+La banda de incertidumbre combina error de calibración y tamaño de la muestra;
+es una medida empírica para comunicar incertidumbre, no un intervalo formal con
+cobertura garantizada.
+
+## Champion–challenger y drift
+
+El challenger solo puede convertirse en champion si mejora Sharpe al menos
+0.05, reduce drawdown al menos 5 puntos porcentuales, mantiene CAGR dentro de 2
+puntos y tiene al menos 12 observaciones. Debe cumplir todo durante tres
+ejecuciones diarias distintas. Las predicciones anteriores conservan su versión.
+
+El monitoreo publica cobertura, antigüedad de datos, desplazamientos
+estandarizados de features y Brier/accuracy realizados cuando existen al menos
+30 predicciones maduras.
 
 ## Noticias y event study
 
@@ -132,7 +165,7 @@ Cada ejecución publica:
 
 ## Limitaciones
 
-- El universo inicial produce riesgo de supervivencia.
+- El universo de 32 acciones más SPY fue seleccionado hoy y mantiene riesgo de supervivencia.
 - Los fundamentales históricos point-in-time aún no participan en el modelo
   retrospectivo.
 - Google News RSS no es un archivo completo de noticias históricas.

@@ -24,16 +24,34 @@ import ConstructionLab from "@/app/components/ConstructionLab";
 import MethodologyLab from "@/app/components/MethodologyLab";
 import PortfolioRiskLab from "@/app/components/PortfolioRiskLab";
 import ResearchLab from "@/app/components/ResearchLab";
-import { demoBacktest, demoBuildJournal, demoEventStudy, demoManifest, demoRisk } from "@/data/researchDemo";
+import {
+  demoAlerts,
+  demoBacktest,
+  demoBuildJournal,
+  demoEventStudy,
+  demoFastSignals,
+  demoLedger,
+  demoManifest,
+  demoMonitoring,
+  demoPredictions,
+  demoRegistry,
+  demoRisk,
+} from "@/data/researchDemo";
 import { firebaseConfigured, getFirebaseServices } from "@/lib/firebase";
 import type {
   JournalEntry,
   BacktestDataset,
   BuildJournal,
   EventStudyDataset,
+  FastSignalsDataset,
+  AlertDataset,
+  LivePredictionsDataset,
   LiveQuoteDataset,
   MarketDataset,
+  ModelMonitoringDataset,
+  ModelRegistryDataset,
   Position,
+  PredictionLedgerDataset,
   ResearchManifest,
   RiskDataset,
   ScoreKey,
@@ -72,6 +90,11 @@ const normalizeMarketApiUrl = (value: string) => value.trim().replace(/\/+$/, ""
 const quoteTime = (value: string) => {
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString("es-PE");
+};
+
+const isRecent = (value: string, minutes = 90) => {
+  const parsed = new Date(value).getTime();
+  return Number.isFinite(parsed) && Date.now() - parsed <= minutes * 60_000;
 };
 
 function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -185,9 +208,15 @@ export default function InvestmentApp() {
   const [market, setMarket] = useState<MarketDataset>(demoMarket);
   const [backtest, setBacktest] = useState<BacktestDataset>(demoBacktest);
   const [eventStudies, setEventStudies] = useState<EventStudyDataset>(demoEventStudy);
+  const [fastSignals, setFastSignals] = useState<FastSignalsDataset>(demoFastSignals);
   const [riskDataset, setRiskDataset] = useState<RiskDataset>(demoRisk);
   const [researchManifest, setResearchManifest] = useState<ResearchManifest>(demoManifest);
   const [buildJournal, setBuildJournal] = useState<BuildJournal>(demoBuildJournal);
+  const [predictions, setPredictions] = useState<LivePredictionsDataset>(demoPredictions);
+  const [predictionLedger, setPredictionLedger] = useState<PredictionLedgerDataset>(demoLedger);
+  const [modelRegistry, setModelRegistry] = useState<ModelRegistryDataset>(demoRegistry);
+  const [modelMonitoring, setModelMonitoring] = useState<ModelMonitoringDataset>(demoMonitoring);
+  const [alerts, setAlerts] = useState<AlertDataset>(demoAlerts);
   const [selectedTicker, setSelectedTicker] = useState("UBER");
   const [positions, setPositions] = useState<Position[]>([]);
   const [watchlist, setWatchlist] = useState<WatchItem[]>([]);
@@ -214,12 +243,47 @@ export default function InvestmentApp() {
   }, []);
 
   useEffect(() => {
+    let active = true;
+
+    async function refreshFastSignals() {
+      if (document.visibilityState === "hidden") return;
+      try {
+        const resource = new URL("data/fast_signals.json", document.baseURI);
+        resource.searchParams.set("v", String(Date.now()));
+        const response = await fetch(resource, { cache: "no-store" });
+        if (!response.ok) throw new Error("Señales rápidas no disponibles");
+        const payload = (await response.json()) as FastSignalsDataset;
+        if (active && payload?.stocks) setFastSignals(payload);
+      } catch {
+        // Conserva la última copia válida; el pipeline profundo continúa independiente.
+      }
+    }
+
+    void refreshFastSignals();
+    const timer = window.setInterval(() => void refreshFastSignals(), 120_000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void refreshFastSignals();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
+  }, []);
+
+  useEffect(() => {
     const resources: Array<[string, (value: never) => void]> = [
       ["data/backtest.json", (value) => setBacktest(value as BacktestDataset)],
       ["data/event_studies.json", (value) => setEventStudies(value as EventStudyDataset)],
       ["data/risk_model.json", (value) => setRiskDataset(value as RiskDataset)],
       ["data/research_manifest.json", (value) => setResearchManifest(value as ResearchManifest)],
       ["data/build_journal.json", (value) => setBuildJournal(value as BuildJournal)],
+      ["data/live_predictions.json", (value) => setPredictions(value as LivePredictionsDataset)],
+      ["data/prediction_ledger.json", (value) => setPredictionLedger(value as PredictionLedgerDataset)],
+      ["data/model_registry.json", (value) => setModelRegistry(value as ModelRegistryDataset)],
+      ["data/model_monitoring.json", (value) => setModelMonitoring(value as ModelMonitoringDataset)],
+      ["data/alerts.json", (value) => setAlerts(value as AlertDataset)],
     ];
     resources.forEach(([path, setter]) => {
       fetch(new URL(path, document.baseURI))
@@ -316,6 +380,10 @@ export default function InvestmentApp() {
   const currentQuote = liveQuotes[stock.ticker];
   const currentStockPrice = currentQuote?.price ?? stock.price;
   const currentStockChange = stock.price ? ((currentStockPrice - stock.price) / stock.price) * 100 : stock.changePct;
+  const fastStock = fastSignals.stocks[stock.ticker];
+  const fastItems = fastStock?.items ?? [];
+  const freshFastItems = fastItems.filter((item) => isRecent(item.firstSeenAt));
+  const fastTone = fastStock?.signal === "positive" ? "positive" : fastStock?.signal === "negative" ? "negative" : "neutral";
   const totalPortfolio = useMemo(
     () => positions.reduce((sum, position) => sum + (liveQuotes[position.ticker]?.price ?? market.stocks[position.ticker]?.price ?? position.averageCost) * position.shares, 0),
     [positions, market, liveQuotes],
@@ -442,7 +510,7 @@ export default function InvestmentApp() {
 
       <main className="main-content">
         <header className="topbar">
-          <div><p className="eyebrow">Horizonte de 1 mes a 1 ano</p><h1>{nav.find((item) => item.id === view)?.label}</h1></div>
+          <div><p className="eyebrow">Horizontes de 5, 20 y 60 sesiones</p><h1>{nav.find((item) => item.id === view)?.label}</h1></div>
           <div className="top-actions">
             <Badge tone={dataTone}>{dataLabel}</Badge>
             <label className="ticker-select"><span>Activo</span><select value={selectedTicker} onChange={(e) => setSelectedTicker(e.target.value)}>{tickers.map((ticker) => <option key={ticker}>{ticker}</option>)}</select></label>
@@ -450,6 +518,23 @@ export default function InvestmentApp() {
         </header>
 
         {notice && <div className="toast">{notice}</div>}
+
+        <section className="system-cadence" aria-label="Cadencia automática del sistema">
+          <article className={liveQuoteStatus === "live" ? "is-live" : "is-waiting"}>
+            <i /><div><span>Precio interno</span><strong>1 minuto</strong></div><small>{liveQuoteStatus === "live" ? "Alpaca IEX conectado" : "Respaldo diario"}</small>
+          </article>
+          <article className={alerts.deliveryEnabled ? "is-live" : "is-waiting"}>
+            <i /><div><span>Alertas cloud</span><strong>5 minutos</strong></div><small>{alerts.deliveryEnabled ? "Gmail activo · GitHub Actions" : "Monitor activo · correo opcional"}</small>
+          </article>
+          <article className={fastSignals.mode === "live" ? "is-live" : "is-waiting"}>
+            <i /><div><span>Noticias + señales</span><strong>20 minutos</strong></div><small>{fastSignals.mode === "live" ? `Cambio ${quoteTime(fastSignals.generatedAt)}` : "Esperando primera ejecución"}</small>
+          </article>
+          <article className={market.mode === "live" ? "is-live" : "is-waiting"}>
+            <i /><div><span>Research Lab</span><strong>1 vez al día</strong></div><small>Score, macro y backtest</small>
+          </article>
+        </section>
+
+        <div key={view} className="view-stage">
 
         {view === "dashboard" && (
           <div className="page-grid dashboard-page">
@@ -522,9 +607,32 @@ export default function InvestmentApp() {
         {view === "analysis" && (
           <div className="analysis-page">
             <section className="analysis-intro"><div><p className="eyebrow">{stock.ticker} · Analisis integrado</p><h2>{stock.name}</h2><p>La salida combina evidencias independientes, publica incertidumbre y conserva lo que invalidaría la tesis.</p><button className="link-button" onClick={() => setView("research")}>Auditar el score completo →</button></div><ScoreRing score={stock.score} /></section>
+            <Card className="fast-signal-card">
+              <div className="card-heading fast-signal-heading">
+                <div><p className="eyebrow">Radar de eventos · ciclo de 20 minutos</p><h2>Señal rápida de {stock.ticker}</h2></div>
+                <Badge tone={fastSignals.mode === "live" ? fastTone : "neutral"}>{fastSignals.mode === "live" ? `${freshFastItems.length} nuevos` : "Esperando workflow"}</Badge>
+              </div>
+              <div className="fast-signal-console">
+                <div className={`signal-radar signal-${fastTone}`} aria-hidden="true"><i /><i /><i /><b /></div>
+                <div className="fast-signal-summary">
+                  <span>Dirección</span><strong>{fastStock?.signal ?? "sin señal"}</strong><small>No ejecuta operaciones</small>
+                </div>
+                <div className="fast-signal-summary">
+                  <span>News score</span><strong>{fastStock ? fastStock.newsScore.toFixed(1) : "N/D"}</strong><small>Lectura rápida / 100</small>
+                </div>
+                <div className="fast-signal-summary">
+                  <span>Urgencia</span><strong>{fastStock?.urgency ?? "pendiente"}</strong><small>Relevancia + impacto</small>
+                </div>
+                <div className="fast-signal-summary">
+                  <span>Fuerza</span><strong>{fastStock ? `${fastStock.signalStrength.toFixed(0)}%` : "N/D"}</strong><small>Distancia desde neutral</small>
+                </div>
+              </div>
+              <p className="fast-signal-policy">{fastSignals.policy}</p>
+              {fastItems.length ? <div className="fast-news-grid">{fastItems.slice(0, 6).map((item) => <a key={item.id} href={item.url === "#" ? undefined : item.url} target="_blank" rel="noreferrer" className={isRecent(item.firstSeenAt) ? "is-new" : ""}><div><Badge tone={item.sentiment}>{isRecent(item.firstSeenAt) ? "nuevo" : item.sentiment}</Badge><span>{item.eventType}</span><span>{item.source}</span></div><strong>{item.title}</strong><small>detectada {quoteTime(item.firstSeenAt)} · relevancia {Math.round((item.relevance ?? 0) * 100)}%</small></a>)}</div> : <EmptyState title="Sin titulares rápidos todavía" text="El nuevo workflow publicará aquí únicamente cambios detectados, sin recalcular fundamentales." />}
+            </Card>
             <Card>
-              <div className="card-heading"><div><p className="eyebrow">Inteligencia propia de eventos</p><h2>Noticias clasificadas y medibles</h2></div><Badge tone={market.mode === "live" ? "positive" : "neutral"}>{stock.news.length} eventos</Badge></div>
-              <p className="live-card-copy">Estos titulares sí forman parte del dataset del agente. Se publican sentimiento, tipo, relevancia, novedad y la medición posterior cuando existe una ventana suficiente.</p>
+              <div className="card-heading"><div><p className="eyebrow">Corte profundo diario</p><h2>Evidencia incorporada al score</h2></div><Badge tone={market.mode === "live" ? "positive" : "neutral"}>{stock.news.length} eventos</Badge></div>
+              <p className="live-card-copy">Este conjunto sí participa en la ejecución oficial diaria y conserva sentimiento, tipo, relevancia, novedad y medición posterior.</p>
               <div className="news-list enriched-news-list">{stock.news.map((item) => <a key={item.title} href={item.url === "#" ? undefined : item.url} target="_blank" rel="noreferrer"><div><Badge tone={item.sentiment}>{item.sentiment}</Badge><span>{item.source}</span><span>{item.eventType}</span></div><strong>{item.title}</strong><small>confianza {Math.round(item.confidence * 100)}% · relevancia {Math.round((item.relevance ?? item.confidence) * 100)}% · novedad {Math.round((item.novelty ?? 0.5) * 100)}% · {item.entityMatched === false ? "entidad no confirmada" : "entidad confirmada"}</small></a>)}</div>
             </Card>
             <Card className="live-news-card">
@@ -553,7 +661,7 @@ export default function InvestmentApp() {
           </div>
         )}
 
-        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} />}
+        {view === "research" && <ResearchLab stock={stock} backtest={backtest} events={eventStudies} manifest={researchManifest} predictions={predictions} ledger={predictionLedger} registry={modelRegistry} monitoring={modelMonitoring} alerts={alerts} />}
 
         {view === "methodology" && <MethodologyLab market={market} stock={stock} manifest={researchManifest} />}
 
@@ -609,6 +717,7 @@ export default function InvestmentApp() {
             <Card><p className="eyebrow">Limites honestos</p><h2>Lo que este sistema no hace</h2><ul className="limits"><li>No ejecuta operaciones ni garantiza rentabilidad.</li><li>No intenta adivinar un precio futuro exacto.</li><li>El precio por minuto no recalcula automaticamente fundamentales, noticias ni score.</li><li>El backtest no convierte una correlación histórica en causalidad.</li><li>Alpaca Basic usa el feed IEX, que puede diferir de una cotizacion consolidada de todo el mercado.</li><li>La actualizacion por minuto funciona mientras la pagina esta abierta; al volver a la pestana consulta de inmediato.</li><li>No sustituye la verificacion de estados financieros o fuentes primarias.</li><li>Nunca pegues claves privadas de Alpaca dentro de GitHub ni en esta aplicacion.</li></ul></Card>
           </div>
         )}
+        </div>
       </main>
     </div>
   );

@@ -17,6 +17,29 @@ export type NewsItem = {
   impactWeight?: number;
 };
 
+export type FastNewsItem = NewsItem & {
+  id: string;
+  firstSeenAt: string;
+};
+
+export type FastSignalStock = {
+  ticker: string;
+  newsScore: number;
+  signal: "positive" | "neutral" | "negative";
+  urgency: "low" | "medium" | "high";
+  signalStrength: number;
+  items: FastNewsItem[];
+};
+
+export type FastSignalsDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  refreshIntervalMinutes: 20;
+  policy: string;
+  stocks: Record<string, FastSignalStock>;
+  errors?: Record<string, string>;
+};
+
 export type ScoreContribution = {
   feature: string;
   group: ScoreKey;
@@ -125,6 +148,124 @@ export type BacktestDataset = {
     sampleSize: number;
     bins: Array<{ predicted: number; observed: number; count: number }>;
   };
+  riskControls?: {
+    targetAnnualVolatility: number;
+    dailyCvarLimit: number;
+    maximumPositionWeight: number;
+    defensiveExposureBelowSpySma200: number;
+    cashReturnAssumption: number;
+    allocations: Array<{
+      date: string;
+      tickers: string[];
+      grossExposure: number;
+      cashWeight: number;
+      maxPositionWeight: number;
+      spyAboveSma200: boolean;
+      estimatedAnnualVolatility: number;
+      dailyCvarProxy: number;
+    }>;
+  };
+};
+
+export type PredictionContribution = {
+  feature: string;
+  rawValue: number;
+  standardizedValue: number;
+  coefficient: number;
+  logitContribution: number;
+  formula: string;
+  source: string;
+};
+
+export type PublishedPrediction = {
+  id: string;
+  predictionDate: string;
+  ticker: string;
+  horizonSessions: 5 | 20 | 60;
+  probability: number;
+  uncertainty: { low: number; high: number; method: string };
+  initialPrice: number;
+  estimatedMaturityDate: string;
+  modelVersion: string;
+  dataHash: string;
+  status: "pending" | "evaluated";
+  changeFromPrevious: number | null;
+  decisionThreshold: number;
+  contributions: PredictionContribution[];
+  evaluatedOn?: string;
+  finalPrice?: number;
+  assetReturn?: number;
+  spyReturn?: number;
+  excessReturn?: number;
+  outcome?: 0 | 1;
+  correct?: boolean;
+};
+
+export type LivePredictionsDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  modelVersion: string;
+  horizons: number[];
+  hypothesis: string;
+  predictions: PublishedPrediction[];
+  modelFits: Record<string, {
+    trainStart: string;
+    trainEnd: string;
+    calibrationStart: string;
+    calibrationEnd: string;
+    trainingRows: number;
+    calibrationRows: number;
+    brierScoreCalibration: number | null;
+  }>;
+  limitations: string[];
+};
+
+export type PredictionLedgerDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  policy: string;
+  immutableFields: string[];
+  recordCount: number;
+  evaluatedCount: number;
+  records: PublishedPrediction[];
+};
+
+export type ModelRegistryDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  champion: { key: string; version: string; metrics: BacktestMetric };
+  challenger: { key: string; version: string; metrics: BacktestMetric; rules?: Record<string, unknown> };
+  baseline: { key: string; version: string; metrics: BacktestMetric };
+  promotionCriteria: Record<string, boolean>;
+  qualifiedThisRun: boolean;
+  qualificationStreak: number;
+  requiredStreak: number;
+  lastQualificationDate: string;
+  decision: string;
+  guardrail: string;
+};
+
+export type ModelMonitoringDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  status: "healthy" | "warning" | "critical";
+  data: { predictionCoverage: number; predictionsPublished: number; predictionsExpected: number; marketDataAgeHours: number; providerErrors: number };
+  featureDrift: { maximumAbsoluteShift: number; thresholdWarning: number; thresholdCritical: number; topShifts: Array<{ feature: string; referenceMean: number; latestMean: number; standardizedShift: number }> };
+  performance: { evaluatedPredictions: number; recentWindow: number; accuracy: number | null; brierScore: number | null; minimumWindowForAlert: number };
+  governance: { champion: string; challengerQualified: boolean; qualificationStreak: number };
+  issues: Array<{ code: string; severity: "warning" | "critical"; message: string }>;
+  interpretation: string;
+};
+
+export type AlertDataset = {
+  generatedAt: string;
+  mode: "live" | "sample";
+  deliveryEnabled: boolean;
+  deliveryStatus: "disabled" | "misconfigured" | "no-new-alerts" | "sent" | "failed";
+  newAlertsSent: number;
+  candidates: Array<{ fingerprint: string; code: string; severity: "critical" | "warning" | "opportunity" | "info"; ticker: string | null; title: string; message: string }>;
+  pendingAfterCooldown: number;
+  policy: string;
 };
 
 export type EventStudyItem = {
@@ -184,6 +325,10 @@ export type ResearchManifest = {
   testsPassed: number;
   dataCoverage: number;
   durationSeconds: number;
+  predictionsPublished?: number;
+  predictionsEvaluated?: number;
+  alertsDetected?: number;
+  alertDeliveryStatus?: string;
   artifacts: Array<{ name: string; sha256: string; bytes: number }>;
 };
 

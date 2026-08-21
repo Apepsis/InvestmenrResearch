@@ -1,4 +1,4 @@
-# Model Card — transparent-research-v4.0
+# Model Card — transparent-research-v5.0
 
 ## Uso previsto
 
@@ -11,7 +11,10 @@ invalidación. No ejecuta operaciones ni reemplaza asesoría financiera.
 | Componente | Salida | Validación |
 | --- | --- | --- |
 | Score determinista | 0–100 y contribuciones | Reconciliación exacta |
-| Modelo estadístico | Probabilidad de exceso positivo a 60 sesiones | Walk-forward y Brier score |
+| Modelo estadístico | Probabilidad de exceso positivo a 5, 20 y 60 sesiones | Separación temporal y Brier score |
+| Ledger | Predicción congelada y resultado maduro | ID determinista, hash y pruebas de inmutabilidad |
+| Risk-controlled challenger | Asignación con efectivo y límites | Mismo backtest fuera de muestra que el champion |
+| Monitoring | Cobertura, staleness, drift y precisión | Umbrales publicados y ventana mínima |
 | Clasificador de noticias | Sentimiento, evento, relevancia y novedad | Línea base hasta completar etiquetas humanas |
 | Modelo de riesgo | VaR, CVaR, beta, correlación y estrés | Pruebas unitarias y rangos |
 
@@ -33,12 +36,13 @@ invalidación. No ejecuta operaciones ni reemplaza asesoría financiera.
 
 ## Riesgos de uso
 
-- Extrapolación desde un universo pequeño.
+- Extrapolación desde un universo contemporáneo de 32 acciones.
 - Sesgo de supervivencia.
 - Revisiones posteriores de datos fundamentales.
 - Cambios de régimen económico.
 - Dependencias externas y disponibilidad desigual.
 - Interpretar una probabilidad como certeza.
+- Confundir la banda empírica con un intervalo de confianza formal.
 
 ## Decisiones de seguridad
 
@@ -46,3 +50,5 @@ invalidación. No ejecuta operaciones ni reemplaza asesoría financiera.
 - Firestore separa documentos por UID.
 - Los artefactos públicos no contienen posiciones personales.
 - La validación rechaza cadenas compatibles con credenciales privadas.
+- Gmail usa una contraseña de aplicación guardada solo como secreto de GitHub;
+  el archivo público no contiene remitente, destinatarios ni contraseña.

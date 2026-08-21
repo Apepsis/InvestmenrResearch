@@ -17,6 +17,11 @@ export default function MethodologyLab({ market, stock, manifest }: Props) {
     { name: "backtest.json", sha256: "Se genera durante el workflow", bytes: 0 },
     { name: "risk_model.json", sha256: "Se genera durante el workflow", bytes: 0 },
     { name: "event_studies.json", sha256: "Se genera durante el workflow", bytes: 0 },
+    { name: "live_predictions.json", sha256: "Se genera durante el workflow", bytes: 0 },
+    { name: "prediction_ledger.json", sha256: "Se genera durante el workflow", bytes: 0 },
+    { name: "model_registry.json", sha256: "Se genera durante el workflow", bytes: 0 },
+    { name: "model_monitoring.json", sha256: "Se genera durante el workflow", bytes: 0 },
+    { name: "alerts.json", sha256: "Se genera durante el workflow", bytes: 0 },
   ];
   return (
     <div className="methodology-page">
@@ -39,19 +44,19 @@ export default function MethodologyLab({ market, stock, manifest }: Props) {
           <div className="architecture-stack">
             <article><span>01</span><div><strong>Ingesta</strong><p>SEC, FRED, RSS, yfinance y Alpaca se consultan de forma aislada. Un proveedor no puede corromper toda la ejecución.</p></div></article>
             <article><span>02</span><div><strong>Validación</strong><p>Tipos, rangos, fechas, credenciales accidentales y cobertura mínima se verifican antes de publicar.</p></div></article>
-            <article><span>03</span><div><strong>Investigación</strong><p>Features, backtest temporal, event studies y riesgo se calculan sin acceder a datos privados de Firebase.</p></div></article>
-            <article><span>04</span><div><strong>Publicación</strong><p>GitHub Pages recibe únicamente artefactos JSON de solo lectura; Firestore conserva los datos privados por UID.</p></div></article>
+            <article><span>03</span><div><strong>Investigación</strong><p>Features, backtest temporal, predicciones pre-registradas, event studies y riesgo se calculan sin acceder a Firebase.</p></div></article>
+            <article><span>04</span><div><strong>Publicación</strong><p>GitHub Pages recibe JSON de solo lectura; el ledger conserva la predicción y Firestore mantiene datos privados por UID.</p></div></article>
           </div>
         </section>
         <section className="research-panel">
           <p className="eyebrow">Especificación del modelo</p><h2>{manifest.modelVersion}</h2>
           <dl className="model-spec">
-            <div><dt>Objetivo</dt><dd>Retorno excedente positivo frente a SPY a 60 sesiones.</dd></div>
+            <div><dt>Objetivo</dt><dd>Retorno excedente positivo frente a SPY a 5, 20 y 60 sesiones.</dd></div>
             <div><dt>Validación</dt><dd>Walk-forward anual con calibración temporal.</dd></div>
             <div><dt>Regularización</dt><dd>L2 para reducir sensibilidad a una muestra pequeña.</dd></div>
-            <div><dt>Rebalanceo</dt><dd>Cada 60 sesiones; tres activos con mayor probabilidad estimada.</dd></div>
+            <div><dt>Gobernanza</dt><dd>Champion–challenger; promoción solo después de tres ejecuciones calificadas.</dd></div>
             <div><dt>Costos</dt><dd>10 puntos básicos descontados por rebalanceo.</dd></div>
-            <div><dt>Salida</dt><dd>Probabilidad, score explicable, rango de incertidumbre y evidencia.</dd></div>
+            <div><dt>Salida</dt><dd>Probabilidad, banda empírica, contribuciones, hash y resultado al madurar.</dd></div>
           </dl>
         </section>
       </div>

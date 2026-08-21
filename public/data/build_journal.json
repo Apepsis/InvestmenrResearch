@@ -1,6 +1,6 @@
 {
-  "version": "4.0",
-  "question": "¿Puede un sistema transparente combinar mercado, fundamentos, macroeconomía y noticias para investigar retornos excedentes a 60 sesiones?",
+  "version": "5.0",
+  "question": "¿Puede un sistema transparente publicar por adelantado probabilidades de superar al SPY a 5, 20 y 60 sesiones, evaluarlas sin reescribirlas y controlar el riesgo?",
   "principles": [
     "No usar información futura",
     "Separar evidencia de interpretación",
@@ -30,7 +30,15 @@
       "problem": "Un score aislado no demostraba validez ni procedencia.",
       "decision": "Agregar backtesting walk-forward, explicabilidad, riesgo, event studies y manifiestos reproducibles.",
       "evidence": "Código, pruebas y pantallas incluidos; los resultados reales se generan en GitHub Actions.",
-      "status": "in-progress"
+      "status": "completed"
+    },
+    {
+      "date": "2026-08",
+      "title": "Predicciones pre-registradas y gobernanza V5",
+      "problem": "Un backtest puede cambiar al recalcularse y no demuestra que una predicción se publicó antes del resultado.",
+      "decision": "Crear un ledger append-only para 5, 20 y 60 sesiones, champion–challenger, drift y alertas deduplicadas.",
+      "evidence": "IDs deterministas, hashes, evaluación al madurar, 16 pruebas automáticas y artefactos públicos por ejecución.",
+      "status": "completed"
     },
     {
       "date": "Próximo",
@@ -61,7 +69,7 @@
   "limitations": [
     "Alpaca Basic utiliza IEX y puede diferir del mercado consolidado.",
     "Los fundamentales históricos point-in-time requieren especial cuidado para evitar revisiones posteriores.",
-    "El universo de nueve activos produce evidencia exploratoria, no una conclusión universal.",
+    "El universo ampliado fue seleccionado hoy y aún contiene sesgo de supervivencia.",
     "Existe riesgo de supervivencia porque el universo inicial contiene empresas vigentes hoy.",
     "Las pruebas de estrés describen sensibilidad y no son predicciones.",
     "El clasificador de noticias actual continúa siendo una línea base léxica hasta completar el conjunto etiquetado."

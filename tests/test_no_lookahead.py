@@ -21,5 +21,10 @@ class NoLookaheadTests(unittest.TestCase):
             "ret_5", "ret_20", "ret_60", "sma_50_ratio", "sma_200_ratio", "rsi_14",
             "vol_20", "vol_60", "drawdown_252", "volume_z_20", "spy_ret_20", "spy_ret_60", "beta_60",
         ]
-        forbidden = {"forward_return_60", "forward_spy_60", "forward_excess_60", "label_excess_positive"}
+        forbidden = {
+            "forward_return_5", "forward_spy_5", "forward_excess_5", "label_excess_positive_5",
+            "forward_return_20", "forward_spy_20", "forward_excess_20", "label_excess_positive_20",
+            "forward_return_60", "forward_spy_60", "forward_excess_60", "label_excess_positive_60",
+            "label_excess_positive",
+        }
         self.assertTrue(forbidden.isdisjoint(features))

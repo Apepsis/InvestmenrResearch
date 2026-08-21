@@ -20,6 +20,7 @@ ARTIFACT_NAMES = [
     "market.json", "backtest.json", "risk_model.json", "event_studies.json",
     "live_predictions.json", "prediction_ledger.json", "model_registry.json",
     "model_monitoring.json", "alerts.json", "build_journal.json",
+    "fast_signals.json",
 ]
 MODEL_VERSION = "transparent-research-v5.0"
 

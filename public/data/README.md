@@ -6,8 +6,18 @@ El workflow `.github/workflows/update-market-data.yml` genera:
 - `backtest.json`
 - `risk_model.json`
 - `event_studies.json`
+- `live_predictions.json`
+- `prediction_ledger.json`
+- `model_registry.json`
+- `model_monitoring.json`
+- `alerts.json`
 - `research_manifest.json`
+
+El workflow `.github/workflows/refresh-fast-signals.yml` genera por separado:
+
+- `fast_signals.json` (titulares, dirección y urgencia cada 20 minutos)
 
 `build_journal.json` es documentación versionada del proceso. Mientras todavía
 no existan resultados válidos, la interfaz muestra estructuras de demostración
-claramente identificadas. No edites manualmente los artefactos generados.
+claramente identificadas. No edites manualmente los artefactos generados y, en
+especial, no borres `prediction_ledger.json`: es el historial pre-registrado.

@@ -5,11 +5,12 @@ Aplicacion personal de investigacion bursatil para un horizonte aproximado de
 riesgo en un score explicable. No compra ni vende activos y no garantiza
 rentabilidad.
 
-La V4 transforma el dashboard en un **Research Lab auditable**. Además del
+La V5 transforma el dashboard en un **Research Lab auditable y pre-registrado**. Además del
 score diario, publica validación walk-forward, comparación contra SPY,
 calibración probabilística, explicación de contribuciones, event studies,
 riesgo cuantitativo, procedencia de datos y un manifiesto reproducible por
-ejecución.
+ejecución. También publica predicciones inmutables a 5, 20 y 60 sesiones,
+champion–challenger, drift y alertas opcionales por Gmail.
 
 ## Que incluye
 
@@ -27,15 +28,26 @@ ejecución.
   riesgo 15%.
 - Descomposición exacta del score alrededor de una base neutral, con fórmula,
   fuente, fecha, peso y estado de cada contribución.
-- Backtest walk-forward de cuatro modelos, sin utilizar datos futuros y con
+- Backtest walk-forward de cinco modelos, sin utilizar datos futuros y con
   costos de transacción.
+- Ledger append-only: guarda cada predicción antes del resultado y la evalúa
+  automáticamente al madurar.
+- Challenger con objetivo de volatilidad, máximo 20% por posición, proxy de
+  CVaR, régimen SMA 200 y efectivo.
+- Alertas gratuitas opcionales por Gmail con cooldown y sin operaciones.
+- Radar propio de noticias y señales rápidas cada 20 minutos, separado del
+  score oficial para no mezclar vigilancia con validación histórica.
+- Barra de estado que distingue precio por minuto, alertas cada 5 minutos,
+  noticias cada 20 minutos e investigación profunda diaria.
+- Interfaz tipo laboratorio cuantitativo con animaciones de entrada, radar,
+  trazado de curvas y estados vivos; respeta `prefers-reduced-motion`.
 - Probabilidades del modelo estadístico evaluadas con Brier score y curvas de
   calibración.
 - Event studies de noticias frente a SPY a 1, 5 y 20 sesiones.
 - VaR, CVaR, correlaciones, beta, concentración y pruebas de estrés del
   portafolio calculados localmente en el navegador.
 - Run ID, versión del modelo, commit, cobertura y hashes SHA-256 de artefactos.
-- Nueve pruebas automáticas contra leakage, errores del score, datos inseguros
+- Dieciséis pruebas automáticas contra leakage, inmutabilidad, spam, errores del score, datos inseguros
   y cálculos de riesgo.
 - Indicadores SMA 50/200, RSI, MACD, volatilidad y drawdown.
 - Fundamentales con SEC EDGAR cuando es posible y datos de mercado como
@@ -57,15 +69,20 @@ flowchart TD
   P --> C[Cloudflare Worker]
   C --> L[Alpaca IEX]
   G[GitHub Actions] --> Y[Precios y fundamentos]
+  Q[GitHub Actions cada 20 min] --> N[Noticias RSS]
   G --> N[Noticias RSS]
   G --> M[FRED y SEC]
   G --> R[Research Lab y backtest]
+  G --> E[Ledger y alertas Gmail]
   Y --> J[market.json]
   N --> J
+  N --> S[fast_signals.json]
   M --> J
   R --> B[backtest y riesgo]
   J --> P
+  S --> P
   B --> P
+  E --> P
 ```
 
 GitHub Pages solo sirve archivos estaticos; no puede ejecutar Python ni guardar
@@ -145,14 +162,29 @@ los documentos depende de `firestore.rules`.
    variables `VITE_FIREBASE_*` de la tabla anterior.
 3. Opcionalmente crea `SEC_USER_AGENT` con un texto descriptivo y un correo de
    contacto, por ejemplo `MiResearchApp contacto@correo.com`.
-4. En **Settings > Pages > Build and deployment**, elige **GitHub Actions**.
-5. Abre **Actions** y ejecuta manualmente **Actualizar datos e investigacion**.
-6. Ejecuta **Publicar aplicacion en GitHub Pages** o haz un nuevo `push`.
+4. Si quieres correo, sigue `CONFIGURAR_ALERTAS_GMAIL.md`.
+5. En **Settings > Pages > Build and deployment**, elige **GitHub Actions**.
+6. Abre **Actions** y ejecuta manualmente **Actualizar datos e investigacion**.
+7. Ejecuta una vez **Actualizar noticias y senales rapidas**. Después quedará
+   programado cada 20 minutos y publicará solamente cuando detecte cambios.
+8. Ejecuta **Publicar aplicacion en GitHub Pages** o haz un nuevo `push`.
 
 La actualizacion completa corre todos los dias alrededor de las 5:20 p. m. de
 Lima. También ejecuta pruebas, feature store, backtest, riesgo, event studies y
 manifiesto reproducible. Si cambia cualquiera de los artefactos públicos, el
 commit automático vuelve a publicar la página.
+
+La automatización queda separada por costo y propósito:
+
+- **Navegador abierto:** consulta precios Alpaca cada minuto.
+- **Cada 5 minutos:** GitHub Actions revisa precios y condiciones de alerta.
+- **Cada 20 minutos:** otro workflow busca titulares nuevos y recalcula solo la
+  señal rápida; no toca fundamentales, score ni backtest.
+- **Una vez al día:** se reconstruye la investigación profunda completa.
+
+Los workflows de GitHub funcionan aunque la página esté cerrada. Los horarios
+`schedule` pueden iniciar con algunos minutos de retraso por capacidad de
+GitHub; la aplicación muestra la fecha real del último cambio detectado.
 
 La grafica y el bloque de noticias de TradingView se cargan directamente en el
 navegador y no necesitan que GitHub vuelva a publicar la aplicacion. Esos
@@ -190,7 +222,10 @@ python -m pip install -r requirements.txt
 python scripts/collect_market_data.py
 python scripts/validate_market_data.py public/data/market.json
 
-# Ejecutar las nueve pruebas sin dependencias adicionales
+# Actualizar únicamente titulares y señales rápidas
+python scripts/refresh_fast_signals.py
+
+# Ejecutar las dieciséis pruebas
 python scripts/run_tests.py
 
 # Ejecutar mercado, features, backtest, riesgo, eventos y manifiesto
@@ -226,6 +261,8 @@ invalidarian la tesis.
 
 - `yfinance` y los RSS gratuitos no ofrecen garantias de disponibilidad ni
   datos en tiempo real.
+- La señal de 20 minutos es vigilancia informativa y no modifica el modelo
+  oficial hasta la siguiente ejecución profunda.
 - Alpaca Basic usa IEX; el precio puede diferir del consolidado de todas las
   bolsas estadounidenses.
 - La consulta por minuto ocurre mientras la pagina esta abierta. Al regresar a
@@ -237,7 +274,7 @@ invalidarian la tesis.
   conjunto humano etiquetado.
 - El backtest histórico utiliza mercado y riesgo. No introduce fundamentales o
   noticias retrospectivas mientras no exista un archivo point-in-time fiable.
-- El universo actual es pequeño y tiene riesgo de supervivencia.
+- El universo ampliado a 32 acciones más SPY sigue teniendo riesgo de supervivencia.
 - Los datos fundamentales pueden llegar con retraso o faltar para algunos
   emisores y ETFs.
 - No se calculan impuestos, comisiones, liquidez del mercado ni idoneidad
@@ -249,7 +286,8 @@ invalidarian la tesis.
 - `RESEARCH_METHODOLOGY.md`: hipótesis, fórmulas y validación temporal.
 - `MODEL_CARD.md`: uso previsto, métricas y riesgos del modelo.
 - `DATA_CARD.md`: artefactos, fechas, datos faltantes y privacidad.
-- `CAMBIOS_V4_RESEARCH_LAB.md`: instrucciones exactas para actualizar GitHub.
+- `CAMBIOS_V5_PREDICCIONES_ALERTAS.md`: instrucciones de la V5.
+- `CONFIGURAR_ALERTAS_GMAIL.md`: correo automático opcional.
 - `data/NEWS_LABELING_GUIDE.md`: protocolo para el experimento de NLP.
 
 ## Licencia

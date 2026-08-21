@@ -22,6 +22,7 @@ def main() -> None:
     (WORK_DIR / "pipeline_started_at.txt").write_text(str(time.time()), encoding="utf-8")
     run("collect_market_data.py")
     run("validate_market_data.py")
+    run("refresh_fast_signals.py")
     run("build_feature_store.py")
     run("run_walk_forward.py")
     run("calculate_portfolio_risk.py")

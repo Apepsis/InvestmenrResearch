@@ -122,6 +122,27 @@ def validate_alerts(payload: dict[str, Any]) -> None:
             raise ValueError("alerts.json expone configuración privada")
 
 
+def validate_fast_signals(payload: dict[str, Any]) -> None:
+    if payload.get("mode") != "live" or payload.get("refreshIntervalMinutes") != 20:
+        raise ValueError("fast_signals no representa una ejecución live de 20 minutos")
+    stocks = payload.get("stocks", {})
+    if not stocks:
+        raise ValueError("fast_signals no contiene activos")
+    for ticker, stock in stocks.items():
+        if stock.get("ticker") != ticker:
+            raise ValueError("ticker inconsistente en fast_signals")
+        if stock.get("signal") not in {"positive", "neutral", "negative"}:
+            raise ValueError("dirección inválida en fast_signals")
+        if stock.get("urgency") not in {"low", "medium", "high"}:
+            raise ValueError("urgencia inválida en fast_signals")
+        score = finite(stock.get("newsScore"), "newsScore")
+        if not 0 <= score <= 100:
+            raise ValueError("newsScore fuera de rango")
+        for item in stock.get("items", []):
+            if not item.get("id") or not item.get("firstSeenAt"):
+                raise ValueError("titular rápido sin identidad o procedencia temporal")
+
+
 def main() -> None:
     validate_backtest(load("backtest.json"))
     validate_risk(load("risk_model.json"))
@@ -131,6 +152,7 @@ def main() -> None:
     validate_registry(load("model_registry.json"))
     validate_monitoring(load("model_monitoring.json"))
     validate_alerts(load("alerts.json"))
+    validate_fast_signals(load("fast_signals.json"))
     print("Artefactos de investigación válidos.")
 
 

@@ -1,0 +1,8 @@
+{
+  "generatedAt": "Sin ejecutar",
+  "mode": "sample",
+  "refreshIntervalMinutes": 20,
+  "policy": "Vigilancia rápida independiente; no modifica el score oficial hasta el pipeline diario.",
+  "stocks": {},
+  "errors": {}
+}
