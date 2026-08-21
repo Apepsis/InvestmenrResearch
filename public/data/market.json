@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:36:44+00:00",
+  "generatedAt": "2026-08-21T00:47:39+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -1457,7 +1457,7 @@
         },
         {
           "label": "Valoracion",
-          "value": "P/E 25.1",
+          "value": "P/E 25.0",
           "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
           "tone": "neutral"
         }
@@ -1609,16 +1609,16 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Good News For Amazon Stock Fans - GuruFocus",
-          "source": "GuruFocus",
-          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFAtWW85WEFnTzNaLXZSa1hqR2NiLUxyYUhGRHJHS0xaYktaM2N2RnNVMHZrWFR4SUhzLUpMYlczcHQ2WXVmd3lsbjlEQ2tlcjJWZkxscnJ2c1o5aXRaMlBuclp2LTVuc0UxWTdwZTIwaXNuemU5a1F1aHJn?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 11:44:18 GMT",
+          "title": "After Earnings, Is Amazon Stock a Buy, a Sell, or Fairly Valued? - Morningstar",
+          "source": "Morningstar",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPcUJfbTBpX1RKdW1fTE0zclVUT21KTS15TTJ3NFVJYzhOS3JCZkR6UEFyWTRVbjBNOWRrSHhYbkRnNjVKNG1NV3AwN1ZZNzlmZzVJbUNhd19NbEtBSFVBQlhteVlpWkhqXzdtbk1GYXhYckZKZG9uNk41Z0RIajZZMTBlM0h5dW9xdTFYTzV3TmNHRVp2aEVpZDR4MFFGV194TDRGRw?oc=5",
+          "publishedAt": "Wed, 12 Aug 2026 06:04:04 GMT",
           "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
+          "eventType": "resultados",
+          "duration": "medium",
           "confidence": 0.45,
           "relevance": 0.69,
-          "novelty": 0.833,
+          "novelty": 0.857,
           "entityMatched": true,
           "impactWeight": 0.0
         }

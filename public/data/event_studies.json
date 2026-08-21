@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-21T00:36:51.848492+00:00",
+  "generatedAt": "2026-08-21T00:47:46.845873+00:00",
   "mode": "live",
   "benchmark": "SPY",
   "methodology": "Retorno del activo menos retorno de SPY en 1, 5 y 20 sesiones posteriores; una ventana sin datos permanece pendiente.",
-  "coverage": 50.0,
+  "coverage": 51.39,
   "items": [
     {
       "ticker": "UBER",
@@ -592,18 +592,18 @@
     },
     {
       "ticker": "AMZN",
-      "title": "Good News For Amazon Stock Fans - GuruFocus",
-      "source": "GuruFocus",
-      "publishedAt": "Thu, 20 Aug 2026 11:44:18 GMT",
-      "eventType": "mercado",
+      "title": "After Earnings, Is Amazon Stock a Buy, a Sell, or Fairly Valued? - Morningstar",
+      "source": "Morningstar",
+      "publishedAt": "Wed, 12 Aug 2026 06:04:04 GMT",
+      "eventType": "resultados",
       "sentiment": "neutral",
       "relevance": 0.69,
-      "novelty": 0.833,
+      "novelty": 0.857,
       "entityMatched": true,
-      "abnormalReturn1d": null,
-      "abnormalReturn5d": null,
+      "abnormalReturn1d": -0.015021,
+      "abnormalReturn5d": -0.000947,
       "abnormalReturn20d": null,
-      "status": "pending"
+      "status": "measured"
     },
     {
       "ticker": "GOOGL",
