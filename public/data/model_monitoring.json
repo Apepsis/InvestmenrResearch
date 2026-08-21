@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-08-21T13:41:21+00:00",
+  "mode": "live",
+  "status": "healthy",
+  "data": {
+    "predictionCoverage": 1.0,
+    "predictionsPublished": 24,
+    "predictionsExpected": 24,
+    "marketDataAgeHours": 0.003,
+    "providerErrors": 0
+  },
+  "featureDrift": {
+    "maximumAbsoluteShift": 1.90305,
+    "thresholdWarning": 2.0,
+    "thresholdCritical": 3.0,
+    "topShifts": [
+      {
+        "feature": "volume_z_20",
+        "referenceMean": 0.00461928,
+        "latestMean": -2.02459498,
+        "standardizedShift": -1.90305
+      },
+      {
+        "feature": "ret_60",
+        "referenceMean": 0.08749612,
+        "latestMean": -0.02565314,
+        "standardizedShift": -0.51258
+      },
+      {
+        "feature": "spy_ret_20",
+        "referenceMean": 0.01178251,
+        "latestMean": 0.03539581,
+        "standardizedShift": 0.50665
+      },
+      {
+        "feature": "ret_20",
+        "referenceMean": 0.02790675,
+        "latestMean": 0.08301001,
+        "standardizedShift": 0.46789
+      },
+      {
+        "feature": "spy_sma_200_ratio",
+        "referenceMean": 0.05339302,
+        "latestMean": 0.08525855,
+        "standardizedShift": 0.45065
+      },
+      {
+        "feature": "vol_20",
+        "referenceMean": 0.36107694,
+        "latestMean": 0.44735059,
+        "standardizedShift": 0.41918
+      },
+      {
+        "feature": "sma_200_ratio",
+        "referenceMean": 0.12120995,
+        "latestMean": 0.02737516,
+        "standardizedShift": -0.38007
+      },
+      {
+        "feature": "vol_60",
+        "referenceMean": 0.37420341,
+        "latestMean": 0.43788462,
+        "standardizedShift": 0.34951
+      }
+    ]
+  },
+  "performance": {
+    "evaluatedPredictions": 0,
+    "recentWindow": 0,
+    "accuracy": null,
+    "brierScore": null,
+    "minimumWindowForAlert": 30
+  },
+  "governance": {
+    "champion": "statistical",
+    "challengerQualified": false,
+    "qualificationStreak": 0
+  },
+  "issues": [],
+  "interpretation": "Las alertas detectan cambios o fallas; no prueban causalidad ni predicen precios."
+}

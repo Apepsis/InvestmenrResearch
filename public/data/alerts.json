@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-08-21T13:41:21+00:00",
+  "mode": "live",
+  "deliveryEnabled": true,
+  "deliveryStatus": "no-new-alerts",
+  "deliveryErrorClass": null,
+  "newAlertsSent": 0,
+  "candidates": [],
+  "pendingAfterCooldown": 0,
+  "history": [],
+  "policy": "Solo se envía un digest deduplicado; oportunidades requieren acuerdo entre 20 y 60 sesiones. No ejecuta operaciones."
+}
