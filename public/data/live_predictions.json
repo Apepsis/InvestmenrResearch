@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T18:46:10.115131+00:00",
+  "generatedAt": "2026-08-21T22:47:08.326880+00:00",
   "mode": "live",
   "modelVersion": "transparent-research-v5.0",
   "horizons": [
@@ -8964,11 +8964,11 @@
       "calibrationEnd": "2026-05-27",
       "trainingRows": 57045,
       "calibrationRows": 14432,
-      "brierScoreCalibration": 0.248107
+      "brierScoreCalibration": 0.248101
     }
   },
   "rerunPolicy": {
-    "reusedPublications": 24,
+    "reusedPublications": 96,
     "rule": "La primera predicción publicada para cada fecha, activo, horizonte y versión permanece congelada en reruns."
   },
   "limitations": [
