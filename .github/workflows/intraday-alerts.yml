@@ -1,0 +1,66 @@
+name: Monitorear alertas intradia
+
+on:
+  schedule:
+    # Cubre el horario regular de EE. UU. durante EDT y EST. El script ignora cotizaciones antiguas.
+    - cron: "*/5 13-21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  # Comparte el bloqueo con el pipeline diario para evitar dos commits simultáneos.
+  group: market-data
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v7
+
+      - name: Preparar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Validar reglas de alertas
+        run: python scripts/run_tests.py
+
+      - name: Revisar cotizaciones y enviar alertas
+        run: python scripts/monitor_intraday_alerts.py
+        env:
+          MARKET_API_URL: ${{ vars.VITE_MARKET_API_URL }}
+          ALERTS_ENABLED: ${{ vars.ALERTS_ENABLED }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+
+      - name: Guardar alerta enviada
+        id: save
+        run: |
+          git config user.name "intraday-alert-bot"
+          git config user.email "intraday-alert-bot@users.noreply.github.com"
+          git add public/data/alerts.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "alerts: registrar evento intradia"
+            git pull --rebase origin main
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Un commit con GITHUB_TOKEN no inicia el despliegue por push.
+      - name: Volver a publicar la pagina
+        if: steps.save.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main
