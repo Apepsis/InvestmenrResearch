@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:30:47.855610+00:00",
+  "generatedAt": "2026-08-21T00:36:51.848492+00:00",
   "mode": "live",
   "benchmark": "SPY",
   "methodology": "Retorno del activo menos retorno de SPY en 1, 5 y 20 sesiones posteriores; una ventana sin datos permanece pendiente.",
