@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:24:50.416206+00:00",
+  "generatedAt": "2026-08-21T00:30:47.855610+00:00",
   "mode": "live",
   "benchmark": "SPY",
   "methodology": "Retorno del activo menos retorno de SPY en 1, 5 y 20 sesiones posteriores; una ventana sin datos permanece pendiente.",
@@ -667,21 +667,6 @@
     },
     {
       "ticker": "GOOGL",
-      "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
-      "source": "Barron's",
-      "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
-      "eventType": "mercado",
-      "sentiment": "neutral",
-      "relevance": 0.69,
-      "novelty": 0.9,
-      "entityMatched": true,
-      "abnormalReturn1d": null,
-      "abnormalReturn5d": null,
-      "abnormalReturn20d": null,
-      "status": "pending"
-    },
-    {
-      "ticker": "GOOGL",
       "title": "Berkshire Hathaway Boosted Its Alphabet Stake 83%—Buffett Said the Investment Was His Idea - Investopedia",
       "source": "Investopedia",
       "publishedAt": "Mon, 17 Aug 2026 17:46:30 GMT",
@@ -694,6 +679,21 @@
       "abnormalReturn5d": null,
       "abnormalReturn20d": null,
       "status": "measured"
+    },
+    {
+      "ticker": "GOOGL",
+      "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
+      "source": "Barron's",
+      "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
+      "eventType": "mercado",
+      "sentiment": "neutral",
+      "relevance": 0.69,
+      "novelty": 0.9,
+      "entityMatched": true,
+      "abnormalReturn1d": null,
+      "abnormalReturn5d": null,
+      "abnormalReturn20d": null,
+      "status": "pending"
     },
     {
       "ticker": "GOOGL",
@@ -939,7 +939,7 @@
       "ticker": "TSLA",
       "title": "Prediction: Cybercab Adds Less Than 5% to Tesla's Revenue in Its First Full Year - The Motley Fool",
       "source": "The Motley Fool",
-      "publishedAt": "Thu, 20 Aug 2026 21:06:34 GMT",
+      "publishedAt": "Thu, 20 Aug 2026 21:41:00 GMT",
       "eventType": "resultados",
       "sentiment": "neutral",
       "relevance": 0.69,

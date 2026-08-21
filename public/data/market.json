@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:24:46+00:00",
+  "generatedAt": "2026-08-21T00:30:40+00:00",
   "mode": "live",
   "macro": {
     "fedRate": {
@@ -1457,7 +1457,7 @@
         },
         {
           "label": "Valoracion",
-          "value": "P/E 25.0",
+          "value": "P/E 25.1",
           "interpretation": "Multiplo esperado; requiere comparacion con sector y crecimiento.",
           "tone": "neutral"
         }
@@ -1900,20 +1900,6 @@
           "impactWeight": 0.0
         },
         {
-          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
-          "source": "Barron's",
-          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
-          "sentiment": "neutral",
-          "eventType": "mercado",
-          "duration": "temporary",
-          "confidence": 0.45,
-          "relevance": 0.69,
-          "novelty": 0.9,
-          "entityMatched": true,
-          "impactWeight": 0.0
-        },
-        {
           "title": "Berkshire Hathaway Boosted Its Alphabet Stake 83%—Buffett Said the Investment Was His Idea - Investopedia",
           "source": "Investopedia",
           "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxQME9mdFRNT0J6RDg5V0hBc29weW90ZXNuOXlKUUdHYU5wZzhzeUMyTm4zVXp6ZVV2Sy1BelFWT1F5RG45b1JMa2lwRlJYc3J6N19jUl92X0pzYXdQNGNoZC1vVThEMzFrRnE2VmFUQlYwd0RNZ1p0RkIwRjJJOXlIZDNGbXNjNUw4QjN3dXFXSnh0S2g3ai1JZlFtNWdqUDJQSGRBdDlOVGxWckhGQlhoemt3bnd1Uk4yZFlrUjloc0FyUmZfMGthT0RHSUFwMXdGaGZCZVpKUHk2NkZ3Ym12YTRuRmZuZHZLaW8xWXNUS2RDdVhYT2c?oc=5",
@@ -1924,6 +1910,20 @@
           "confidence": 0.45,
           "relevance": 0.69,
           "novelty": 0.913,
+          "entityMatched": true,
+          "impactWeight": 0.0
+        },
+        {
+          "title": "Why Amazon and Alphabet May Be the Best Way to Play the AI E-Commerce Shift - Barron's",
+          "source": "Barron's",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVW1wdmE0Y3lDWHZxbEFTei12ejU3Zlp2aWlKUmo2dVBHMUdKeS1KXzhMUWpFOW9xdUFGU3VkNHRiRkdWS2JfdmpCT3R2UGNvWUlqX3hGMVg2bVJ4TlhacldrTjNJRl9Zdkw5YjY1djdxdktOTi03VUJEbVhFTnlaTG43VQ?oc=5",
+          "publishedAt": "Thu, 20 Aug 2026 15:52:00 GMT",
+          "sentiment": "neutral",
+          "eventType": "mercado",
+          "duration": "temporary",
+          "confidence": 0.45,
+          "relevance": 0.69,
+          "novelty": 0.9,
           "entityMatched": true,
           "impactWeight": 0.0
         },
@@ -2597,7 +2597,7 @@
           "title": "Prediction: Cybercab Adds Less Than 5% to Tesla's Revenue in Its First Full Year - The Motley Fool",
           "source": "The Motley Fool",
           "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQeXhZOUp0bXRsR2UybTlHUzlxOHZOcFp1NWRBNkJXcDFhQ3FpTWRNcG8zSk9ELWZjSFk1b1ZrRExVd1RGZjlfNnRDTUZhN3ZjSEI5VWp5ZnQwMDZnYVh3LUt5N3pCTVIzVVJ3SHpmcFU4WUhqSkNBWExnNS1lQ1Fubi1tM1ZvQTRwZVJRQkN6a21YUFNqQ25jcVJ6aFNZb002dnU1Sl9XM3JlbkkwekRyZXZjbkJUbEEtVXNMZ1ln?oc=5",
-          "publishedAt": "Thu, 20 Aug 2026 21:06:34 GMT",
+          "publishedAt": "Thu, 20 Aug 2026 21:41:00 GMT",
           "sentiment": "neutral",
           "eventType": "resultados",
           "duration": "medium",
